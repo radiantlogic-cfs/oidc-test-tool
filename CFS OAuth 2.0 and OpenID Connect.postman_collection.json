@@ -5,7 +5,7 @@
 		"description": "This postman collection is used to try out the **OpenID Connect feature of CFS**.\n\n**Pre-requisities**:\n\n- Configure an OpenID Connect Application in CFS.\n    - For the Callback URL field, use the value: `https://oauth.pstmn.io/v1/callback`\n- Fill in the Postman Collection Varaiables with appropriate values for `CFS Master URL`, `Tenant Name`, `client_id`, `client_secret`, `username`, and `password` respectively.\n- Log in to CFS Master and authorize with the application once so the consent is remembered\n    - Copy the URL from the [Authorization code flow -&gt; Authorize](https://go.postman.co/workspace/CFS5~8ebc958a-523b-46bd-931a-968060aa59a4/documentation/25667693-fbcd655d-ce2f-40e1-9bb4-bd4d5afd2a47?entity=request-317061c1-b932-4389-8930-092d5a4960e1) request and paste it in your web browser.\n    - Authorize the OIDC Application access to your information by pressing Accept on the consent screen\n\n<img src=\"https://content.pstmn.io/3d8a6e12-581b-41f4-ad9f-12bf06bc3d1f/aW1hZ2UucG5n\" alt=\"Screen%20capture%20of%20the%20CFS%20OIDC%20Application%20consent%20screen%20\" width=\"219\" height=\"377\">\n\n**N.B.:** The consent screen will be automatically accepted when running the requests in this Postman Collection, but in a real world scenario the user will have to press the \"Accept\" button.\n\n<img src=\"https://content.pstmn.io/ee715dd2-321c-4d28-a58d-5c0de4d5f4a6/aW1hZ2UucG5n\" alt=\"Screen%20capture%20of%20CFS%20showing%20an%20authorized%20application\" width=\"1187\" height=\"547\">\n\nNow you can test the OAuth requests directly in Postman.\n\nThe \"Authorize\" requests will automatically set the values for the `authorization_code` collection variable, while the \"Request for tokens\" requests will automatically set the values for the `id_token`, `access_token`, and `refresh_token` collections variable(s) where appropriate.\n\n**N.B.:** The \"Automatically follow redirects\" setting must be **disabled** in Postman in order to run the requests in the \"[Implicit Flow](https://speeding-sunset-964902.postman.co/workspace/8ebc958a-523b-46bd-931a-968060aa59a4/folder/25667693-003c0c6b-ada8-4a6f-8591-9fbaf0154d60)\" and \"[Hybrid Flow](https://speeding-sunset-964902.postman.co/workspace/8ebc958a-523b-46bd-931a-968060aa59a4/folder/25667693-ae4a2241-bd4e-40c1-9091-32f10c6f6b4c)\" folders!\n\n<img src=\"https://content.pstmn.io/bb3aa626-370b-4bfc-88b9-b0daec95b702/aW1hZ2UucG5n\" width=\"846\" height=\"840\">",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "25667693",
-		"_collection_link": "https://speeding-sunset-964902.postman.co/workspace/8ebc958a-523b-46bd-931a-968060aa59a4/collection/25667693-99b90132-8042-4516-b4b7-44ae06ff2924?action=share&source=collection_link&creator=25667693"
+		"_collection_link": "https://speeding-sunset-964902.postman.co/workspace/CFS5~8ebc958a-523b-46bd-931a-968060aa59a4/collection/25667693-99b90132-8042-4516-b4b7-44ae06ff2924?action=share&source=collection_link&creator=25667693"
 	},
 	"item": [
 		{
@@ -18,7 +18,11 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pmutils(pm).postConfirmAuthorizeRequestIfNecessaryThenSetTokens('query');\r",
+									"pmutils(pm).testCallbacks.testResponseStatus200or302();\r",
+									"\r",
+									"pmutils(pm).postConfirmAuthorizeRequestIfNecessaryThenSetTokens('query', ({ authorization_code }) => {\r",
+									"    pmutils(pm).testCallbacks.testAuthorizationCode(authorization_code);\r",
+									"});\r",
 									""
 								],
 								"type": "text/javascript"
@@ -76,15 +80,13 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://cfs01/cfs/oauth/mytenant/authorize?response_type=code&client_id=&redirect_uri=https://oauth.pstmn.io/v1/callback&scope=openid email profile&state=abc&nonce=xyz",
-									"protocol": "https",
+									"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/authorize?response_type=code&client_id={{client_id}}&redirect_uri=https://oauth.pstmn.io/v1/callback&scope={{scope}}&state={{state}}&nonce={{nonce}}",
 									"host": [
-										"cfs01"
+										"{{CFS Master URL}}"
 									],
 									"path": [
-										"cfs",
 										"oauth",
-										"mytenant",
+										"{{Tenant Name}}",
 										"authorize"
 									],
 									"query": [
@@ -94,7 +96,7 @@
 										},
 										{
 											"key": "client_id",
-											"value": ""
+											"value": "{{client_id}}"
 										},
 										{
 											"key": "redirect_uri",
@@ -102,15 +104,15 @@
 										},
 										{
 											"key": "scope",
-											"value": "openid email profile"
+											"value": "{{scope}}"
 										},
 										{
 											"key": "state",
-											"value": "abc"
+											"value": "{{state}}"
 										},
 										{
 											"key": "nonce",
-											"value": "xyz"
+											"value": "{{nonce}}"
 										}
 									]
 								}
@@ -176,7 +178,12 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"var responseData = pm.response.json();\r",
+									"pmutils(pm).testCallbacks.testResponseStatus200();\r",
+									"\r",
+									"const responseData = pm.response.json();\r",
+									"\r",
+									"pmutils(pm).testCallbacks.testAccessToken(responseData.access_token);\r",
+									"pmutils(pm).testCallbacks.testIdToken(responseData.id_token);\r",
 									"\r",
 									"pm.collectionVariables.set(\"access_token\", responseData.access_token);\r",
 									"pm.collectionVariables.set(\"id_token\", responseData.id_token);\r",
@@ -253,7 +260,7 @@
 										},
 										{
 											"key": "code",
-											"value": "",
+											"value": "{{authorization_code}}",
 											"type": "text"
 										},
 										{
@@ -263,31 +270,29 @@
 										},
 										{
 											"key": "client_id",
-											"value": "",
+											"value": "{{client_id}}",
 											"type": "text"
 										},
 										{
 											"key": "client_secret",
-											"value": "",
+											"value": "{{client_secret}}",
 											"type": "text"
 										},
 										{
 											"key": "state",
-											"value": "abc",
+											"value": "{{state}}",
 											"type": "text"
 										}
 									]
 								},
 								"url": {
-									"raw": "https://cfs01/cfs/oauth/mytenant/token",
-									"protocol": "https",
+									"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token",
 									"host": [
-										"cfs01"
+										"{{CFS Master URL}}"
 									],
 									"path": [
-										"cfs",
 										"oauth",
-										"mytenant",
+										"{{Tenant Name}}",
 										"token"
 									]
 								}
@@ -374,7 +379,11 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pmutils(pm).postConfirmAuthorizeRequestIfNecessaryThenSetTokens('query');\r",
+									"pmutils(pm).testCallbacks.testResponseStatus200or302();\r",
+									"\r",
+									"pmutils(pm).postConfirmAuthorizeRequestIfNecessaryThenSetTokens('query', ({ authorization_code }) => {\r",
+									"    pmutils(pm).testCallbacks.testAuthorizationCode(authorization_code);\r",
+									"});\r",
 									""
 								],
 								"type": "text/javascript"
@@ -441,21 +450,19 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://cfs01/cfs/oauth/mytenant/authorize?scope=openid email profile&response_type=code&redirect_uri=https://oauth.pstmn.io/v1/callback&client_id=&code_challenge=rrsv_GL5iipUGp6yR5w5ra77fdggOxJ6htH9E217PeI&code_challenge_method=S256&state=abc&nonce=xyz",
-									"protocol": "https",
+									"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/authorize?scope={{scope}}&response_type=code&redirect_uri=https://oauth.pstmn.io/v1/callback&client_id={{client_id}}&code_challenge={{code_challenge}}&code_challenge_method={{code_method}}&state={{state}}&nonce={{nonce}}",
 									"host": [
-										"cfs01"
+										"{{CFS Master URL}}"
 									],
 									"path": [
-										"cfs",
 										"oauth",
-										"mytenant",
+										"{{Tenant Name}}",
 										"authorize"
 									],
 									"query": [
 										{
 											"key": "scope",
-											"value": "openid email profile"
+											"value": "{{scope}}"
 										},
 										{
 											"key": "response_type",
@@ -467,23 +474,23 @@
 										},
 										{
 											"key": "client_id",
-											"value": ""
+											"value": "{{client_id}}"
 										},
 										{
 											"key": "code_challenge",
-											"value": "rrsv_GL5iipUGp6yR5w5ra77fdggOxJ6htH9E217PeI"
+											"value": "{{code_challenge}}"
 										},
 										{
 											"key": "code_challenge_method",
-											"value": "S256"
+											"value": "{{code_method}}"
 										},
 										{
 											"key": "state",
-											"value": "abc"
+											"value": "{{state}}"
 										},
 										{
 											"key": "nonce",
-											"value": "xyz"
+											"value": "{{nonce}}"
 										}
 									]
 								}
@@ -549,11 +556,17 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"var jsonData = JSON.parse(responseBody);\r",
+									"pmutils(pm).testCallbacks.testResponseStatus200();\r",
 									"\r",
-									"pm.collectionVariables.set(\"access_token\", jsonData.access_token);\r",
-									"pm.collectionVariables.set(\"id_token\", jsonData.id_token);\r",
-									"pm.collectionVariables.set(\"refresh_token\", jsonData.refresh_token);"
+									"const responseData = JSON.parse(responseBody);\r",
+									"\r",
+									"pmutils(pm).testCallbacks.testAccessToken(responseData.access_token);\r",
+									"pmutils(pm).testCallbacks.testIdToken(responseData.id_token);\r",
+									"\r",
+									"pm.collectionVariables.set(\"access_token\", responseData.access_token);\r",
+									"pm.collectionVariables.set(\"id_token\", responseData.id_token);\r",
+									"pm.collectionVariables.set(\"refresh_token\", responseData.refresh_token);\r",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -626,7 +639,7 @@
 										},
 										{
 											"key": "code",
-											"value": "",
+											"value": "{{authorization_code}}",
 											"type": "text"
 										},
 										{
@@ -636,31 +649,29 @@
 										},
 										{
 											"key": "client_id",
-											"value": "",
+											"value": "{{client_id}}",
 											"type": "text"
 										},
 										{
 											"key": "code_verifier",
-											"value": "MR~lBQbZeIHsG3RnZuvgWmrAr8y1Ia~muw2zBrJdPlz5A7carMvqfm3MxiWCMN7KOjzfbZo0is3FxyWDf6e4Ad0sU6Of10.PvukuaqO2ez~YLU.lCrLYDC4.xDb420z2",
+											"value": "{{code_verifier}}",
 											"type": "text"
 										},
 										{
 											"key": "state",
-											"value": "abc",
+											"value": "{{state}}",
 											"type": "text"
 										}
 									]
 								},
 								"url": {
-									"raw": "https://cfs01/cfs/oauth/mytenant/token",
-									"protocol": "https",
+									"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token",
 									"host": [
-										"cfs01"
+										"{{CFS Master URL}}"
 									],
 									"path": [
-										"cfs",
 										"oauth",
-										"mytenant",
+										"{{Tenant Name}}",
 										"token"
 									]
 								}
@@ -747,7 +758,11 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pmutils(pm).postConfirmAuthorizeRequestIfNecessaryThenSetTokens('hash');\r",
+									"pmutils(pm).testCallbacks.testResponseStatus200or302();\r",
+									"\r",
+									"pmutils(pm).postConfirmAuthorizeRequestIfNecessaryThenSetTokens('hash', ({ id_token }) => {\r",
+									"    pmutils(pm).testCallbacks.testIdToken(id_token);\r",
+									"});\r",
 									""
 								],
 								"type": "text/javascript"
@@ -807,7 +822,12 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pmutils(pm).postConfirmAuthorizeRequestIfNecessaryThenSetTokens('hash');\r",
+									"pmutils(pm).testCallbacks.testResponseStatus200or302();\r",
+									"\r",
+									"pmutils(pm).postConfirmAuthorizeRequestIfNecessaryThenSetTokens('hash', ({ access_token, id_token }) => {\r",
+									"    pmutils(pm).testCallbacks.testAccessToken(access_token);\r",
+									"    pmutils(pm).testCallbacks.testIdToken(id_token);\r",
+									"});\r",
 									""
 								],
 								"type": "text/javascript"
@@ -876,7 +896,12 @@
 									"listen": "test",
 									"script": {
 										"exec": [
-											"pmutils(pm).postConfirmAuthorizeRequestIfNecessaryThenSetTokens('form');\r",
+											"pmutils(pm).testCallbacks.testResponseStatus200or302();\r",
+											"\r",
+											"pmutils(pm).postConfirmAuthorizeRequestIfNecessaryThenSetTokens('form', ({ authorization_code, id_token }) => {\r",
+											"    pmutils(pm).testCallbacks.testAuthorizationCode(authorization_code);\r",
+											"    pmutils(pm).testCallbacks.testIdToken(id_token);\r",
+											"});\r",
 											""
 										],
 										"type": "text/javascript"
@@ -936,7 +961,12 @@
 									"listen": "test",
 									"script": {
 										"exec": [
-											"var responseData = JSON.parse(responseBody);\r",
+											"pmutils(pm).testCallbacks.testResponseStatus200();\r",
+											"\r",
+											"const responseData = JSON.parse(responseBody);\r",
+											"\r",
+											"pmutils(pm).testCallbacks.testAccessToken(responseData.access_token);\r",
+											"pmutils(pm).testCallbacks.testIdToken(responseData.id_token);\r",
 											"\r",
 											"pm.collectionVariables.set(\"access_token\", responseData.access_token);\r",
 											"pm.collectionVariables.set(\"id_token\", responseData.id_token);\r",
@@ -1016,7 +1046,13 @@
 									"listen": "test",
 									"script": {
 										"exec": [
-											"pmutils(pm).postConfirmAuthorizeRequestIfNecessaryThenSetTokens('form');\r",
+											"pmutils(pm).testCallbacks.testResponseStatus200or302();\r",
+											"\r",
+											"pmutils(pm).postConfirmAuthorizeRequestIfNecessaryThenSetTokens('form', ({ authorization_code, access_token, id_token }) => {\r",
+											"    pmutils(pm).testCallbacks.testAuthorizationCode(authorization_code);\r",
+											"    pmutils(pm).testCallbacks.testAccessToken(access_token);\r",
+											"    pmutils(pm).testCallbacks.testIdToken(id_token);\r",
+											"});\r",
 											""
 										],
 										"type": "text/javascript"
@@ -1076,7 +1112,12 @@
 									"listen": "test",
 									"script": {
 										"exec": [
-											"var responseData = JSON.parse(responseBody);\r",
+											"pmutils(pm).testCallbacks.testResponseStatus200();\r",
+											"\r",
+											"const responseData = JSON.parse(responseBody);\r",
+											"\r",
+											"pmutils(pm).testCallbacks.testAccessToken(responseData.access_token);\r",
+											"pmutils(pm).testCallbacks.testIdToken(responseData.id_token);\r",
 											"\r",
 											"pm.collectionVariables.set(\"access_token\", responseData.access_token);\r",
 											"pm.collectionVariables.set(\"id_token\", responseData.id_token);\r",
@@ -1156,7 +1197,12 @@
 									"listen": "test",
 									"script": {
 										"exec": [
-											"pmutils(pm).postConfirmAuthorizeRequestIfNecessaryThenSetTokens('form');\r",
+											"pmutils(pm).testCallbacks.testResponseStatus200or302();\r",
+											"\r",
+											"pmutils(pm).postConfirmAuthorizeRequestIfNecessaryThenSetTokens('form', ({ authorization_code, access_token }) => {\r",
+											"    pmutils(pm).testCallbacks.testAuthorizationCode(authorization_code);\r",
+											"    pmutils(pm).testCallbacks.testAccessToken(access_token);\r",
+											"});\r",
 											""
 										],
 										"type": "text/javascript"
@@ -1216,7 +1262,12 @@
 									"listen": "test",
 									"script": {
 										"exec": [
-											"var responseData = JSON.parse(responseBody);\r",
+											"pmutils(pm).testCallbacks.testResponseStatus200();\r",
+											"\r",
+											"const responseData = JSON.parse(responseBody);\r",
+											"\r",
+											"pmutils(pm).testCallbacks.testAccessToken(responseData.access_token);\r",
+											"pmutils(pm).testCallbacks.testIdToken(responseData.id_token);\r",
 											"\r",
 											"pm.collectionVariables.set(\"access_token\", responseData.access_token);\r",
 											"pm.collectionVariables.set(\"id_token\", responseData.id_token);\r",
@@ -1299,7 +1350,11 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"var responseData = pm.response.json();",
+									"pmutils(pm).testCallbacks.testResponseStatus200();",
+									"",
+									"const responseData = pm.response.json();",
+									"",
+									"pmutils(pm).testCallbacks.testAccessToken(responseData.access_token);",
 									"",
 									"pm.collectionVariables.set(\"access_token\", responseData.access_token);",
 									""
@@ -1563,9 +1618,14 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"var responseData = JSON.parse(responseBody);\r",
+							"pmutils(pm).testCallbacks.testResponseStatus200();\r",
+							"\r",
+							"const responseData = JSON.parse(responseBody);\r",
+							"\r",
+							"pmutils(pm).testCallbacks.testAccessToken(responseData.access_token);\r",
 							"\r",
 							"pm.collectionVariables.set(\"access_token\", responseData.access_token);\r",
+							"pm.collectionVariables.set(\"refresh_token\", responseData.refresh_token);\r",
 							""
 						],
 						"type": "text/javascript"
@@ -1943,6 +2003,76 @@
 					"                refresh_token: \"refresh_token\",",
 					"            }),",
 					"",
+					"            testCallbacks: Object.freeze({",
+					"                testAuthorizationCode: (authorization_code) => {",
+					"                    pm.test(\"Authorization code is valid\", () => {",
+					"                        pm.expect(authorization_code).to.not.be.null;",
+					"                        pm.expect(authorization_code).to.not.be.undefined;",
+					"                    });",
+					"                },",
+					"",
+					"                testAccessToken: (access_token) => {",
+					"                    pm.test(\"Acess token is valid\", () => {",
+					"                        pm.expect(access_token).to.not.be.null;",
+					"                        pm.expect(access_token).to.not.be.undefined;",
+					"",
+					"                        const atob = require('atob');",
+					"",
+					"                        const [jwtHeader, jwtPayload, jwtSignature] = access_token.split('.');",
+					"                        const [header, payload] = [jwtHeader, jwtPayload].map(atob).map(JSON.parse);",
+					"",
+					"                        pm.test(\"Access token has valid \\\"iss\\\" claim\", () => {",
+					"                            pm.expect(payload).to.have.property(\"iss\");",
+					"",
+					"                            const URL = require('url');",
+					"",
+					"                            const iss = payload.iss;",
+					"                            const issUrl = URL.parse(iss);",
+					"",
+					"                            const cfsUrl = URL.parse(pm.collectionVariables.get('CFS Master URL'));",
+					"",
+					"                            pm.expect(issUrl.host).to.be.equal(cfsUrl.host);",
+					"                        });",
+					"",
+					"                        pm.test(\"Access token has valid \\\"scope\\\" claim\", () => {",
+					"                            pm.expect(payload).to.have.property(\"scope\", pm.variables.get('scope'), null);",
+					"                        });",
+					"                    });",
+					"                },",
+					"",
+					"                testIdToken: (id_token) => {",
+					"                    pm.test(\"Id token is valid\", () => {",
+					"                        pm.expect(id_token).to.not.be.null;",
+					"                        pm.expect(id_token).to.not.be.undefined;",
+					"",
+					"                        const atob = require('atob');",
+					"",
+					"                        const [jwtHeader, jwtPayload, jwtSignature] = id_token.split('.');",
+					"                        const [header, payload] = [jwtHeader, jwtPayload].map(atob).map(JSON.parse);",
+					"",
+					"                        pm.test(\"Id token has valid \\\"iss\\\" claim\", () => {",
+					"                            pm.expect(payload).to.have.property(\"iss\");",
+					"                        });",
+					"",
+					"                        pm.test(\"Id token has \\\"nonce\\\" claim\", () => {",
+					"                            pm.expect(payload).to.have.property(\"nonce\", pm.variables.get(\"nonce\"), null);",
+					"                        });",
+					"                    });",
+					"                },",
+					"",
+					"                testResponseStatus200: () => {",
+					"                    pm.test(\"Response has status code 200\", () => {",
+					"                        pm.expect(pm.response.code).to.be.equal(200);",
+					"                    });",
+					"                },",
+					"",
+					"                testResponseStatus200or302: () => {",
+					"                    pm.test(\"Response has status code 200 or 302\", () => {",
+					"                        pm.expect(pm.response.code).to.be.oneOf([200, 302]);",
+					"                    });",
+					"                },",
+					"            }),",
+					"",
 					"            /**",
 					"             * @param {require('postman-collection').Response} response",
 					"             */",
@@ -2062,18 +2192,7 @@
 					"             */",
 					"            postConfirmAuthorizeRequestIfNecessaryThenSetTokens(urlQueryExtractionMode = 'query', callback = null) {",
 					"                if (!callback) {",
-					"                    callback =",
-					"                        /**",
-					"                         * @param {object} variablesMap",
-					"                         */",
-					"                        (variablesMap) => {",
-					"                            Object.entries(variablesMap)",
-					"                                .forEach(([collectionVariableName, value]) => pm.collectionVariables.set(collectionVariableName, value));",
-					"",
-					"                            this.setVisualizer({",
-					"                                ...variablesMap",
-					"                            });",
-					"                        };",
+					"                    callback = () => { };",
 					"                }",
 					"",
 					"                const locationHeaderValue = pm.response.headers.get('Location');",
@@ -2107,15 +2226,27 @@
 					"                            }",
 					"",
 					"                            const variablesMap = this.extractTokenVariablesFromResponse(response, urlQueryExtractionMode);",
+					"                            this.setCollectionVariables(variablesMap);",
+					"                            this.setVisualizer(variablesMap);",
 					"",
 					"                            callback(variablesMap);",
 					"                        }",
 					"                    );",
 					"                } else {",
 					"                    const variablesMap = this.extractTokenVariablesFromResponse(pm.response, urlQueryExtractionMode);",
+					"                    this.setCollectionVariables(variablesMap);",
+					"                    this.setVisualizer(variablesMap);",
 					"",
 					"                    callback(variablesMap);",
 					"                }",
+					"            },",
+					"",
+					"            /**",
+					"             * @param {object} variablesMap",
+					"             */",
+					"            setCollectionVariables(variablesMap) {",
+					"                Object.entries(variablesMap)",
+					"                    .forEach(([collectionVariableName, value]) => pm.collectionVariables.set(collectionVariableName, value));",
 					"            },",
 					"",
 					"            /**",
