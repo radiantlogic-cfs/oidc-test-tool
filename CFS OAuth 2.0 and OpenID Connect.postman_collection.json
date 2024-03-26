@@ -24,13 +24,16 @@
 											"listen": "test",
 											"script": {
 												"exec": [
-													"// const cheerio = require('cheerio');\r",
-													"const $ = cheerio.load(pm.response.text());\r",
+													"const responseData = pm.response.json();\r",
 													"\r",
-													"const title = $('title').text();\r",
+													"pmutils(pm).testCallbacks.testResponseStatus(400);\r",
 													"\r",
-													"pm.test('Title should contain \"An Error Happened\"', () => {\r",
-													"    pm.expect(title).to.contain('An Error Happened');\r",
+													"pm.test('Response body has error \"invalid_client\"', () => {\r",
+													"    pm.expect(responseData).to.have.property('error', 'invalid_client');\r",
+													"});\r",
+													"\r",
+													"pm.test('Response body has error_description', () => {\r",
+													"    pm.expect(responseData).to.have.property('error_description');\r",
 													"});\r",
 													""
 												],
@@ -195,13 +198,16 @@
 											"listen": "test",
 											"script": {
 												"exec": [
-													"// const cheerio = require('cheerio');\r",
-													"const $ = cheerio.load(pm.response.text());\r",
+													"const responseData = pm.response.json();\r",
 													"\r",
-													"const title = $('title').text();\r",
+													"pmutils(pm).testCallbacks.testResponseStatus(400);\r",
 													"\r",
-													"pm.test('Title should contain \"An Error Happened\"', () => {\r",
-													"    pm.expect(title).to.contain('An Error Happened');\r",
+													"pm.test('Response body has error \"invalid_request\"', () => {\r",
+													"    pm.expect(responseData).to.have.property('error', 'invalid_request');\r",
+													"});\r",
+													"\r",
+													"pm.test('Response body has error_description', () => {\r",
+													"    pm.expect(responseData).to.have.property('error_description');\r",
 													"});\r",
 													""
 												],
@@ -357,7 +363,7 @@
 							]
 						},
 						{
-							"name": "# Invalid scope",
+							"name": "Invalid scope(s) only",
 							"item": [
 								{
 									"name": "Authorize",
@@ -366,10 +372,16 @@
 											"listen": "test",
 											"script": {
 												"exec": [
-													"pmutils(pm).testCallbacks.testResponseStatus200or302();\r",
+													"const responseData = pm.response.json();\r",
 													"\r",
-													"pmutils(pm).postConfirmAuthorizeRequestIfNecessaryThenSetTokens('query', ({ authorization_code }) => {\r",
-													"    pmutils(pm).testCallbacks.testAuthorizationCode(authorization_code);\r",
+													"pmutils(pm).testCallbacks.testResponseStatus(400);\r",
+													"\r",
+													"pm.test('Response body has error \"invalid_scope\"', () => {\r",
+													"    pm.expect(responseData).to.have.property('error', 'invalid_scope');\r",
+													"});\r",
+													"\r",
+													"pm.test('Response body has error_description', () => {\r",
+													"    pm.expect(responseData).to.have.property('error_description');\r",
 													"});\r",
 													""
 												],
@@ -519,6 +531,357 @@
 											],
 											"cookie": [],
 											"body": "<html>\n    <head>\n        <title>Object moved</title>\n    </head>\n    <body>\n        <h2>Object moved to \n            <a href=\"https://oauth.pstmn.io/v1/callback?code=spDV%21IAAAAFDGtDU3pOruZ-SA_mLEL8hwAnZaU5_lgqetCIfcS5rYIQEAAAETimIiwLo9bN8xSuyPVHhQUaDrftNGqKxqAOa5y0POE7vteyI2c7s_kW4x00EhXNGVdRFQFEbyAt6wU4F_QGyb9AORIC8sajdkAr24rU7IEn0dlI3j1jLrxo9UykAor6i6o3OMiKMEwaCj_EVFndd4wj3iBVsOh7JrVXXkvA5y_ZT0Gb7V8xVb0EsnzNmerTk4P-2R_T5pYMzdEjLH3KSJhpPIK2B781Y6rqly4kwSEPAYIITM78Z_l36tkgK0Q3Fid7pZxFFz2P-9YtcWTZ24Vf5ZxnNBJ6tzIcJb6JVsSudQyxD9nZfw6nVGDkJ6yIJjSz0pBMFYEIduemy8gqhckbIW2O9vIL0P-Zimzim4FXWi6HXpY3j8GMvEywrRT8s&session_state=KUrFlfKOVV1Ua4f8JnANCmjzJ6C_TyOngDxSoY5Kf90.82957585165879FE1E1BEA4569E98422&state=abc\">here</a>.\n        </h2>\n    </body>\n</html>"
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "Invalid scope(s) + valid scope(s)",
+							"item": [
+								{
+									"name": "Authorize",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pmutils(pm).testCallbacks.testResponseStatus200or302();\r",
+													"\r",
+													"pmutils(pm).postConfirmAuthorizeRequestIfNecessaryThenSetTokens('query', ({ authorization_code }) => {\r",
+													"    pmutils(pm).testCallbacks.testAuthorizationCode(authorization_code);\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"followRedirects": false
+									},
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/authorize?response_type=code&client_id={{client_id}}&redirect_uri=https://oauth.pstmn.io/v1/callback&scope=openid email invalidScope&state={{state}}&nonce={{nonce}}",
+											"host": [
+												"{{CFS Master URL}}"
+											],
+											"path": [
+												"oauth",
+												"{{Tenant Name}}",
+												"authorize"
+											],
+											"query": [
+												{
+													"key": "response_type",
+													"value": "code",
+													"description": "Response type is \"code\" for the authorization code grant type\nhttps://datatracker.ietf.org/doc/html/rfc6749#section-4.1.1"
+												},
+												{
+													"key": "client_id",
+													"value": "{{client_id}}"
+												},
+												{
+													"key": "redirect_uri",
+													"value": "https://oauth.pstmn.io/v1/callback"
+												},
+												{
+													"key": "scope",
+													"value": "openid email invalidScope"
+												},
+												{
+													"key": "state",
+													"value": "{{state}}"
+												},
+												{
+													"key": "nonce",
+													"value": "{{nonce}}"
+												}
+											]
+										},
+										"description": "_If necessary, the consent screen will be automatically accepted. In a real use case, the user must click on the \"Accept\" button._\n\n- See the response `authorization_code` in the **Response -> Body -> Visualize** tab\n    - The `authorization_code` will be extracted from the callback url and set in the collection variables\n- See the test results in the **Response -> Test Results** tab\n    - The response status code is expected to be 302\n    - The `authorization_code` is expected to not be empty"
+									},
+									"response": [
+										{
+											"name": "Authorize",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/authorize?response_type=code&client_id={{client_id}}&redirect_uri=https://oauth.pstmn.io/v1/callback&scope={{scope}}&state={{state}}&nonce={{nonce}}",
+													"host": [
+														"{{CFS Master URL}}"
+													],
+													"path": [
+														"oauth",
+														"{{Tenant Name}}",
+														"authorize"
+													],
+													"query": [
+														{
+															"key": "response_type",
+															"value": "code"
+														},
+														{
+															"key": "client_id",
+															"value": "{{client_id}}"
+														},
+														{
+															"key": "redirect_uri",
+															"value": "https://oauth.pstmn.io/v1/callback"
+														},
+														{
+															"key": "scope",
+															"value": "{{scope}}"
+														},
+														{
+															"key": "state",
+															"value": "{{state}}"
+														},
+														{
+															"key": "nonce",
+															"value": "{{nonce}}"
+														}
+													]
+												}
+											},
+											"status": "Found",
+											"code": 302,
+											"_postman_previewlanguage": "html",
+											"header": [
+												{
+													"key": "Cache-Control",
+													"value": "no-cache, no-store, max-age=0, must-revalidate"
+												},
+												{
+													"key": "Pragma",
+													"value": "no-cache"
+												},
+												{
+													"key": "Content-Length",
+													"value": "700"
+												},
+												{
+													"key": "Content-Type",
+													"value": "text/html; charset=utf-8"
+												},
+												{
+													"key": "Location",
+													"value": "https://oauth.pstmn.io/v1/callback?code=spDV%21IAAAAFDGtDU3pOruZ-SA_mLEL8hwAnZaU5_lgqetCIfcS5rYIQEAAAETimIiwLo9bN8xSuyPVHhQUaDrftNGqKxqAOa5y0POE7vteyI2c7s_kW4x00EhXNGVdRFQFEbyAt6wU4F_QGyb9AORIC8sajdkAr24rU7IEn0dlI3j1jLrxo9UykAor6i6o3OMiKMEwaCj_EVFndd4wj3iBVsOh7JrVXXkvA5y_ZT0Gb7V8xVb0EsnzNmerTk4P-2R_T5pYMzdEjLH3KSJhpPIK2B781Y6rqly4kwSEPAYIITM78Z_l36tkgK0Q3Fid7pZxFFz2P-9YtcWTZ24Vf5ZxnNBJ6tzIcJb6JVsSudQyxD9nZfw6nVGDkJ6yIJjSz0pBMFYEIduemy8gqhckbIW2O9vIL0P-Zimzim4FXWi6HXpY3j8GMvEywrRT8s&session_state=KUrFlfKOVV1Ua4f8JnANCmjzJ6C_TyOngDxSoY5Kf90.82957585165879FE1E1BEA4569E98422&state=abc"
+												},
+												{
+													"key": "Server",
+													"value": "Microsoft-IIS/10.0"
+												},
+												{
+													"key": "Access-Control-Allow-Origin",
+													"value": "*"
+												},
+												{
+													"key": "Access-Control-Allow-Headers",
+													"value": "authorization"
+												},
+												{
+													"key": "X-SourceFiles",
+													"value": "=?UTF-8?B?WDpcc291cmNlXGVuc2VtYmxlXHJhZGlhbnRsb2dpY1xjZnNcc3JjXENGU1xSTEkuQ0ZTLldlYlxvYXV0aFxzdG9ybXdpbmRcYXV0aG9yaXpl?="
+												},
+												{
+													"key": "X-Powered-By",
+													"value": "ASP.NET"
+												},
+												{
+													"key": "Date",
+													"value": "Thu, 15 Feb 2024 13:06:21 GMT"
+												}
+											],
+											"cookie": [],
+											"body": "<html>\n    <head>\n        <title>Object moved</title>\n    </head>\n    <body>\n        <h2>Object moved to \n            <a href=\"https://oauth.pstmn.io/v1/callback?code=spDV%21IAAAAFDGtDU3pOruZ-SA_mLEL8hwAnZaU5_lgqetCIfcS5rYIQEAAAETimIiwLo9bN8xSuyPVHhQUaDrftNGqKxqAOa5y0POE7vteyI2c7s_kW4x00EhXNGVdRFQFEbyAt6wU4F_QGyb9AORIC8sajdkAr24rU7IEn0dlI3j1jLrxo9UykAor6i6o3OMiKMEwaCj_EVFndd4wj3iBVsOh7JrVXXkvA5y_ZT0Gb7V8xVb0EsnzNmerTk4P-2R_T5pYMzdEjLH3KSJhpPIK2B781Y6rqly4kwSEPAYIITM78Z_l36tkgK0Q3Fid7pZxFFz2P-9YtcWTZ24Vf5ZxnNBJ6tzIcJb6JVsSudQyxD9nZfw6nVGDkJ6yIJjSz0pBMFYEIduemy8gqhckbIW2O9vIL0P-Zimzim4FXWi6HXpY3j8GMvEywrRT8s&session_state=KUrFlfKOVV1Ua4f8JnANCmjzJ6C_TyOngDxSoY5Kf90.82957585165879FE1E1BEA4569E98422&state=abc\">here</a>.\n        </h2>\n    </body>\n</html>"
+										}
+									]
+								},
+								{
+									"name": "Request for tokens",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pmutils(pm).testCallbacks.testResponseStatus200();\r",
+													"\r",
+													"const responseData = pm.response.json();\r",
+													"\r",
+													"pmutils(pm).testCallbacks.testAccessToken(responseData.access_token, {\r",
+													"    expectedScopes: ['openid', 'email']\r",
+													"});\r",
+													"pmutils(pm).testCallbacks.testIdToken(responseData.id_token);\r",
+													"\r",
+													"pm.collectionVariables.set(\"access_token\", responseData.access_token);\r",
+													"pm.collectionVariables.set(\"id_token\", responseData.id_token);\r",
+													"pm.collectionVariables.set(\"refresh_token\", responseData.refresh_token);\r",
+													"\r",
+													"pmutils(pm).testCallbacks.testAccessTokenGrantsAccessToResources(responseData.access_token);\r",
+													"pmutils(pm).testCallbacks.testRefreshTokenRefreshesTokens(responseData.refresh_token);\r",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": [
+												{
+													"key": "redirect_uri",
+													"value": "https://oauth.pstmn.io/v1/callback",
+													"type": "text"
+												},
+												{
+													"key": "code",
+													"value": "{{authorization_code}}",
+													"type": "text"
+												},
+												{
+													"key": "grant_type",
+													"value": "authorization_code",
+													"type": "text"
+												},
+												{
+													"key": "client_id",
+													"value": "{{client_id}}",
+													"type": "text"
+												},
+												{
+													"key": "client_secret",
+													"value": "{{client_secret}}",
+													"type": "text"
+												},
+												{
+													"key": "state",
+													"value": "{{state}}",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token",
+											"host": [
+												"{{CFS Master URL}}"
+											],
+											"path": [
+												"oauth",
+												"{{Tenant Name}}",
+												"token"
+											]
+										},
+										"description": "- See the response `access_token`, `id_token`, `refresh_token`, etc. in the **Response -> Body -> Pretty** tab\n    - The `acess_token`, `id_token`, `refresh_token` will be extracted from the response and set in the collection variables\n- See the test results in the **Response -> Test Results** tab\n    - The response status code is expected to be 200\n    - Access token has valid \"iss\" claim\n        - if the \"iss\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Access token has valid \"aud\" claim\n        - if the \"aud\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Access token has valid \"iat\" claim\n        - if the \"iat\" claim value is before `Date.now()`\n    - Access token has valid \"exp\" claim\n        - if the \"exp\" claim value is after `Date.now()`\n    - Access token has valid \"nbf\" claim\n        - if the \"nbf\" claim value is before the \"exp\" claim value\n    - Access token has valid \"scope\" claim\n        - if the \"scope\" claim value is equal to {{scope}}\n    - Access token is valid\n        - if all the above tests are passing\n    - Id token has valid \"iss\" claim\n        - if the \"iss\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Id token has valid \"aud\" claim\n        - if the \"aud\" claim value is equal to {{client_id}}\n    - Id token has valid \"iat\" claim\n        - if the \"iat\" claim value is before `Date.now()`\n    - Id token has valid \"exp\" claim\n        - if the \"exp\" claim value is after `Date.now()`\n    - Id token has valid \"nbf\" claim\n        - if the \"nbf\" claim value is before the \"exp\" claim value\n    - Id token has valid \"nonce\" claim\n        - if the \"nonce\" claim value is equal to {{nonce}}\n    - Id token is valid\n        - if all the above tests are passing\n    - Access token grants access to resources\n        - automatically send the \"UserInfo endpoint\" request to make sure that the `acess_token` is accepted by the server\n    - Refresh token grants new tokens\n        - automatically send the \"Refresh token\" request to make sure that the `refresh_token` can be used to retrieve new tokens"
+									},
+									"response": [
+										{
+											"name": "Request for tokens",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "urlencoded",
+													"urlencoded": [
+														{
+															"key": "redirect_uri",
+															"value": "https://oauth.pstmn.io/v1/callback",
+															"type": "text"
+														},
+														{
+															"key": "code",
+															"value": "{{authorization_code}}",
+															"type": "text"
+														},
+														{
+															"key": "grant_type",
+															"value": "authorization_code",
+															"type": "text"
+														},
+														{
+															"key": "client_id",
+															"value": "{{client_id}}",
+															"type": "text"
+														},
+														{
+															"key": "client_secret",
+															"value": "{{client_secret}}",
+															"type": "text"
+														},
+														{
+															"key": "state",
+															"value": "{{state}}",
+															"type": "text"
+														}
+													]
+												},
+												"url": {
+													"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token",
+													"host": [
+														"{{CFS Master URL}}"
+													],
+													"path": [
+														"oauth",
+														"{{Tenant Name}}",
+														"token"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Cache-Control",
+													"value": "no-cache, no-store, max-age=0, must-revalidate"
+												},
+												{
+													"key": "Pragma",
+													"value": "no-cache"
+												},
+												{
+													"key": "Content-Length",
+													"value": "2165"
+												},
+												{
+													"key": "Content-Type",
+													"value": "application/json; charset=utf-8"
+												},
+												{
+													"key": "Server",
+													"value": "Microsoft-IIS/10.0"
+												},
+												{
+													"key": "Access-Control-Allow-Origin",
+													"value": "*"
+												},
+												{
+													"key": "Access-Control-Allow-Headers",
+													"value": "authorization"
+												},
+												{
+													"key": "X-SourceFiles",
+													"value": "=?UTF-8?B?WDpcc291cmNlXGVuc2VtYmxlXHJhZGlhbnRsb2dpY1xjZnNcc3JjXENGU1xSTEkuQ0ZTLldlYlxvYXV0aFxzdG9ybXdpbmRcdG9rZW4=?="
+												},
+												{
+													"key": "X-Powered-By",
+													"value": "ASP.NET"
+												},
+												{
+													"key": "Date",
+													"value": "Thu, 15 Feb 2024 13:06:32 GMT"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"access_token\": \"eyJhbGciOiJSUzI1NiIsImtpZCI6ImZkOGU4NmYwLWQ0YjMtNDBkZC1iYWYyLTFjNjE2MDNkYzRlNiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ2YXJpYW4ud3J5bm4iLCJzY29wZSI6Im9wZW5pZCBlbWFpbCBwcm9maWxlIiwidG9rZW5fdHlwZSI6ImJlYXJlciIsImNsaWVudF9pZCI6InN0TEp3VzliM0w1QlBhaUZGVng5Y0IiLCJuYmYiOjE3MDgwMDIzOTEsImV4cCI6MTcwODAwMjUxMSwiaWF0IjoxNzA4MDAyMzgxLCJpc3MiOiJodHRwczovL2xvY2FsaG9zdDo0NDMwMy9vYXV0aC9zdG9ybXdpbmQiLCJhdWQiOiJodHRwczovL2xvY2FsaG9zdDo0NDMwMy9vYXV0aC9zdG9ybXdpbmQifQ.bWb9XhbrF9G6svUv0ZPewc3VvM66CHDQKnP4CJi1PxvM8pOHgzT6CBkm4UiE0F--tAHt5MRCzOeFl-taRIw07TLh_mVwVkvofG7dziI8dkZ8OzIH9fBnU3juSZjBNDFx5mVb5iJFpsaCSE6QccIX7mKvLezXnYXDDrE2JYJO63pCjvLh9k870qmWExTSi3XQBObtnF0CJl76N2U3iDgQ5CEAd9Ulur9E1xzpTHPGZqaBI6DHWA5E0OtIu26V0RGMAZkNcHw1zkU5f958HDRaAjia6VtZvXL8fUbJw16gKWNN_KHgzs1J3HjR0L_Id7TQmRHGA6BAq5EIqukvECi3Mg\",\n    \"token_type\": \"bearer\",\n    \"expires_in\": 120,\n    \"refresh_token\": \"92ld!IAAAAG7kYOxT2gZTHajAjnW_mMJjn88t5FhvSGhg-QALzJLt0QAAAAHl93_YZX90Lk2DQWQUylOqZRjL8UeTvnMErtqvFd9vu9pinVOJg7UYe94vNH5R9GNt0LJiY5rHA2FCzGWH1qOTvQvZGWs2dUQNGwNlj3nMA9MAx3_dZuwytqe3zNaBUytOoEqoU1P4eOYCM8BbKTJdtIVBbK3mbA99IULF8jaVJR26nG7MFnjQgoZH5P5HlVNj1s9g628IdkSVuZuNH-41IznYSoKtOgWn5cuZ497-i_EzBu3lmR3Edfd0OF33eMFQuvKBfGNKCu-TesXeVW5w\",\n    \"id_token\": \"eyJhbGciOiJSUzI1NiIsImtpZCI6ImZkOGU4NmYwLWQ0YjMtNDBkZC1iYWYyLTFjNjE2MDNkYzRlNiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ2YXJpYW4ud3J5bm4iLCJub25jZSI6Inh5eiIsIm5hbWUiOiJWYXJpYW4gV3J5bm4iLCJmYW1pbHlfbmFtZSI6IldyeW5uIiwiZ2l2ZW5fbmFtZSI6IlZhcmlhbiIsImVtYWlsIjoidmFyaWFuLndyeW5uQHN0b3Jtd2luZC56ZXIiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiY19oYXNoIjoidVZoQ1gycnhaMUNuWkxmTngxdnNTQSIsImF0X2hhc2giOiJNT2xRV1N1QnpFR1VoUW80NFZ6WU93IiwibmJmIjoxNzA4MDAyMzkyLCJleHAiOjE3MDgwMDM1OTIsImlhdCI6MTcwODAwMjM5MiwiaXNzIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NDQzMDMvb2F1dGgvc3Rvcm13aW5kIiwiYXVkIjoic3RMSndXOWIzTDVCUGFpRkZWeDljQiJ9.SHGgxUGURhyHTaavYejG7TtWmhGNtn11DlbVQVW0ayoBsAB2gFLQ3JVuuKhz-BR-zXh96mcA_QGBlXLBCnZ5TSmz5CsLA4GZ2ikxSPz5OygVffVcazp3LB0qJFNqsZvarf7OJQatKzH1OHxcOmPiBlqieQJtLm_VjJzJ3UnIPoezi8Yj20v9VMPvhdjb9gN3JQov-rFjBIBH-VY7fgg2Mwwi42OIXVQnjFS6_u5e3Q77o-SlJHuIFrRQUpnlZa9a-6cMTosjtCDljd-Lb-X1c5Pi6bOV-Cj_NAl3KslmIuo9IAKe438hvlaAZX2fzjUJIz035tWX7kbbLigbHk3KWw\",\n    \"scope\": \"openid email profile\"\n}"
 										}
 									]
 								}
@@ -697,12 +1060,16 @@
 											"listen": "test",
 											"script": {
 												"exec": [
-													"pmutils(pm).testCallbacks.testResponseStatus(401);\r",
+													"pmutils(pm).testCallbacks.testResponseStatus(400);\r",
 													"\r",
 													"const responseData = pm.response.json();\r",
 													"\r",
 													"pm.test('Response body has error \"invalid_client\"', () => {\r",
 													"    pm.expect(responseData).to.have.property('error', 'invalid_client');\r",
+													"});\r",
+													"\r",
+													"pm.test('Response body has error_description', () => {\r",
+													"    pm.expect(responseData).to.have.property('error_description');\r",
 													"});\r",
 													""
 												],
@@ -2863,7 +3230,7 @@
 					"name": "Negative Tests",
 					"item": [
 						{
-							"name": "# Invalid code challenge",
+							"name": "Invalid code challenge method",
 							"item": [
 								{
 									"name": "Authorize",
@@ -2872,10 +3239,16 @@
 											"listen": "test",
 											"script": {
 												"exec": [
-													"pmutils(pm).testCallbacks.testResponseStatus200or302();\r",
+													"const responseData = pm.response.json();\r",
 													"\r",
-													"pmutils(pm).postConfirmAuthorizeRequestIfNecessaryThenSetTokens('query', ({ authorization_code }) => {\r",
-													"    pmutils(pm).testCallbacks.testAuthorizationCode(authorization_code);\r",
+													"pmutils(pm).testCallbacks.testResponseStatus(400);\r",
+													"\r",
+													"pm.test('Response body has error \"invalid_request\"', () => {\r",
+													"    pm.expect(responseData).to.have.property('error', 'invalid_request');\r",
+													"});\r",
+													"\r",
+													"pm.test('Response body has error_description', () => {\r",
+													"    pm.expect(responseData).to.have.property('error_description');\r",
 													"});\r",
 													""
 												],
@@ -2891,7 +3264,7 @@
 										"method": "GET",
 										"header": [],
 										"url": {
-											"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/authorize?scope={{scope}}&response_type=code&redirect_uri=https://oauth.pstmn.io/v1/callback&client_id={{client_id}}&code_challenge=invalidCodeChallenge!@rrsv_GL5iipUGp6yR5w5ra77fdggOxJ6htH9E217PeI&code_challenge_method=S256&state={{state}}&nonce={{nonce}}",
+											"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/authorize?scope={{scope}}&response_type=code&redirect_uri=https://oauth.pstmn.io/v1/callback&client_id={{client_id}}&code_challenge=rrsv_GL5iipUGp6yR5w5ra77fdggOxJ6htH9E217PeI&code_challenge_method=invalidCodeChallengeMethod&state={{state}}&nonce={{nonce}}",
 											"host": [
 												"{{CFS Master URL}}"
 											],
@@ -2919,11 +3292,11 @@
 												},
 												{
 													"key": "code_challenge",
-													"value": "invalidCodeChallenge!@rrsv_GL5iipUGp6yR5w5ra77fdggOxJ6htH9E217PeI"
+													"value": "rrsv_GL5iipUGp6yR5w5ra77fdggOxJ6htH9E217PeI"
 												},
 												{
 													"key": "code_challenge_method",
-													"value": "S256"
+													"value": "invalidCodeChallengeMethod"
 												},
 												{
 													"key": "state",
@@ -3237,8 +3610,8 @@
 													"\r",
 													"const responseData = pm.response.json();\r",
 													"\r",
-													"pm.test('Response body has error \"invalid_grant\"', () => {\r",
-													"    pm.expect(responseData).to.have.property('error', 'invalid_grant');\r",
+													"pm.test('Response body has error \"invalid_request\"', () => {\r",
+													"    pm.expect(responseData).to.have.property('error', 'invalid_request');\r",
 													"});\r",
 													""
 												],
@@ -5686,6 +6059,198 @@
 			"description": "Run the \"Request for access token\" request"
 		},
 		{
+			"name": "Resource owner password credentials",
+			"item": [
+				{
+					"name": "Request for access token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pmutils(pm).testCallbacks.testResponseStatus200();",
+									"",
+									"const responseData = pm.response.json();",
+									"",
+									"pmutils(pm).testCallbacks.testAccessToken(responseData.access_token);",
+									"",
+									"pm.collectionVariables.set(\"access_token\", responseData.access_token);",
+									"",
+									"pmutils(pm).testCallbacks.testAccessTokenGrantsAccessToResources(responseData.access_token);",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "{{client_id}}",
+									"type": "text"
+								},
+								{
+									"key": "client_secret",
+									"value": "{{client_secret}}",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "text"
+								},
+								{
+									"key": "scope",
+									"value": "{{scope}}",
+									"type": "text"
+								},
+								{
+									"key": "state",
+									"value": "{{state}}",
+									"type": "text"
+								},
+								{
+									"key": "nonce",
+									"value": "{{nonce}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token",
+							"host": [
+								"{{CFS Master URL}}"
+							],
+							"path": [
+								"oauth",
+								"{{Tenant Name}}",
+								"token"
+							]
+						},
+						"description": "- See the response `access_token`, etc. in the **Response -> Body -> Pretty** tab\n    \n    - The `acess_token`, will be extracted from the response and set in the collection variables\n        \n- See the test results in the **Response -> Test Results** tab\n    \n    - The response status code is expected to be 200\n        \n    - Access token has valid \"iss\" claim\n        \n        - if the \"iss\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n            \n    - Access token has valid \"aud\" claim\n        \n        - if the \"aud\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n            \n    - Access token has valid \"iat\" claim\n        \n        - if the \"iat\" claim value is before `Date.now()`\n            \n    - Access token has valid \"exp\" claim\n        \n        - if the \"exp\" claim value is after `Date.now()`\n            \n    - Access token has valid \"nbf\" claim\n        \n        - if the \"nbf\" claim value is before the \"exp\" claim value\n            \n    - Access token has valid \"scope\" claim\n        \n        - if the \"scope\" claim value is equal to {{scope}}\n            \n    - Access token is valid\n        \n        - if all the above tests are passing\n            \n    - Access token grants access to resources\n        \n        - automatically send the \"UserInfo endpoint\" request to make sure that the `acess_token` is accepted by the server"
+					},
+					"response": [
+						{
+							"name": "Request for access token",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "grant_type",
+											"value": "client_credentials",
+											"type": "text"
+										},
+										{
+											"key": "client_id",
+											"value": "{{client_id}}",
+											"type": "text"
+										},
+										{
+											"key": "client_secret",
+											"value": "{{client_secret}}",
+											"type": "text"
+										},
+										{
+											"key": "scope",
+											"value": "{{scope}}",
+											"type": "text"
+										},
+										{
+											"key": "state",
+											"value": "{{state}}",
+											"type": "text"
+										},
+										{
+											"key": "nonce",
+											"value": "{{nonce}}",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token",
+									"host": [
+										"{{CFS Master URL}}"
+									],
+									"path": [
+										"oauth",
+										"{{Tenant Name}}",
+										"token"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Content-Length",
+									"value": "888"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Server",
+									"value": "Microsoft-IIS/10.0"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "authorization"
+								},
+								{
+									"key": "X-SourceFiles",
+									"value": "=?UTF-8?B?WDpcc291cmNlXHJhZGlhbnRsb2dpY1xjZnNcc3JjXENGU1xSTEkuQ0ZTLldlYlxvYXV0aFxzdG9ybXdpbmRcdG9rZW4=?="
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "ASP.NET"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 13 Mar 2024 14:02:23 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"access_token\": \"eyJhbGciOiJSUzI1NiIsImtpZCI6IjI0ZjAyYWNjLWM2NjItNDliYS04NmMxLWE4MmUxMjY5NGU3ZSIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxczJvOTg1bElmMkZhMkRpNVpnMG1KIiwic2NvcGUiOiJvcGVuaWQgZW1haWwgcHJvZmlsZSIsInRva2VuX3R5cGUiOiJiZWFyZXIiLCJjbGllbnRfaWQiOiIxczJvOTg1bElmMkZhMkRpNVpnMG1KIiwibmJmIjoxNzEwMzM4NTQzLCJleHAiOjE3MTAzMzg2NjMsImlhdCI6MTcxMDMzODU0MywiaXNzIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NDQzMDMvb2F1dGgvc3Rvcm13aW5kIiwiYXVkIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NDQzMDMvb2F1dGgvc3Rvcm13aW5kIn0.EsI-e_GP1ntXoOzk9nsIJUEjY3GtHJ8niZSUdCPQBYQp7JyncPysE27YdOIrf8y_9JWHLnSVhCToA6BnsxmoZJV1NLiwQ-HZHhi9jMC022RsPGm0pao41R6dYcKZA26xr2tnYDmutYXKMAgq5xWiapqYBY_2YkgwLp3ZNh618wQt2YOgdkXOlKSYG-tfu-kfHhEfJ5BD9yrT85jc0ZZfZFsjKJGlSZubs5KYiDifF5RSumDQPgfFYUJ6AsVrO-sYGOqE02VN6Qfwzmkq-PTC0zPnwqgUtRfTh41mbZ0H0kCg0-jq0WhU_jMREaVqJ9SJmc2RMI-z-ZdidLBXk7t1dA\",\n    \"token_type\": \"bearer\",\n    \"expires_in\": 120,\n    \"scope\": \"openid email profile\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
 			"name": "Get OIDC metadata",
 			"request": {
 				"method": "GET",
@@ -6111,7 +6676,7 @@
 			]
 		},
 		{
-			"name": "EndSession #pending_bug_CFS-35",
+			"name": "EndSession",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -6171,7 +6736,7 @@
 					"                    });",
 					"                },",
 					"",
-					"                testAccessToken: (access_token) => {",
+					"                testAccessToken: (access_token, { expectedScopes } = {}) => {",
 					"                    pm.test(\"Acess token is valid\", () => {",
 					"                        pm.expect(access_token).to.not.be.null;",
 					"                        pm.expect(access_token).to.not.be.undefined;",
@@ -6190,9 +6755,9 @@
 					"                            const issUrl = URL.parse(iss);",
 					"",
 					"                            const cfsUrl = URL.parse(",
-					"                                pm.collectionVariables.get('CFS Master URL') +",
+					"                                pm.variables.get('CFS Master URL') +",
 					"                                \"/oauth/\" +",
-					"                                pm.collectionVariables.get('Tenant Name')",
+					"                                pm.variables.get('Tenant Name')",
 					"                            );",
 					"",
 					"                            pm.expect(issUrl.toString()).to.be.equal(cfsUrl.toString());",
@@ -6201,18 +6766,9 @@
 					"                        pm.test(\"Access token has valid \\\"aud\\\" claim\", () => {",
 					"                            pm.expect(payload).to.have.property(\"aud\");",
 					"",
-					"                            const URL = require('url');",
-					"",
 					"                            const aud = payload.aud;",
-					"                            const audUrl = URL.parse(aud);",
 					"",
-					"                            const cfsUrl = URL.parse(",
-					"                                pm.collectionVariables.get('CFS Master URL') +",
-					"                                \"/oauth/\" +",
-					"                                pm.collectionVariables.get('Tenant Name')",
-					"                            );",
-					"",
-					"                            pm.expect(audUrl.toString()).to.be.equal(cfsUrl.toString());",
+					"                            pm.expect(aud).to.be.equal(pm.variables.get('client_id'));",
 					"                        });",
 					"",
 					"                        pm.test(\"Access token has valid \\\"iat\\\" claim\", () => {",
@@ -6239,11 +6795,25 @@
 					"                            const nbf = payload.nbf;",
 					"                            const now = Date.now() / 1000;",
 					"",
-					"                            pm.expect(nbf).to.be.greaterThan(now);",
+					"                            pm.expect(nbf).to.be.lessThan(now);",
 					"                        });",
 					"",
 					"                        pm.test(\"Access token has valid \\\"scope\\\" claim\", () => {",
-					"                            pm.expect(payload).to.have.property(\"scope\", pm.variables.get('scope'), null);",
+					"                            pm.expect(payload).to.have.property(\"scope\");",
+					"",
+					"                            if (expectedScopes) {",
+					"                                const scopes = payload.scope.split(' ');",
+					"                                if (expectedScopes.length !== scopes.length) {",
+					"                                    pm.expect.fail(`Expected ${expectedScopes.length} scopes, but got ${scopes.length}`)",
+					"                                }",
+					"                                for (const scope of scopes) {",
+					"                                    if (!expectedScopes.includes(scope)) {",
+					"                                        pm.expect.fail(`Scope ${scope} was not expected`);",
+					"                                    }",
+					"                                }",
+					"                            } else {",
+					"                                pm.expect(payload.scope).to.be.equal(pm.variables.get('scope'));",
+					"                            }",
 					"                        });",
 					"                    });",
 					"                },",
@@ -6290,9 +6860,9 @@
 					"                            const issUrl = URL.parse(iss);",
 					"",
 					"                            const cfsUrl = URL.parse(",
-					"                                pm.collectionVariables.get('CFS Master URL') +",
+					"                                pm.variables.get('CFS Master URL') +",
 					"                                \"/oauth/\" +",
-					"                                pm.collectionVariables.get('Tenant Name')",
+					"                                pm.variables.get('Tenant Name')",
 					"                            );",
 					"",
 					"                            pm.expect(issUrl.toString()).to.be.equal(cfsUrl.toString());",
@@ -6303,7 +6873,7 @@
 					"",
 					"                            const aud = payload.aud;",
 					"",
-					"                            pm.expect(aud).to.be.equal(pm.collectionVariables.get('client_id'));",
+					"                            pm.expect(aud).to.be.equal(pm.variables.get('client_id'));",
 					"                        });",
 					"",
 					"                        pm.test(\"Id token has valid \\\"iat\\\" claim\", () => {",
@@ -6330,7 +6900,7 @@
 					"                            const nbf = payload.nbf;",
 					"                            const now = Date.now() / 1000;",
 					"",
-					"                            pm.expect(nbf).to.be.greaterThan(now);",
+					"                            pm.expect(nbf).to.be.lessThan(now);",
 					"                        });",
 					"",
 					"                        pm.test(\"Id token has valid \\\"nonce\\\" claim\", () => {",
