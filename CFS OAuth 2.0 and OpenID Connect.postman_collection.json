@@ -9,1713 +9,6 @@
 	},
 	"item": [
 		{
-			"name": "Validations",
-			"item": [
-				{
-					"name": "Common",
-					"item": [
-						{
-							"name": "Authorize",
-							"item": [
-								{
-									"name": "Invalid client id",
-									"item": [
-										{
-											"name": "Authorize",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"exec": [
-															"const responseData = pm.response.json();\r",
-															"\r",
-															"pmutils(pm).testCallbacks.testResponseStatus(400);\r",
-															"\r",
-															"pm.test('Response body has error \"invalid_client\"', () => {\r",
-															"    pm.expect(responseData).to.have.property('error', 'invalid_client');\r",
-															"});\r",
-															"\r",
-															"pm.test('Response body has error_description', () => {\r",
-															"    pm.expect(responseData).to.have.property('error_description');\r",
-															"});\r",
-															""
-														],
-														"type": "text/javascript",
-														"packages": {}
-													}
-												}
-											],
-											"protocolProfileBehavior": {
-												"followRedirects": false
-											},
-											"request": {
-												"method": "GET",
-												"header": [],
-												"url": {
-													"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/authorize?response_type={{validations_common_response_type}}&client_id=invalidClientId&redirect_uri=https://oauth.pstmn.io/v1/callback&scope={{scope}}&state={{state}}&nonce={{nonce}}",
-													"host": [
-														"{{CFS Master URL}}"
-													],
-													"path": [
-														"oauth",
-														"{{Tenant Name}}",
-														"authorize"
-													],
-													"query": [
-														{
-															"key": "response_type",
-															"value": "{{validations_common_response_type}}"
-														},
-														{
-															"key": "client_id",
-															"value": "invalidClientId"
-														},
-														{
-															"key": "redirect_uri",
-															"value": "https://oauth.pstmn.io/v1/callback"
-														},
-														{
-															"key": "scope",
-															"value": "{{scope}}"
-														},
-														{
-															"key": "state",
-															"value": "{{state}}"
-														},
-														{
-															"key": "nonce",
-															"value": "{{nonce}}"
-														}
-													]
-												},
-												"description": "_If necessary, the consent screen will be automatically accepted. In a real use case, the user must click on the \"Accept\" button._\n\n- See the response `authorization_code` in the **Response -> Body -> Visualize** tab\n    - The `authorization_code` will be extracted from the callback url and set in the collection variables\n- See the test results in the **Response -> Test Results** tab\n    - The response status code is expected to be 302\n    - The `authorization_code` is expected to not be empty"
-											},
-											"response": []
-										}
-									]
-								},
-								{
-									"name": "Invalid callback url",
-									"item": [
-										{
-											"name": "Authorize",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"exec": [
-															"const responseData = pm.response.json();\r",
-															"\r",
-															"pmutils(pm).testCallbacks.testResponseStatus(400);\r",
-															"\r",
-															"pm.test('Response body has error \"invalid_request\"', () => {\r",
-															"    pm.expect(responseData).to.have.property('error', 'invalid_request');\r",
-															"});\r",
-															"\r",
-															"pm.test('Response body has error_description', () => {\r",
-															"    pm.expect(responseData).to.have.property('error_description');\r",
-															"});\r",
-															""
-														],
-														"type": "text/javascript",
-														"packages": {}
-													}
-												}
-											],
-											"protocolProfileBehavior": {
-												"followRedirects": false
-											},
-											"request": {
-												"method": "GET",
-												"header": [],
-												"url": {
-													"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/authorize?response_type={{validations_common_response_type}}&client_id={{client_id}}&redirect_uri=https://invalid.callback.url.example.com/callback&scope={{scope}}&state={{state}}&nonce={{nonce}}",
-													"host": [
-														"{{CFS Master URL}}"
-													],
-													"path": [
-														"oauth",
-														"{{Tenant Name}}",
-														"authorize"
-													],
-													"query": [
-														{
-															"key": "response_type",
-															"value": "{{validations_common_response_type}}"
-														},
-														{
-															"key": "client_id",
-															"value": "{{client_id}}"
-														},
-														{
-															"key": "redirect_uri",
-															"value": "https://invalid.callback.url.example.com/callback"
-														},
-														{
-															"key": "scope",
-															"value": "{{scope}}"
-														},
-														{
-															"key": "state",
-															"value": "{{state}}"
-														},
-														{
-															"key": "nonce",
-															"value": "{{nonce}}"
-														}
-													]
-												},
-												"description": "_If necessary, the consent screen will be automatically accepted. In a real use case, the user must click on the \"Accept\" button._\n\n- See the response `authorization_code` in the **Response -> Body -> Visualize** tab\n    - The `authorization_code` will be extracted from the callback url and set in the collection variables\n- See the test results in the **Response -> Test Results** tab\n    - The response status code is expected to be 302\n    - The `authorization_code` is expected to not be empty"
-											},
-											"response": []
-										}
-									]
-								},
-								{
-									"name": "Invalid scope(s) only",
-									"item": [
-										{
-											"name": "Authorize",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"exec": [
-															"const responseData = pm.response.json();\r",
-															"\r",
-															"pmutils(pm).testCallbacks.testResponseStatus(400);\r",
-															"\r",
-															"pm.test('Response body has error \"invalid_scope\"', () => {\r",
-															"    pm.expect(responseData).to.have.property('error', 'invalid_scope');\r",
-															"});\r",
-															"\r",
-															"pm.test('Response body has error_description', () => {\r",
-															"    pm.expect(responseData).to.have.property('error_description');\r",
-															"});\r",
-															""
-														],
-														"type": "text/javascript",
-														"packages": {}
-													}
-												}
-											],
-											"protocolProfileBehavior": {
-												"followRedirects": false
-											},
-											"request": {
-												"method": "GET",
-												"header": [],
-												"url": {
-													"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/authorize?response_type={{validations_common_response_type}}&client_id={{client_id}}&redirect_uri=https://oauth.pstmn.io/v1/callback&scope=invalidScope&state={{state}}&nonce={{nonce}}",
-													"host": [
-														"{{CFS Master URL}}"
-													],
-													"path": [
-														"oauth",
-														"{{Tenant Name}}",
-														"authorize"
-													],
-													"query": [
-														{
-															"key": "response_type",
-															"value": "{{validations_common_response_type}}"
-														},
-														{
-															"key": "client_id",
-															"value": "{{client_id}}"
-														},
-														{
-															"key": "redirect_uri",
-															"value": "https://oauth.pstmn.io/v1/callback"
-														},
-														{
-															"key": "scope",
-															"value": "invalidScope"
-														},
-														{
-															"key": "state",
-															"value": "{{state}}"
-														},
-														{
-															"key": "nonce",
-															"value": "{{nonce}}"
-														}
-													]
-												},
-												"description": "_If necessary, the consent screen will be automatically accepted. In a real use case, the user must click on the \"Accept\" button._\n\n- See the response `authorization_code` in the **Response -> Body -> Visualize** tab\n    - The `authorization_code` will be extracted from the callback url and set in the collection variables\n- See the test results in the **Response -> Test Results** tab\n    - The response status code is expected to be 302\n    - The `authorization_code` is expected to not be empty"
-											},
-											"response": []
-										}
-									]
-								},
-								{
-									"name": "Expired access token",
-									"item": [
-										{
-											"name": "Authorize",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"exec": [
-															"pmutils(pm).testCallbacks.testResponseStatus200or302();\r",
-															"\r",
-															"pmutils(pm).postConfirmAuthorizeRequestIfNecessaryThenSetTokens('hash', ({ access_token, id_token }) => {\r",
-															"    const atob = require('atob');\r",
-															"    const jwtPayload = JSON.parse(atob(access_token.split('.')[1]));\r",
-															"    const exp = jwtPayload.exp;\r",
-															"    // Wait until exp + 1 second\r",
-															"    const wait = (exp * 1000 - Date.now()) + 1000;\r",
-															"\r",
-															"    console.log(`Waiting ${wait}ms for access token to expire...`);\r",
-															"    setTimeout(() => {\r",
-															"        pm.sendRequest(\r",
-															"            {\r",
-															"                url: pm.variables.get('CFS Master URL') + '/oauth/' + pm.variables.get('Tenant Name') + '/userinfo',\r",
-															"                method: 'GET',\r",
-															"                header: {\r",
-															"                    Authorization: 'Bearer ' + access_token\r",
-															"                }\r",
-															"            },\r",
-															"            (err, response) => {\r",
-															"                pm.test(\"Expired access token does not grant access to resources\", () => {\r",
-															"                    pm.expect(err).to.be.null;\r",
-															"                    if (err) {\r",
-															"                        console.error(err);\r",
-															"                        return;\r",
-															"                    }\r",
-															"\r",
-															"                    pm.expect(response.code).to.be.equal(401);\r",
-															"                });\r",
-															"            }\r",
-															"        );\r",
-															"    }, wait);\r",
-															"});\r",
-															""
-														],
-														"type": "text/javascript",
-														"packages": {}
-													}
-												}
-											],
-											"protocolProfileBehavior": {
-												"followRedirects": false
-											},
-											"request": {
-												"method": "GET",
-												"header": [],
-												"url": {
-													"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/authorize?response_type=token&redirect_uri=https://oauth.pstmn.io/v1/callback&client_id={{client_id}}&scope={{scope}}&state={{state}}&nonce={{nonce}}",
-													"host": [
-														"{{CFS Master URL}}"
-													],
-													"path": [
-														"oauth",
-														"{{Tenant Name}}",
-														"authorize"
-													],
-													"query": [
-														{
-															"key": "response_type",
-															"value": "token"
-														},
-														{
-															"key": "redirect_uri",
-															"value": "https://oauth.pstmn.io/v1/callback"
-														},
-														{
-															"key": "client_id",
-															"value": "{{client_id}}"
-														},
-														{
-															"key": "scope",
-															"value": "{{scope}}"
-														},
-														{
-															"key": "state",
-															"value": "{{state}}"
-														},
-														{
-															"key": "nonce",
-															"value": "{{nonce}}"
-														}
-													]
-												},
-												"description": "_The consent screen will be automatically accepted. In a real use case, the user must click on the \"Accept\" button._\n\n- See the response `access_token`, `id_token` in the **Response -> Body -> Visualize** tab\n    - The `access_token`, `id_token` will be extracted from the callback url and set in the collection variables\n- See the test results in the **Response -> Test Results** tab\n    - The response status code is expected to be 200 because we're always getting the consent form back in the case of Implicit Flow\n    - Access token has valid \"iss\" claim\n        - if the \"iss\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Access token has valid \"aud\" claim\n        - if the \"aud\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Access token has valid \"iat\" claim\n        - if the \"iat\" claim value is before `Date.now()`\n    - Access token has valid \"exp\" claim\n        - if the \"exp\" claim value is after `Date.now()`\n    - Access token has valid \"nbf\" claim\n        - if the \"nbf\" claim value is before the \"exp\" claim value\n    - Access token has valid \"scope\" claim\n        - if the \"scope\" claim value is equal to {{scope}}\n    - Access token is valid\n        - if all the above tests are passing\n    - Id token has valid \"iss\" claim\n        - if the \"iss\" claim value is equal to [https://cfs01/cfs/oauth/mytenant](https://cfs01/cfs/oauth/mytenant)\n    - Id token has valid \"aud\" claim\n        - if the \"aud\" claim value is equal to stLJwW9b3L5BPaiFFVx9cB\n    - Id token has valid \"iat\" claim\n        - if the \"iat\" claim value is before `Date.now()`\n    - Id token has valid \"exp\" claim\n        - if the \"exp\" claim value is after `Date.now()`\n    - Id token has valid \"nbf\" claim\n        - if the \"nbf\" claim value is before the \"exp\" claim value\n    - Id token has valid \"nonce\" claim\n        - if the \"nonce\" claim value is equal to xyz\n    - Id token is valid\n        - if all the above tests are passing"
-											},
-											"response": [
-												{
-													"name": "Authorize - id_token token",
-													"originalRequest": {
-														"method": "GET",
-														"header": [],
-														"url": {
-															"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/authorize?scope={{scope}}&response_type=id_token token&redirect_uri=https://oauth.pstmn.io/v1/callback&client_id={{client_id}}&state={{state}}&nonce={{nonce}}",
-															"host": [
-																"{{CFS Master URL}}"
-															],
-															"path": [
-																"oauth",
-																"{{Tenant Name}}",
-																"authorize"
-															],
-															"query": [
-																{
-																	"key": "scope",
-																	"value": "{{scope}}"
-																},
-																{
-																	"key": "response_type",
-																	"value": "id_token token"
-																},
-																{
-																	"key": "redirect_uri",
-																	"value": "https://oauth.pstmn.io/v1/callback"
-																},
-																{
-																	"key": "client_id",
-																	"value": "{{client_id}}"
-																},
-																{
-																	"key": "state",
-																	"value": "{{state}}"
-																},
-																{
-																	"key": "nonce",
-																	"value": "{{nonce}}"
-																}
-															]
-														}
-													},
-													"status": "OK",
-													"code": 200,
-													"_postman_previewlanguage": "html",
-													"header": [
-														{
-															"key": "Cache-Control",
-															"value": "private"
-														},
-														{
-															"key": "Content-Type",
-															"value": "text/html; charset=utf-8"
-														},
-														{
-															"key": "Content-Encoding",
-															"value": "gzip"
-														},
-														{
-															"key": "Vary",
-															"value": "Accept-Encoding"
-														},
-														{
-															"key": "Server",
-															"value": "Microsoft-IIS/10.0"
-														},
-														{
-															"key": "Access-Control-Allow-Origin",
-															"value": "*"
-														},
-														{
-															"key": "Access-Control-Allow-Headers",
-															"value": "authorization"
-														},
-														{
-															"key": "X-Frame-Options",
-															"value": "SAMEORIGIN"
-														},
-														{
-															"key": "X-SourceFiles",
-															"value": "=?UTF-8?B?WDpcc291cmNlXHJhZGlhbnRsb2dpY1xjZnNcc3JjXENGU1xSTEkuQ0ZTLldlYlxvYXV0aFxzdG9ybXdpbmRcYXV0aG9yaXpl?="
-														},
-														{
-															"key": "X-Powered-By",
-															"value": "ASP.NET"
-														},
-														{
-															"key": "Date",
-															"value": "Wed, 13 Mar 2024 14:00:48 GMT"
-														},
-														{
-															"key": "Content-Length",
-															"value": "1861"
-														}
-													],
-													"cookie": [],
-													"body": "<!DOCTYPE html>\n<html xmlns=\"http://www.w3.org/1999/xhtml\" lang=\"en-US\">\n    <head>\n        <title>Cloud Federation Service - Authorize the application</title>\n        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n        <meta name=\"robots\" content=\"noindex,nofollow\" />\n        <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\" />\n        <link rel=\"stylesheet\" href=\"/Content/css/base.min.css\" />\n        <link rel=\"stylesheet\" href=\"/Content/css/login.min.css\" />\n        <link rel=\"stylesheet\" href=\"/Css/Login/stormwind.css\" />\n    </head>\n    <body>\n        <div>\n            <div class=\"title\">\n                <img class=\"login-picture\" src=\"/Images/Index/stormwind.png\" alt=\"Stormwind\" />\n            </div>\n            <div data-cfs-page-name=\"oauth2-authorize\" class=\"guest-content\">\n                <p class=\"alert alert-warning\">\n                    <strong>You can use your account to sign in to other sites and services.</strong>\n        By signing here, you can use My Application without sharing your password.\n                </p>\n                <h3 class=\"dark\">Authorize My Application to use your account?</h3>\n                <p class=\"dark\">This application \n                    <span class=\"text-success\">will be able to</span>:\n                </p>\n                <ul class=\"dark\">\n                    <li>Get your email address.</li>\n                    <li>Get your basic profile information.</li>\n                </ul>\n                <p id=\"javascriptDisabled\" class=\"alert alert-danger\">\n                    <strong>Javascript appears to be disabled in your browser.</strong>\n        This page requires Javascript to be enabled to better protect your security.\n                </p>\n                <form action=\"/oauth/stormwind/authorize?scope=openid%20email%20profile&amp;response_type=id_token%20token&amp;redirect_uri=https://oauth.pstmn.io/v1/callback&amp;client_id=1s2o985lIf2Fa2Di5Zg0mJ&amp;state=abc&amp;nonce=xyz\" method=\"post\">\n                    <input name=\"__RequestVerificationToken\" type=\"hidden\" value=\"aRbF0d3sxVT2yOGDWN2EE2jjkdH7ifCTBzkRBEa7t2YwzeHA6gOVDxIQTpe03Q8JZGyShHzbjb9fXP5l9jyNXChRX33vQp12kLU8jZJDsZ6TeExidcyUfm_A1SGcpJay5JUPIn5V3Y0nqTC7Eq3-EQ2\" />\n                    <input id=\"IsApproved\" name=\"IsApproved\" type=\"hidden\" value=\"\" />\n                    <input id=\"client_id\" name=\"client_id\" type=\"hidden\" value=\"1s2o985lIf2Fa2Di5Zg0mJ\" />\n                    <input id=\"redirect_uri\" name=\"redirect_uri\" type=\"hidden\" value=\"https://oauth.pstmn.io/v1/callback\" />\n                    <input id=\"state\" name=\"state\" type=\"hidden\" value=\"abc\" />\n                    <input id=\"scope\" name=\"scope\" type=\"hidden\" value=\"openid email profile\" />\n                    <input id=\"response_type\" name=\"response_type\" type=\"hidden\" value=\"id_token token\" />\n                    <input id=\"nonce\" name=\"nonce\" type=\"hidden\" value=\"xyz\" />\n                    <div id=\"responseButtonsDiv\" class=\"clearfix\" style=\"margin-top: 15px; margin-bottom: 15px;\">\n                        <div class=\"col-xs-6\">\n                            <button type=\"submit\" class=\"btn btn-primary btn-lg btn-block no-border\" onclick=\"document.getElementsByName('IsApproved')[0].value = true; return true;\">\n                    Accept\n                </button>\n                        </div>\n                        <div class=\"col-xs-6\">\n                            <button type=\"submit\" class=\"btn btn-warning btn-lg btn-block no-border\" onclick=\"document.getElementsByName('IsApproved')[0].value = false; return true;\">\n                    Cancel\n                </button>\n                        </div>\n                    </div>\n                </form>\n                <div class=\"clearfix\">\n                    <p class=\"alert alert-info alert-footer\">You can revoke access to any application at any time from your Security page.</p>\n                </div>\n            </div>\n        </div>\n        <script src=\"/Scripts/base.min.js\"></script>\n        <script language=\"javascript\" type=\"text/javascript\">\n        document.getElementById('responseButtonsDiv').style.display = 'block';\n        document.getElementById('javascriptDisabled').style.display = 'none';\n\n        if (document.location !== window.top.location) {\n            window.top.location = document.location;\n        }\n    </script>\n    </body>\n</html>"
-												}
-											]
-										}
-									]
-								}
-							]
-						}
-					]
-				},
-				{
-					"name": "Authorization code flow + Authorization code flow with PKCE + Hybrid Flow",
-					"item": [
-						{
-							"name": "Token",
-							"item": [
-								{
-									"name": "Invalid authorization code",
-									"item": [
-										{
-											"name": "Request for tokens",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"exec": [
-															"pmutils(pm).testCallbacks.testResponseStatus(400);\r",
-															"\r",
-															"const responseData = pm.response.json();\r",
-															"\r",
-															"pm.test('Response body has error \"invalid_grant\"', () => {\r",
-															"    pm.expect(responseData).to.have.property('error', 'invalid_grant');\r",
-															"});\r",
-															""
-														],
-														"type": "text/javascript",
-														"packages": {}
-													}
-												}
-											],
-											"request": {
-												"method": "POST",
-												"header": [],
-												"body": {
-													"mode": "urlencoded",
-													"urlencoded": [
-														{
-															"key": "redirect_uri",
-															"value": "https://oauth.pstmn.io/v1/callback",
-															"type": "text"
-														},
-														{
-															"key": "code",
-															"value": "invalidAuthorizationCode",
-															"type": "text"
-														},
-														{
-															"key": "grant_type",
-															"value": "authorization_code",
-															"type": "text"
-														},
-														{
-															"key": "client_id",
-															"value": "{{client_id}}",
-															"type": "text"
-														},
-														{
-															"key": "client_secret",
-															"value": "{{client_secret}}",
-															"type": "text"
-														},
-														{
-															"key": "state",
-															"value": "{{state}}",
-															"type": "text"
-														}
-													]
-												},
-												"url": {
-													"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token",
-													"host": [
-														"{{CFS Master URL}}"
-													],
-													"path": [
-														"oauth",
-														"{{Tenant Name}}",
-														"token"
-													]
-												},
-												"description": "- See the response `access_token`, `id_token`, `refresh_token`, etc. in the **Response -> Body -> Pretty** tab\n    - The `acess_token`, `id_token`, `refresh_token` will be extracted from the response and set in the collection variables\n- See the test results in the **Response -> Test Results** tab\n    - The response status code is expected to be 200\n    - Access token has valid \"iss\" claim\n        - if the \"iss\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Access token has valid \"aud\" claim\n        - if the \"aud\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Access token has valid \"iat\" claim\n        - if the \"iat\" claim value is before `Date.now()`\n    - Access token has valid \"exp\" claim\n        - if the \"exp\" claim value is after `Date.now()`\n    - Access token has valid \"nbf\" claim\n        - if the \"nbf\" claim value is before the \"exp\" claim value\n    - Access token has valid \"scope\" claim\n        - if the \"scope\" claim value is equal to {{scope}}\n    - Access token is valid\n        - if all the above tests are passing\n    - Id token has valid \"iss\" claim\n        - if the \"iss\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Id token has valid \"aud\" claim\n        - if the \"aud\" claim value is equal to {{client_id}}\n    - Id token has valid \"iat\" claim\n        - if the \"iat\" claim value is before `Date.now()`\n    - Id token has valid \"exp\" claim\n        - if the \"exp\" claim value is after `Date.now()`\n    - Id token has valid \"nbf\" claim\n        - if the \"nbf\" claim value is before the \"exp\" claim value\n    - Id token has valid \"nonce\" claim\n        - if the \"nonce\" claim value is equal to {{nonce}}\n    - Id token is valid\n        - if all the above tests are passing\n    - Access token grants access to resources\n        - automatically send the \"UserInfo endpoint\" request to make sure that the `acess_token` is accepted by the server\n    - Refresh token grants new tokens\n        - automatically send the \"Refresh token\" request to make sure that the `refresh_token` can be used to retrieve new tokens"
-											},
-											"response": []
-										}
-									]
-								},
-								{
-									"name": "Invalid client id",
-									"item": [
-										{
-											"name": "Authorize",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"exec": [
-															"pmutils(pm).testCallbacks.testResponseStatus200or302();\r",
-															"\r",
-															"pmutils(pm).postConfirmAuthorizeRequestIfNecessaryThenSetTokens('query', ({ authorization_code }) => {\r",
-															"    pmutils(pm).testCallbacks.testAuthorizationCode(authorization_code);\r",
-															"});\r",
-															""
-														],
-														"type": "text/javascript",
-														"packages": {}
-													}
-												}
-											],
-											"protocolProfileBehavior": {
-												"followRedirects": false
-											},
-											"request": {
-												"method": "GET",
-												"header": [],
-												"url": {
-													"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/authorize?response_type=code&client_id={{client_id}}&redirect_uri=https://oauth.pstmn.io/v1/callback&scope={{scope}}&state={{state}}&nonce={{nonce}}",
-													"host": [
-														"{{CFS Master URL}}"
-													],
-													"path": [
-														"oauth",
-														"{{Tenant Name}}",
-														"authorize"
-													],
-													"query": [
-														{
-															"key": "response_type",
-															"value": "code"
-														},
-														{
-															"key": "client_id",
-															"value": "{{client_id}}"
-														},
-														{
-															"key": "redirect_uri",
-															"value": "https://oauth.pstmn.io/v1/callback"
-														},
-														{
-															"key": "scope",
-															"value": "{{scope}}"
-														},
-														{
-															"key": "state",
-															"value": "{{state}}"
-														},
-														{
-															"key": "nonce",
-															"value": "{{nonce}}"
-														}
-													]
-												},
-												"description": "_If necessary, the consent screen will be automatically accepted. In a real use case, the user must click on the \"Accept\" button._\n\n- See the response `authorization_code` in the **Response -> Body -> Visualize** tab\n    - The `authorization_code` will be extracted from the callback url and set in the collection variables\n- See the test results in the **Response -> Test Results** tab\n    - The response status code is expected to be 302\n    - The `authorization_code` is expected to not be empty"
-											},
-											"response": []
-										},
-										{
-											"name": "Request for tokens",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"exec": [
-															"pmutils(pm).testCallbacks.testResponseStatus(400);\r",
-															"\r",
-															"const responseData = pm.response.json();\r",
-															"\r",
-															"pm.test('Response body has error \"invalid_client\"', () => {\r",
-															"    pm.expect(responseData).to.have.property('error', 'invalid_client');\r",
-															"});\r",
-															"\r",
-															"pm.test('Response body has error_description', () => {\r",
-															"    pm.expect(responseData).to.have.property('error_description');\r",
-															"});\r",
-															""
-														],
-														"type": "text/javascript",
-														"packages": {}
-													}
-												}
-											],
-											"request": {
-												"method": "POST",
-												"header": [],
-												"body": {
-													"mode": "urlencoded",
-													"urlencoded": [
-														{
-															"key": "redirect_uri",
-															"value": "https://oauth.pstmn.io/v1/callback",
-															"type": "text"
-														},
-														{
-															"key": "code",
-															"value": "{{authorization_code}}",
-															"type": "text"
-														},
-														{
-															"key": "grant_type",
-															"value": "authorization_code",
-															"type": "text"
-														},
-														{
-															"key": "client_id",
-															"value": "invalidClientId",
-															"type": "text"
-														},
-														{
-															"key": "client_secret",
-															"value": "{{client_secret}}",
-															"type": "text"
-														},
-														{
-															"key": "state",
-															"value": "{{state}}",
-															"type": "text"
-														}
-													]
-												},
-												"url": {
-													"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token",
-													"host": [
-														"{{CFS Master URL}}"
-													],
-													"path": [
-														"oauth",
-														"{{Tenant Name}}",
-														"token"
-													]
-												},
-												"description": "- See the response `access_token`, `id_token`, `refresh_token`, etc. in the **Response -> Body -> Pretty** tab\n    - The `acess_token`, `id_token`, `refresh_token` will be extracted from the response and set in the collection variables\n- See the test results in the **Response -> Test Results** tab\n    - The response status code is expected to be 200\n    - Access token has valid \"iss\" claim\n        - if the \"iss\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Access token has valid \"aud\" claim\n        - if the \"aud\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Access token has valid \"iat\" claim\n        - if the \"iat\" claim value is before `Date.now()`\n    - Access token has valid \"exp\" claim\n        - if the \"exp\" claim value is after `Date.now()`\n    - Access token has valid \"nbf\" claim\n        - if the \"nbf\" claim value is before the \"exp\" claim value\n    - Access token has valid \"scope\" claim\n        - if the \"scope\" claim value is equal to {{scope}}\n    - Access token is valid\n        - if all the above tests are passing\n    - Id token has valid \"iss\" claim\n        - if the \"iss\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Id token has valid \"aud\" claim\n        - if the \"aud\" claim value is equal to {{client_id}}\n    - Id token has valid \"iat\" claim\n        - if the \"iat\" claim value is before `Date.now()`\n    - Id token has valid \"exp\" claim\n        - if the \"exp\" claim value is after `Date.now()`\n    - Id token has valid \"nbf\" claim\n        - if the \"nbf\" claim value is before the \"exp\" claim value\n    - Id token has valid \"nonce\" claim\n        - if the \"nonce\" claim value is equal to {{nonce}}\n    - Id token is valid\n        - if all the above tests are passing\n    - Access token grants access to resources\n        - automatically send the \"UserInfo endpoint\" request to make sure that the `acess_token` is accepted by the server\n    - Refresh token grants new tokens\n        - automatically send the \"Refresh token\" request to make sure that the `refresh_token` can be used to retrieve new tokens"
-											},
-											"response": []
-										}
-									]
-								},
-								{
-									"name": "Invalid client secret",
-									"item": [
-										{
-											"name": "Authorize",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"exec": [
-															"pmutils(pm).testCallbacks.testResponseStatus200or302();\r",
-															"\r",
-															"pmutils(pm).postConfirmAuthorizeRequestIfNecessaryThenSetTokens('query', ({ authorization_code }) => {\r",
-															"    pmutils(pm).testCallbacks.testAuthorizationCode(authorization_code);\r",
-															"});\r",
-															""
-														],
-														"type": "text/javascript",
-														"packages": {}
-													}
-												}
-											],
-											"protocolProfileBehavior": {
-												"followRedirects": false
-											},
-											"request": {
-												"method": "GET",
-												"header": [],
-												"url": {
-													"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/authorize?response_type=code&client_id={{client_id}}&redirect_uri=https://oauth.pstmn.io/v1/callback&scope={{scope}}&state={{state}}&nonce={{nonce}}",
-													"host": [
-														"{{CFS Master URL}}"
-													],
-													"path": [
-														"oauth",
-														"{{Tenant Name}}",
-														"authorize"
-													],
-													"query": [
-														{
-															"key": "response_type",
-															"value": "code"
-														},
-														{
-															"key": "client_id",
-															"value": "{{client_id}}"
-														},
-														{
-															"key": "redirect_uri",
-															"value": "https://oauth.pstmn.io/v1/callback"
-														},
-														{
-															"key": "scope",
-															"value": "{{scope}}"
-														},
-														{
-															"key": "state",
-															"value": "{{state}}"
-														},
-														{
-															"key": "nonce",
-															"value": "{{nonce}}"
-														}
-													]
-												},
-												"description": "_If necessary, the consent screen will be automatically accepted. In a real use case, the user must click on the \"Accept\" button._\n\n- See the response `authorization_code` in the **Response -> Body -> Visualize** tab\n    - The `authorization_code` will be extracted from the callback url and set in the collection variables\n- See the test results in the **Response -> Test Results** tab\n    - The response status code is expected to be 302\n    - The `authorization_code` is expected to not be empty"
-											},
-											"response": []
-										},
-										{
-											"name": "Request for tokens",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"exec": [
-															"pmutils(pm).testCallbacks.testResponseStatus(401);\r",
-															"\r",
-															"const responseData = pm.response.json();\r",
-															"\r",
-															"pm.test('Response body has error \"invalid_client\"', () => {\r",
-															"    pm.expect(responseData).to.have.property('error', 'invalid_client');\r",
-															"});\r",
-															""
-														],
-														"type": "text/javascript",
-														"packages": {}
-													}
-												}
-											],
-											"request": {
-												"method": "POST",
-												"header": [],
-												"body": {
-													"mode": "urlencoded",
-													"urlencoded": [
-														{
-															"key": "redirect_uri",
-															"value": "https://oauth.pstmn.io/v1/callback",
-															"type": "text"
-														},
-														{
-															"key": "code",
-															"value": "{{authorization_code}}",
-															"type": "text"
-														},
-														{
-															"key": "grant_type",
-															"value": "authorization_code",
-															"type": "text"
-														},
-														{
-															"key": "client_id",
-															"value": "{{client_id}}",
-															"type": "text"
-														},
-														{
-															"key": "client_secret",
-															"value": "invalidClientSecret",
-															"type": "text"
-														},
-														{
-															"key": "state",
-															"value": "{{state}}",
-															"type": "text"
-														}
-													]
-												},
-												"url": {
-													"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token",
-													"host": [
-														"{{CFS Master URL}}"
-													],
-													"path": [
-														"oauth",
-														"{{Tenant Name}}",
-														"token"
-													]
-												},
-												"description": "- See the response `access_token`, `id_token`, `refresh_token`, etc. in the **Response -> Body -> Pretty** tab\n    - The `acess_token`, `id_token`, `refresh_token` will be extracted from the response and set in the collection variables\n- See the test results in the **Response -> Test Results** tab\n    - The response status code is expected to be 200\n    - Access token has valid \"iss\" claim\n        - if the \"iss\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Access token has valid \"aud\" claim\n        - if the \"aud\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Access token has valid \"iat\" claim\n        - if the \"iat\" claim value is before `Date.now()`\n    - Access token has valid \"exp\" claim\n        - if the \"exp\" claim value is after `Date.now()`\n    - Access token has valid \"nbf\" claim\n        - if the \"nbf\" claim value is before the \"exp\" claim value\n    - Access token has valid \"scope\" claim\n        - if the \"scope\" claim value is equal to {{scope}}\n    - Access token is valid\n        - if all the above tests are passing\n    - Id token has valid \"iss\" claim\n        - if the \"iss\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Id token has valid \"aud\" claim\n        - if the \"aud\" claim value is equal to {{client_id}}\n    - Id token has valid \"iat\" claim\n        - if the \"iat\" claim value is before `Date.now()`\n    - Id token has valid \"exp\" claim\n        - if the \"exp\" claim value is after `Date.now()`\n    - Id token has valid \"nbf\" claim\n        - if the \"nbf\" claim value is before the \"exp\" claim value\n    - Id token has valid \"nonce\" claim\n        - if the \"nonce\" claim value is equal to {{nonce}}\n    - Id token is valid\n        - if all the above tests are passing\n    - Access token grants access to resources\n        - automatically send the \"UserInfo endpoint\" request to make sure that the `acess_token` is accepted by the server\n    - Refresh token grants new tokens\n        - automatically send the \"Refresh token\" request to make sure that the `refresh_token` can be used to retrieve new tokens"
-											},
-											"response": []
-										}
-									]
-								},
-								{
-									"name": "Invalid scope(s) + valid scope(s)",
-									"item": [
-										{
-											"name": "Authorize",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"exec": [
-															"pmutils(pm).testCallbacks.testResponseStatus200or302();\r",
-															"\r",
-															"pmutils(pm).postConfirmAuthorizeRequestIfNecessaryThenSetTokens('query', ({ authorization_code }) => {\r",
-															"    pmutils(pm).testCallbacks.testAuthorizationCode(authorization_code);\r",
-															"});\r",
-															""
-														],
-														"type": "text/javascript",
-														"packages": {}
-													}
-												}
-											],
-											"protocolProfileBehavior": {
-												"followRedirects": false
-											},
-											"request": {
-												"method": "GET",
-												"header": [],
-												"url": {
-													"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/authorize?response_type=code&client_id={{client_id}}&redirect_uri=https://oauth.pstmn.io/v1/callback&scope=openid email invalidScope&state={{state}}&nonce={{nonce}}",
-													"host": [
-														"{{CFS Master URL}}"
-													],
-													"path": [
-														"oauth",
-														"{{Tenant Name}}",
-														"authorize"
-													],
-													"query": [
-														{
-															"key": "response_type",
-															"value": "code"
-														},
-														{
-															"key": "client_id",
-															"value": "{{client_id}}"
-														},
-														{
-															"key": "redirect_uri",
-															"value": "https://oauth.pstmn.io/v1/callback"
-														},
-														{
-															"key": "scope",
-															"value": "openid email invalidScope"
-														},
-														{
-															"key": "state",
-															"value": "{{state}}"
-														},
-														{
-															"key": "nonce",
-															"value": "{{nonce}}"
-														}
-													]
-												},
-												"description": "_If necessary, the consent screen will be automatically accepted. In a real use case, the user must click on the \"Accept\" button._\n\n- See the response `authorization_code` in the **Response -> Body -> Visualize** tab\n    - The `authorization_code` will be extracted from the callback url and set in the collection variables\n- See the test results in the **Response -> Test Results** tab\n    - The response status code is expected to be 302\n    - The `authorization_code` is expected to not be empty"
-											},
-											"response": []
-										},
-										{
-											"name": "Request for tokens",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"exec": [
-															"pmutils(pm).testCallbacks.testResponseStatus200();\r",
-															"\r",
-															"const responseData = pm.response.json();\r",
-															"\r",
-															"pmutils(pm).testCallbacks.testAccessToken(responseData.access_token, {\r",
-															"    expectedScopes: ['openid', 'email']\r",
-															"});\r",
-															"pmutils(pm).testCallbacks.testIdToken(responseData.id_token);\r",
-															"\r",
-															"pm.collectionVariables.set(\"access_token\", responseData.access_token);\r",
-															"pm.collectionVariables.set(\"id_token\", responseData.id_token);\r",
-															"pm.collectionVariables.set(\"refresh_token\", responseData.refresh_token);\r",
-															"\r",
-															"pmutils(pm).testCallbacks.testAccessTokenGrantsAccessToResources(responseData.access_token);\r",
-															"pmutils(pm).testCallbacks.testRefreshTokenRefreshesTokens(responseData.refresh_token);\r",
-															""
-														],
-														"type": "text/javascript",
-														"packages": {}
-													}
-												}
-											],
-											"request": {
-												"method": "POST",
-												"header": [],
-												"body": {
-													"mode": "urlencoded",
-													"urlencoded": [
-														{
-															"key": "redirect_uri",
-															"value": "https://oauth.pstmn.io/v1/callback",
-															"type": "text"
-														},
-														{
-															"key": "code",
-															"value": "{{authorization_code}}",
-															"type": "text"
-														},
-														{
-															"key": "grant_type",
-															"value": "authorization_code",
-															"type": "text"
-														},
-														{
-															"key": "client_id",
-															"value": "{{client_id}}",
-															"type": "text"
-														},
-														{
-															"key": "client_secret",
-															"value": "{{client_secret}}",
-															"type": "text"
-														},
-														{
-															"key": "state",
-															"value": "{{state}}",
-															"type": "text"
-														}
-													]
-												},
-												"url": {
-													"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token",
-													"host": [
-														"{{CFS Master URL}}"
-													],
-													"path": [
-														"oauth",
-														"{{Tenant Name}}",
-														"token"
-													]
-												},
-												"description": "- See the response `access_token`, `id_token`, `refresh_token`, etc. in the **Response -> Body -> Pretty** tab\n    - The `acess_token`, `id_token`, `refresh_token` will be extracted from the response and set in the collection variables\n- See the test results in the **Response -> Test Results** tab\n    - The response status code is expected to be 200\n    - Access token has valid \"iss\" claim\n        - if the \"iss\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Access token has valid \"aud\" claim\n        - if the \"aud\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Access token has valid \"iat\" claim\n        - if the \"iat\" claim value is before `Date.now()`\n    - Access token has valid \"exp\" claim\n        - if the \"exp\" claim value is after `Date.now()`\n    - Access token has valid \"nbf\" claim\n        - if the \"nbf\" claim value is before the \"exp\" claim value\n    - Access token has valid \"scope\" claim\n        - if the \"scope\" claim value is equal to {{scope}}\n    - Access token is valid\n        - if all the above tests are passing\n    - Id token has valid \"iss\" claim\n        - if the \"iss\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Id token has valid \"aud\" claim\n        - if the \"aud\" claim value is equal to {{client_id}}\n    - Id token has valid \"iat\" claim\n        - if the \"iat\" claim value is before `Date.now()`\n    - Id token has valid \"exp\" claim\n        - if the \"exp\" claim value is after `Date.now()`\n    - Id token has valid \"nbf\" claim\n        - if the \"nbf\" claim value is before the \"exp\" claim value\n    - Id token has valid \"nonce\" claim\n        - if the \"nonce\" claim value is equal to {{nonce}}\n    - Id token is valid\n        - if all the above tests are passing\n    - Access token grants access to resources\n        - automatically send the \"UserInfo endpoint\" request to make sure that the `acess_token` is accepted by the server\n    - Refresh token grants new tokens\n        - automatically send the \"Refresh token\" request to make sure that the `refresh_token` can be used to retrieve new tokens"
-											},
-											"response": []
-										}
-									]
-								},
-								{
-									"name": "Invalid response access token",
-									"item": [
-										{
-											"name": "Authorize",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"exec": [
-															"pmutils(pm).testCallbacks.testResponseStatus200or302();\r",
-															"\r",
-															"pmutils(pm).postConfirmAuthorizeRequestIfNecessaryThenSetTokens('query', ({ authorization_code }) => {\r",
-															"    pmutils(pm).testCallbacks.testAuthorizationCode(authorization_code);\r",
-															"});\r",
-															""
-														],
-														"type": "text/javascript",
-														"packages": {}
-													}
-												}
-											],
-											"protocolProfileBehavior": {
-												"followRedirects": false
-											},
-											"request": {
-												"method": "GET",
-												"header": [],
-												"url": {
-													"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/authorize?response_type=code&client_id={{client_id}}&redirect_uri=https://oauth.pstmn.io/v1/callback&scope={{scope}}&state={{state}}&nonce={{nonce}}",
-													"host": [
-														"{{CFS Master URL}}"
-													],
-													"path": [
-														"oauth",
-														"{{Tenant Name}}",
-														"authorize"
-													],
-													"query": [
-														{
-															"key": "response_type",
-															"value": "code"
-														},
-														{
-															"key": "client_id",
-															"value": "{{client_id}}"
-														},
-														{
-															"key": "redirect_uri",
-															"value": "https://oauth.pstmn.io/v1/callback"
-														},
-														{
-															"key": "scope",
-															"value": "{{scope}}"
-														},
-														{
-															"key": "state",
-															"value": "{{state}}"
-														},
-														{
-															"key": "nonce",
-															"value": "{{nonce}}"
-														}
-													]
-												},
-												"description": "_If necessary, the consent screen will be automatically accepted. In a real use case, the user must click on the \"Accept\" button._\n\n- See the response `authorization_code` in the **Response -> Body -> Visualize** tab\n    - The `authorization_code` will be extracted from the callback url and set in the collection variables\n- See the test results in the **Response -> Test Results** tab\n    - The response status code is expected to be 302\n    - The `authorization_code` is expected to not be empty"
-											},
-											"response": []
-										},
-										{
-											"name": "Request for tokens",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"exec": [
-															"pmutils(pm).testCallbacks.testResponseStatus200();\r",
-															"\r",
-															"// pretend the server responded with an invalid access token\r",
-															"const access_token = \"invalidAccessToken\";\r",
-															"pm.test(\"Invalid access token decoding fails\", () => {\r",
-															"    const atob = require('atob');\r",
-															"\r",
-															"    pm.expect(() => JSON.parse(atob(access_token))).to.throw();\r",
-															"});\r",
-															"\r",
-															"pm.sendRequest(\r",
-															"    {\r",
-															"        url: pm.variables.get('CFS Master URL') + '/oauth/' + pm.variables.get('Tenant Name') + '/userinfo',\r",
-															"        method: 'GET',\r",
-															"        header: {\r",
-															"            Authorization: 'Bearer ' + access_token\r",
-															"        }\r",
-															"    },\r",
-															"    (err, response) => {\r",
-															"        pm.test(\"Invalid access token does not grant access to resources\", () => {\r",
-															"            pm.expect(err).to.be.null;\r",
-															"            if (err) {\r",
-															"                console.error(err);\r",
-															"                return;\r",
-															"            }\r",
-															"\r",
-															"            pm.expect(response.code).to.be.equal(401);\r",
-															"        });\r",
-															"    }\r",
-															");\r",
-															""
-														],
-														"type": "text/javascript",
-														"packages": {}
-													}
-												}
-											],
-											"request": {
-												"method": "POST",
-												"header": [],
-												"body": {
-													"mode": "urlencoded",
-													"urlencoded": [
-														{
-															"key": "redirect_uri",
-															"value": "https://oauth.pstmn.io/v1/callback",
-															"type": "text"
-														},
-														{
-															"key": "code",
-															"value": "{{authorization_code}}",
-															"type": "text"
-														},
-														{
-															"key": "grant_type",
-															"value": "authorization_code",
-															"type": "text"
-														},
-														{
-															"key": "client_id",
-															"value": "{{client_id}}",
-															"type": "text"
-														},
-														{
-															"key": "client_secret",
-															"value": "{{client_secret}}",
-															"type": "text"
-														},
-														{
-															"key": "state",
-															"value": "{{state}}",
-															"type": "text"
-														}
-													]
-												},
-												"url": {
-													"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token",
-													"host": [
-														"{{CFS Master URL}}"
-													],
-													"path": [
-														"oauth",
-														"{{Tenant Name}}",
-														"token"
-													]
-												},
-												"description": "- See the response `access_token`, `id_token`, `refresh_token`, etc. in the **Response -> Body -> Pretty** tab\n    - The `acess_token`, `id_token`, `refresh_token` will be extracted from the response and set in the collection variables\n- See the test results in the **Response -> Test Results** tab\n    - The response status code is expected to be 200\n    - Access token has valid \"iss\" claim\n        - if the \"iss\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Access token has valid \"aud\" claim\n        - if the \"aud\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Access token has valid \"iat\" claim\n        - if the \"iat\" claim value is before `Date.now()`\n    - Access token has valid \"exp\" claim\n        - if the \"exp\" claim value is after `Date.now()`\n    - Access token has valid \"nbf\" claim\n        - if the \"nbf\" claim value is before the \"exp\" claim value\n    - Access token has valid \"scope\" claim\n        - if the \"scope\" claim value is equal to {{scope}}\n    - Access token is valid\n        - if all the above tests are passing\n    - Id token has valid \"iss\" claim\n        - if the \"iss\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Id token has valid \"aud\" claim\n        - if the \"aud\" claim value is equal to {{client_id}}\n    - Id token has valid \"iat\" claim\n        - if the \"iat\" claim value is before `Date.now()`\n    - Id token has valid \"exp\" claim\n        - if the \"exp\" claim value is after `Date.now()`\n    - Id token has valid \"nbf\" claim\n        - if the \"nbf\" claim value is before the \"exp\" claim value\n    - Id token has valid \"nonce\" claim\n        - if the \"nonce\" claim value is equal to {{nonce}}\n    - Id token is valid\n        - if all the above tests are passing\n    - Access token grants access to resources\n        - automatically send the \"UserInfo endpoint\" request to make sure that the `acess_token` is accepted by the server\n    - Refresh token grants new tokens\n        - automatically send the \"Refresh token\" request to make sure that the `refresh_token` can be used to retrieve new tokens"
-											},
-											"response": []
-										}
-									]
-								},
-								{
-									"name": "Invalid response id token",
-									"item": [
-										{
-											"name": "Authorize",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"exec": [
-															"pmutils(pm).testCallbacks.testResponseStatus200or302();\r",
-															"\r",
-															"pmutils(pm).postConfirmAuthorizeRequestIfNecessaryThenSetTokens('query', ({ authorization_code }) => {\r",
-															"    pmutils(pm).testCallbacks.testAuthorizationCode(authorization_code);\r",
-															"});\r",
-															""
-														],
-														"type": "text/javascript",
-														"packages": {}
-													}
-												}
-											],
-											"protocolProfileBehavior": {
-												"followRedirects": false
-											},
-											"request": {
-												"method": "GET",
-												"header": [],
-												"url": {
-													"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/authorize?response_type=code&client_id={{client_id}}&redirect_uri=https://oauth.pstmn.io/v1/callback&scope={{scope}}&state={{state}}&nonce={{nonce}}",
-													"host": [
-														"{{CFS Master URL}}"
-													],
-													"path": [
-														"oauth",
-														"{{Tenant Name}}",
-														"authorize"
-													],
-													"query": [
-														{
-															"key": "response_type",
-															"value": "code"
-														},
-														{
-															"key": "client_id",
-															"value": "{{client_id}}"
-														},
-														{
-															"key": "redirect_uri",
-															"value": "https://oauth.pstmn.io/v1/callback"
-														},
-														{
-															"key": "scope",
-															"value": "{{scope}}"
-														},
-														{
-															"key": "state",
-															"value": "{{state}}"
-														},
-														{
-															"key": "nonce",
-															"value": "{{nonce}}"
-														}
-													]
-												},
-												"description": "_If necessary, the consent screen will be automatically accepted. In a real use case, the user must click on the \"Accept\" button._\n\n- See the response `authorization_code` in the **Response -> Body -> Visualize** tab\n    - The `authorization_code` will be extracted from the callback url and set in the collection variables\n- See the test results in the **Response -> Test Results** tab\n    - The response status code is expected to be 302\n    - The `authorization_code` is expected to not be empty"
-											},
-											"response": []
-										},
-										{
-											"name": "Request for tokens",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"exec": [
-															"pmutils(pm).testCallbacks.testResponseStatus200();\r",
-															"\r",
-															"// pretend the server responded with an invalid id token\r",
-															"const id_token = \"invalidIdToken\";\r",
-															"pm.test(\"Invalid id token decoding fails\", () => {\r",
-															"    const atob = require('atob');\r",
-															"\r",
-															"    pm.expect(() => JSON.parse(atob(id_token))).to.throw();\r",
-															"});\r",
-															""
-														],
-														"type": "text/javascript",
-														"packages": {}
-													}
-												}
-											],
-											"request": {
-												"method": "POST",
-												"header": [],
-												"body": {
-													"mode": "urlencoded",
-													"urlencoded": [
-														{
-															"key": "redirect_uri",
-															"value": "https://oauth.pstmn.io/v1/callback",
-															"type": "text"
-														},
-														{
-															"key": "code",
-															"value": "{{authorization_code}}",
-															"type": "text"
-														},
-														{
-															"key": "grant_type",
-															"value": "authorization_code",
-															"type": "text"
-														},
-														{
-															"key": "client_id",
-															"value": "{{client_id}}",
-															"type": "text"
-														},
-														{
-															"key": "client_secret",
-															"value": "{{client_secret}}",
-															"type": "text"
-														},
-														{
-															"key": "state",
-															"value": "{{state}}",
-															"type": "text"
-														}
-													]
-												},
-												"url": {
-													"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token",
-													"host": [
-														"{{CFS Master URL}}"
-													],
-													"path": [
-														"oauth",
-														"{{Tenant Name}}",
-														"token"
-													]
-												},
-												"description": "- See the response `access_token`, `id_token`, `refresh_token`, etc. in the **Response -> Body -> Pretty** tab\n    - The `acess_token`, `id_token`, `refresh_token` will be extracted from the response and set in the collection variables\n- See the test results in the **Response -> Test Results** tab\n    - The response status code is expected to be 200\n    - Access token has valid \"iss\" claim\n        - if the \"iss\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Access token has valid \"aud\" claim\n        - if the \"aud\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Access token has valid \"iat\" claim\n        - if the \"iat\" claim value is before `Date.now()`\n    - Access token has valid \"exp\" claim\n        - if the \"exp\" claim value is after `Date.now()`\n    - Access token has valid \"nbf\" claim\n        - if the \"nbf\" claim value is before the \"exp\" claim value\n    - Access token has valid \"scope\" claim\n        - if the \"scope\" claim value is equal to {{scope}}\n    - Access token is valid\n        - if all the above tests are passing\n    - Id token has valid \"iss\" claim\n        - if the \"iss\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Id token has valid \"aud\" claim\n        - if the \"aud\" claim value is equal to {{client_id}}\n    - Id token has valid \"iat\" claim\n        - if the \"iat\" claim value is before `Date.now()`\n    - Id token has valid \"exp\" claim\n        - if the \"exp\" claim value is after `Date.now()`\n    - Id token has valid \"nbf\" claim\n        - if the \"nbf\" claim value is before the \"exp\" claim value\n    - Id token has valid \"nonce\" claim\n        - if the \"nonce\" claim value is equal to {{nonce}}\n    - Id token is valid\n        - if all the above tests are passing\n    - Access token grants access to resources\n        - automatically send the \"UserInfo endpoint\" request to make sure that the `acess_token` is accepted by the server\n    - Refresh token grants new tokens\n        - automatically send the \"Refresh token\" request to make sure that the `refresh_token` can be used to retrieve new tokens"
-											},
-											"response": []
-										}
-									]
-								},
-								{
-									"name": "Invalid refresh token",
-									"item": [
-										{
-											"name": "Refresh token",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"exec": [
-															"pmutils(pm).testCallbacks.testResponseStatus(400);\r",
-															"\r",
-															"const responseData = pm.response.json();\r",
-															"\r",
-															"pm.test('Response body has error \"invalid_request\"', () => {\r",
-															"    pm.expect(responseData).to.have.property('error', 'invalid_request');\r",
-															"});\r",
-															""
-														],
-														"type": "text/javascript",
-														"packages": {}
-													}
-												}
-											],
-											"request": {
-												"method": "POST",
-												"header": [],
-												"body": {
-													"mode": "urlencoded",
-													"urlencoded": [
-														{
-															"key": "client_id",
-															"value": "{{client_id}}",
-															"type": "text"
-														},
-														{
-															"key": "grant_type",
-															"value": "refresh_token",
-															"type": "text"
-														},
-														{
-															"key": "client_secret",
-															"value": "{{client_secret}}",
-															"type": "text"
-														},
-														{
-															"key": "refresh_token",
-															"value": "invalidRefreshToken",
-															"type": "text"
-														}
-													]
-												},
-												"url": {
-													"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token",
-													"host": [
-														"{{CFS Master URL}}"
-													],
-													"path": [
-														"oauth",
-														"{{Tenant Name}}",
-														"token"
-													]
-												}
-											},
-											"response": []
-										}
-									]
-								}
-							]
-						}
-					]
-				},
-				{
-					"name": "Authorization code flow with PKCE",
-					"item": [
-						{
-							"name": "Authorize",
-							"item": [
-								{
-									"name": "Invalid code challenge method",
-									"item": [
-										{
-											"name": "Authorize",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"exec": [
-															"const responseData = pm.response.json();\r",
-															"\r",
-															"pmutils(pm).testCallbacks.testResponseStatus(400);\r",
-															"\r",
-															"pm.test('Response body has error \"invalid_request\"', () => {\r",
-															"    pm.expect(responseData).to.have.property('error', 'invalid_request');\r",
-															"});\r",
-															"\r",
-															"pm.test('Response body has error_description', () => {\r",
-															"    pm.expect(responseData).to.have.property('error_description');\r",
-															"});\r",
-															""
-														],
-														"type": "text/javascript",
-														"packages": {}
-													}
-												}
-											],
-											"protocolProfileBehavior": {
-												"followRedirects": false
-											},
-											"request": {
-												"method": "GET",
-												"header": [],
-												"url": {
-													"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/authorize?scope={{scope}}&response_type=code&redirect_uri=https://oauth.pstmn.io/v1/callback&client_id={{client_id}}&code_challenge=rrsv_GL5iipUGp6yR5w5ra77fdggOxJ6htH9E217PeI&code_challenge_method=invalidCodeChallengeMethod&state={{state}}&nonce={{nonce}}",
-													"host": [
-														"{{CFS Master URL}}"
-													],
-													"path": [
-														"oauth",
-														"{{Tenant Name}}",
-														"authorize"
-													],
-													"query": [
-														{
-															"key": "scope",
-															"value": "{{scope}}"
-														},
-														{
-															"key": "response_type",
-															"value": "code"
-														},
-														{
-															"key": "redirect_uri",
-															"value": "https://oauth.pstmn.io/v1/callback"
-														},
-														{
-															"key": "client_id",
-															"value": "{{client_id}}"
-														},
-														{
-															"key": "code_challenge",
-															"value": "rrsv_GL5iipUGp6yR5w5ra77fdggOxJ6htH9E217PeI"
-														},
-														{
-															"key": "code_challenge_method",
-															"value": "invalidCodeChallengeMethod"
-														},
-														{
-															"key": "state",
-															"value": "{{state}}"
-														},
-														{
-															"key": "nonce",
-															"value": "{{nonce}}"
-														}
-													]
-												},
-												"description": "_If necessary, the consent screen will be automatically accepted. In a real use case, the user must click on the \"Accept\" button._\n\n- See the response `authorization_code` in the **Response -> Body -> Visualize** tab\n    - The `authorization_code` will be extracted from the callback url and set in the collection variables\n- See the test results in the **Response -> Test Results** tab\n    \n    - The response status code is expected to be 302\n    - The `authorization_code` is expected to not be empty"
-											},
-											"response": []
-										}
-									]
-								}
-							]
-						},
-						{
-							"name": "Token",
-							"item": [
-								{
-									"name": "Invalid code verifier",
-									"item": [
-										{
-											"name": "Authorize",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"exec": [
-															"pmutils(pm).testCallbacks.testResponseStatus200or302();\r",
-															"\r",
-															"pmutils(pm).postConfirmAuthorizeRequestIfNecessaryThenSetTokens('query', ({ authorization_code }) => {\r",
-															"    pmutils(pm).testCallbacks.testAuthorizationCode(authorization_code);\r",
-															"});\r",
-															""
-														],
-														"type": "text/javascript",
-														"packages": {}
-													}
-												}
-											],
-											"protocolProfileBehavior": {
-												"followRedirects": false
-											},
-											"request": {
-												"method": "GET",
-												"header": [],
-												"url": {
-													"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/authorize?scope={{scope}}&response_type=code&redirect_uri=https://oauth.pstmn.io/v1/callback&client_id={{client_id}}&code_challenge=rrsv_GL5iipUGp6yR5w5ra77fdggOxJ6htH9E217PeI&code_challenge_method=S256&state={{state}}&nonce={{nonce}}",
-													"host": [
-														"{{CFS Master URL}}"
-													],
-													"path": [
-														"oauth",
-														"{{Tenant Name}}",
-														"authorize"
-													],
-													"query": [
-														{
-															"key": "scope",
-															"value": "{{scope}}"
-														},
-														{
-															"key": "response_type",
-															"value": "code"
-														},
-														{
-															"key": "redirect_uri",
-															"value": "https://oauth.pstmn.io/v1/callback"
-														},
-														{
-															"key": "client_id",
-															"value": "{{client_id}}"
-														},
-														{
-															"key": "code_challenge",
-															"value": "rrsv_GL5iipUGp6yR5w5ra77fdggOxJ6htH9E217PeI"
-														},
-														{
-															"key": "code_challenge_method",
-															"value": "S256"
-														},
-														{
-															"key": "state",
-															"value": "{{state}}"
-														},
-														{
-															"key": "nonce",
-															"value": "{{nonce}}"
-														}
-													]
-												},
-												"description": "_If necessary, the consent screen will be automatically accepted. In a real use case, the user must click on the \"Accept\" button._\n\n- See the response `authorization_code` in the **Response -> Body -> Visualize** tab\n    - The `authorization_code` will be extracted from the callback url and set in the collection variables\n- See the test results in the **Response -> Test Results** tab\n    \n    - The response status code is expected to be 302\n    - The `authorization_code` is expected to not be empty"
-											},
-											"response": []
-										},
-										{
-											"name": "Request for tokens",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"exec": [
-															"pmutils(pm).testCallbacks.testResponseStatus(400);\r",
-															"\r",
-															"const responseData = pm.response.json();\r",
-															"\r",
-															"pm.test('Response body has error \"invalid_request\"', () => {\r",
-															"    pm.expect(responseData).to.have.property('error', 'invalid_request');\r",
-															"});\r",
-															""
-														],
-														"type": "text/javascript",
-														"packages": {}
-													}
-												}
-											],
-											"request": {
-												"method": "POST",
-												"header": [],
-												"body": {
-													"mode": "urlencoded",
-													"urlencoded": [
-														{
-															"key": "redirect_uri",
-															"value": "https://oauth.pstmn.io/v1/callback",
-															"type": "text"
-														},
-														{
-															"key": "code",
-															"value": "{{authorization_code}}",
-															"type": "text"
-														},
-														{
-															"key": "grant_type",
-															"value": "authorization_code",
-															"type": "text"
-														},
-														{
-															"key": "client_id",
-															"value": "{{client_id}}",
-															"type": "text"
-														},
-														{
-															"key": "code_verifier",
-															"value": "invalidCodeVerifierMR~lBQbZeIHsG3RnZuvgWmrAr8y1Ia~muw2zBrJdPlz5A7carMvqfm3MxiWCMN7KOjzfbZo0is3FxyWDf6e4Ad0sU6Of10.PvukuaqO2ez~YLU.lCrLYDC4.xDb420z2",
-															"type": "text"
-														},
-														{
-															"key": "state",
-															"value": "{{state}}",
-															"type": "text"
-														}
-													]
-												},
-												"url": {
-													"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token",
-													"host": [
-														"{{CFS Master URL}}"
-													],
-													"path": [
-														"oauth",
-														"{{Tenant Name}}",
-														"token"
-													]
-												},
-												"description": "- See the response `access_token`, `id_token`, `refresh_token`, etc. in the **Response -> Body -> Pretty** tab\n    - The `acess_token`, `id_token`, `refresh_token` will be extracted from the response and set in the collection variables\n- See the test results in the **Response -> Test Results** tab\n    - The response status code is expected to be 200\n    - Access token has valid \"iss\" claim\n        - if the \"iss\" claim value is equal to [https://cfs01/cfs/oauth/mytenant](https://cfs01/cfs/oauth/mytenant)\n    - Access token has valid \"aud\" claim\n        - if the \"aud\" claim value is equal to [https://cfs01/cfs/oauth/mytenant](https://cfs01/cfs/oauth/mytenant)\n    - Access token has valid \"iat\" claim\n        - if the \"iat\" claim value is before `Date.now()`\n    - Access token has valid \"exp\" claim\n        - if the \"exp\" claim value is after `Date.now()`\n    - Access token has valid \"nbf\" claim\n        - if the \"nbf\" claim value is before the \"exp\" claim value\n    - Access token has valid \"scope\" claim\n        - if the \"scope\" claim value is equal to openid email profile\n    - Access token is valid\n        - if all the above tests are passing\n    - Id token has valid \"iss\" claim\n        - if the \"iss\" claim value is equal to [https://cfs01/cfs/oauth/mytenant](https://cfs01/cfs/oauth/mytenant)\n    - Id token has valid \"aud\" claim\n        - if the \"aud\" claim value is equal to stLJwW9b3L5BPaiFFVx9cB\n    - Id token has valid \"iat\" claim\n        - if the \"iat\" claim value is before `Date.now()`\n    - Id token has valid \"exp\" claim\n        - if the \"exp\" claim value is after `Date.now()`\n    - Id token has valid \"nbf\" claim\n        - if the \"nbf\" claim value is before the \"exp\" claim value\n    - Id token has valid \"nonce\" claim\n        - if the \"nonce\" claim value is equal to xyz\n    - Id token is valid\n        - if all the above tests are passing\n    - Access token grants access to resources\n        - automatically send the \"UserInfo endpoint\" request to make sure that the `acess_token` is accepted by the server\n    - Refresh token grants new tokens\n        - automatically send the \"Refresh token\" request to make sure that the `refresh_token` can be used to retrieve new tokens"
-											},
-											"response": []
-										}
-									]
-								}
-							]
-						}
-					]
-				},
-				{
-					"name": "Implicit Flow + Hybrid Flow",
-					"item": [
-						{
-							"name": "Authorize",
-							"item": [
-								{
-									"name": "User denies consent",
-									"item": [
-										{
-											"name": "Authorize - id_token token",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"exec": [
-															"pmutils(pm).testCallbacks.testResponseStatus200or302();\r",
-															"\r",
-															"pmutils(pm).postDenyAuthorizeRequest(response => {\r",
-															"    const URL = require('url');\r",
-															"    const qs = require('querystring');\r",
-															"\r",
-															"    const responseLocation = response.headers.get('Location');\r",
-															"    const url = URL.parse(responseLocation);\r",
-															"    const queryStringValue = url.query;\r",
-															"    const queryString = qs.parse(queryStringValue);\r",
-															"\r",
-															"    pm.test(\"Response location has query string parameter \\\"error=access_denied\\\"\", () => {\r",
-															"        pm.expect(queryString).to.have.property('error', 'access_denied');\r",
-															"    });\r",
-															"});\r",
-															""
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"protocolProfileBehavior": {
-												"followRedirects": false
-											},
-											"request": {
-												"method": "GET",
-												"header": [],
-												"url": {
-													"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/authorize?scope={{scope}}&response_type=id_token token&redirect_uri=https://oauth.pstmn.io/v1/callback&client_id={{client_id}}&state={{state}}&nonce={{nonce}}",
-													"host": [
-														"{{CFS Master URL}}"
-													],
-													"path": [
-														"oauth",
-														"{{Tenant Name}}",
-														"authorize"
-													],
-													"query": [
-														{
-															"key": "scope",
-															"value": "{{scope}}"
-														},
-														{
-															"key": "response_type",
-															"value": "id_token token"
-														},
-														{
-															"key": "redirect_uri",
-															"value": "https://oauth.pstmn.io/v1/callback"
-														},
-														{
-															"key": "client_id",
-															"value": "{{client_id}}"
-														},
-														{
-															"key": "state",
-															"value": "{{state}}"
-														},
-														{
-															"key": "nonce",
-															"value": "{{nonce}}"
-														}
-													]
-												}
-											},
-											"response": []
-										}
-									],
-									"description": "These tests simulate the case where the user would deny consent, i.e. clicking the \"Cancel\" button on the consent screen\n\n<img src=\"https://content.pstmn.io/6258ac22-09a1-4f5b-8ecf-35a397b0c33c/aW1hZ2UucG5n\" alt=\"\" height=\"924\" width=\"1619\">"
-								}
-							]
-						}
-					]
-				}
-			]
-		},
-		{
 			"name": "Authorization code flow",
 			"item": [
 				{
@@ -4180,6 +2473,1613 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"access_token\": \"eyJhbGciOiJSUzI1NiIsImtpZCI6IjI0ZjAyYWNjLWM2NjItNDliYS04NmMxLWE4MmUxMjY5NGU3ZSIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxczJvOTg1bElmMkZhMkRpNVpnMG1KIiwic2NvcGUiOiJvcGVuaWQgZW1haWwgcHJvZmlsZSIsInRva2VuX3R5cGUiOiJiZWFyZXIiLCJjbGllbnRfaWQiOiIxczJvOTg1bElmMkZhMkRpNVpnMG1KIiwibmJmIjoxNzEwMzM4NTQzLCJleHAiOjE3MTAzMzg2NjMsImlhdCI6MTcxMDMzODU0MywiaXNzIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NDQzMDMvb2F1dGgvc3Rvcm13aW5kIiwiYXVkIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NDQzMDMvb2F1dGgvc3Rvcm13aW5kIn0.EsI-e_GP1ntXoOzk9nsIJUEjY3GtHJ8niZSUdCPQBYQp7JyncPysE27YdOIrf8y_9JWHLnSVhCToA6BnsxmoZJV1NLiwQ-HZHhi9jMC022RsPGm0pao41R6dYcKZA26xr2tnYDmutYXKMAgq5xWiapqYBY_2YkgwLp3ZNh618wQt2YOgdkXOlKSYG-tfu-kfHhEfJ5BD9yrT85jc0ZZfZFsjKJGlSZubs5KYiDifF5RSumDQPgfFYUJ6AsVrO-sYGOqE02VN6Qfwzmkq-PTC0zPnwqgUtRfTh41mbZ0H0kCg0-jq0WhU_jMREaVqJ9SJmc2RMI-z-ZdidLBXk7t1dA\",\n    \"token_type\": \"bearer\",\n    \"expires_in\": 120,\n    \"scope\": \"openid email profile\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Validations",
+			"item": [
+				{
+					"name": "Common",
+					"item": [
+						{
+							"name": "Authorize",
+							"item": [
+								{
+									"name": "Invalid client id",
+									"item": [
+										{
+											"name": "Authorize",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"const responseData = pm.response.json();\r",
+															"\r",
+															"pmutils(pm).testCallbacks.testResponseStatus(400);\r",
+															"\r",
+															"pm.test('Response body has error \"invalid_client\"', () => {\r",
+															"    pm.expect(responseData).to.have.property('error', 'invalid_client');\r",
+															"});\r",
+															"\r",
+															"pm.test('Response body has error_description', () => {\r",
+															"    pm.expect(responseData).to.have.property('error_description');\r",
+															"});\r",
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"protocolProfileBehavior": {
+												"followRedirects": false
+											},
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/authorize?response_type={{validations_common_response_type}}&client_id=invalidClientId&redirect_uri=https://oauth.pstmn.io/v1/callback&scope={{scope}}&state={{state}}&nonce={{nonce}}",
+													"host": [
+														"{{CFS Master URL}}"
+													],
+													"path": [
+														"oauth",
+														"{{Tenant Name}}",
+														"authorize"
+													],
+													"query": [
+														{
+															"key": "response_type",
+															"value": "{{validations_common_response_type}}"
+														},
+														{
+															"key": "client_id",
+															"value": "invalidClientId"
+														},
+														{
+															"key": "redirect_uri",
+															"value": "https://oauth.pstmn.io/v1/callback"
+														},
+														{
+															"key": "scope",
+															"value": "{{scope}}"
+														},
+														{
+															"key": "state",
+															"value": "{{state}}"
+														},
+														{
+															"key": "nonce",
+															"value": "{{nonce}}"
+														}
+													]
+												},
+												"description": "_If necessary, the consent screen will be automatically accepted. In a real use case, the user must click on the \"Accept\" button._\n\n- See the response `authorization_code` in the **Response -> Body -> Visualize** tab\n    - The `authorization_code` will be extracted from the callback url and set in the collection variables\n- See the test results in the **Response -> Test Results** tab\n    - The response status code is expected to be 302\n    - The `authorization_code` is expected to not be empty"
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "Invalid callback url",
+									"item": [
+										{
+											"name": "Authorize",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"const responseData = pm.response.json();\r",
+															"\r",
+															"pmutils(pm).testCallbacks.testResponseStatus(400);\r",
+															"\r",
+															"pm.test('Response body has error \"invalid_request\"', () => {\r",
+															"    pm.expect(responseData).to.have.property('error', 'invalid_request');\r",
+															"});\r",
+															"\r",
+															"pm.test('Response body has error_description', () => {\r",
+															"    pm.expect(responseData).to.have.property('error_description');\r",
+															"});\r",
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"protocolProfileBehavior": {
+												"followRedirects": false
+											},
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/authorize?response_type={{validations_common_response_type}}&client_id={{client_id}}&redirect_uri=https://invalid.callback.url.example.com/callback&scope={{scope}}&state={{state}}&nonce={{nonce}}",
+													"host": [
+														"{{CFS Master URL}}"
+													],
+													"path": [
+														"oauth",
+														"{{Tenant Name}}",
+														"authorize"
+													],
+													"query": [
+														{
+															"key": "response_type",
+															"value": "{{validations_common_response_type}}"
+														},
+														{
+															"key": "client_id",
+															"value": "{{client_id}}"
+														},
+														{
+															"key": "redirect_uri",
+															"value": "https://invalid.callback.url.example.com/callback"
+														},
+														{
+															"key": "scope",
+															"value": "{{scope}}"
+														},
+														{
+															"key": "state",
+															"value": "{{state}}"
+														},
+														{
+															"key": "nonce",
+															"value": "{{nonce}}"
+														}
+													]
+												},
+												"description": "_If necessary, the consent screen will be automatically accepted. In a real use case, the user must click on the \"Accept\" button._\n\n- See the response `authorization_code` in the **Response -> Body -> Visualize** tab\n    - The `authorization_code` will be extracted from the callback url and set in the collection variables\n- See the test results in the **Response -> Test Results** tab\n    - The response status code is expected to be 302\n    - The `authorization_code` is expected to not be empty"
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "Invalid scope(s) only",
+									"item": [
+										{
+											"name": "Authorize",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"const responseData = pm.response.json();\r",
+															"\r",
+															"pmutils(pm).testCallbacks.testResponseStatus(400);\r",
+															"\r",
+															"pm.test('Response body has error \"invalid_scope\"', () => {\r",
+															"    pm.expect(responseData).to.have.property('error', 'invalid_scope');\r",
+															"});\r",
+															"\r",
+															"pm.test('Response body has error_description', () => {\r",
+															"    pm.expect(responseData).to.have.property('error_description');\r",
+															"});\r",
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"protocolProfileBehavior": {
+												"followRedirects": false
+											},
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/authorize?response_type={{validations_common_response_type}}&client_id={{client_id}}&redirect_uri=https://oauth.pstmn.io/v1/callback&scope=invalidScope&state={{state}}&nonce={{nonce}}",
+													"host": [
+														"{{CFS Master URL}}"
+													],
+													"path": [
+														"oauth",
+														"{{Tenant Name}}",
+														"authorize"
+													],
+													"query": [
+														{
+															"key": "response_type",
+															"value": "{{validations_common_response_type}}"
+														},
+														{
+															"key": "client_id",
+															"value": "{{client_id}}"
+														},
+														{
+															"key": "redirect_uri",
+															"value": "https://oauth.pstmn.io/v1/callback"
+														},
+														{
+															"key": "scope",
+															"value": "invalidScope"
+														},
+														{
+															"key": "state",
+															"value": "{{state}}"
+														},
+														{
+															"key": "nonce",
+															"value": "{{nonce}}"
+														}
+													]
+												},
+												"description": "_If necessary, the consent screen will be automatically accepted. In a real use case, the user must click on the \"Accept\" button._\n\n- See the response `authorization_code` in the **Response -> Body -> Visualize** tab\n    - The `authorization_code` will be extracted from the callback url and set in the collection variables\n- See the test results in the **Response -> Test Results** tab\n    - The response status code is expected to be 302\n    - The `authorization_code` is expected to not be empty"
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "Expired access token",
+									"item": [
+										{
+											"name": "Authorize",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pmutils(pm).testCallbacks.testResponseStatus200or302();\r",
+															"\r",
+															"pmutils(pm).postConfirmAuthorizeRequestIfNecessaryThenSetTokens('hash', ({ access_token, id_token }) => {\r",
+															"    const atob = require('atob');\r",
+															"    const jwtPayload = JSON.parse(atob(access_token.split('.')[1]));\r",
+															"    const exp = jwtPayload.exp;\r",
+															"    // Wait until exp + 1 second\r",
+															"    const wait = (exp * 1000 - Date.now()) + 1000;\r",
+															"\r",
+															"    console.log(`Waiting ${wait}ms for access token to expire...`);\r",
+															"    setTimeout(() => {\r",
+															"        pm.sendRequest(\r",
+															"            {\r",
+															"                url: pm.variables.get('CFS Master URL') + '/oauth/' + pm.variables.get('Tenant Name') + '/userinfo',\r",
+															"                method: 'GET',\r",
+															"                header: {\r",
+															"                    Authorization: 'Bearer ' + access_token\r",
+															"                }\r",
+															"            },\r",
+															"            (err, response) => {\r",
+															"                pm.test(\"Expired access token does not grant access to resources\", () => {\r",
+															"                    pm.expect(err).to.be.null;\r",
+															"                    if (err) {\r",
+															"                        console.error(err);\r",
+															"                        return;\r",
+															"                    }\r",
+															"\r",
+															"                    pm.expect(response.code).to.be.equal(401);\r",
+															"                });\r",
+															"            }\r",
+															"        );\r",
+															"    }, wait);\r",
+															"});\r",
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"protocolProfileBehavior": {
+												"followRedirects": false
+											},
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/authorize?response_type=token&redirect_uri=https://oauth.pstmn.io/v1/callback&client_id={{client_id}}&scope={{scope}}&state={{state}}&nonce={{nonce}}",
+													"host": [
+														"{{CFS Master URL}}"
+													],
+													"path": [
+														"oauth",
+														"{{Tenant Name}}",
+														"authorize"
+													],
+													"query": [
+														{
+															"key": "response_type",
+															"value": "token"
+														},
+														{
+															"key": "redirect_uri",
+															"value": "https://oauth.pstmn.io/v1/callback"
+														},
+														{
+															"key": "client_id",
+															"value": "{{client_id}}"
+														},
+														{
+															"key": "scope",
+															"value": "{{scope}}"
+														},
+														{
+															"key": "state",
+															"value": "{{state}}"
+														},
+														{
+															"key": "nonce",
+															"value": "{{nonce}}"
+														}
+													]
+												},
+												"description": "_The consent screen will be automatically accepted. In a real use case, the user must click on the \"Accept\" button._\n\n- See the response `access_token`, `id_token` in the **Response -> Body -> Visualize** tab\n    - The `access_token`, `id_token` will be extracted from the callback url and set in the collection variables\n- See the test results in the **Response -> Test Results** tab\n    - The response status code is expected to be 200 because we're always getting the consent form back in the case of Implicit Flow\n    - Access token has valid \"iss\" claim\n        - if the \"iss\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Access token has valid \"aud\" claim\n        - if the \"aud\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Access token has valid \"iat\" claim\n        - if the \"iat\" claim value is before `Date.now()`\n    - Access token has valid \"exp\" claim\n        - if the \"exp\" claim value is after `Date.now()`\n    - Access token has valid \"nbf\" claim\n        - if the \"nbf\" claim value is before the \"exp\" claim value\n    - Access token has valid \"scope\" claim\n        - if the \"scope\" claim value is equal to {{scope}}\n    - Access token is valid\n        - if all the above tests are passing\n    - Id token has valid \"iss\" claim\n        - if the \"iss\" claim value is equal to [https://cfs01/cfs/oauth/mytenant](https://cfs01/cfs/oauth/mytenant)\n    - Id token has valid \"aud\" claim\n        - if the \"aud\" claim value is equal to stLJwW9b3L5BPaiFFVx9cB\n    - Id token has valid \"iat\" claim\n        - if the \"iat\" claim value is before `Date.now()`\n    - Id token has valid \"exp\" claim\n        - if the \"exp\" claim value is after `Date.now()`\n    - Id token has valid \"nbf\" claim\n        - if the \"nbf\" claim value is before the \"exp\" claim value\n    - Id token has valid \"nonce\" claim\n        - if the \"nonce\" claim value is equal to xyz\n    - Id token is valid\n        - if all the above tests are passing"
+											},
+											"response": []
+										}
+									]
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Authorization code flow + Authorization code flow with PKCE + Hybrid Flow",
+					"item": [
+						{
+							"name": "Token",
+							"item": [
+								{
+									"name": "Invalid authorization code",
+									"item": [
+										{
+											"name": "Request for tokens",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pmutils(pm).testCallbacks.testResponseStatus(400);\r",
+															"\r",
+															"const responseData = pm.response.json();\r",
+															"\r",
+															"pm.test('Response body has error \"invalid_grant\"', () => {\r",
+															"    pm.expect(responseData).to.have.property('error', 'invalid_grant');\r",
+															"});\r",
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "urlencoded",
+													"urlencoded": [
+														{
+															"key": "redirect_uri",
+															"value": "https://oauth.pstmn.io/v1/callback",
+															"type": "text"
+														},
+														{
+															"key": "code",
+															"value": "invalidAuthorizationCode",
+															"type": "text"
+														},
+														{
+															"key": "grant_type",
+															"value": "authorization_code",
+															"type": "text"
+														},
+														{
+															"key": "client_id",
+															"value": "{{client_id}}",
+															"type": "text"
+														},
+														{
+															"key": "client_secret",
+															"value": "{{client_secret}}",
+															"type": "text"
+														},
+														{
+															"key": "state",
+															"value": "{{state}}",
+															"type": "text"
+														}
+													]
+												},
+												"url": {
+													"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token",
+													"host": [
+														"{{CFS Master URL}}"
+													],
+													"path": [
+														"oauth",
+														"{{Tenant Name}}",
+														"token"
+													]
+												},
+												"description": "- See the response `access_token`, `id_token`, `refresh_token`, etc. in the **Response -> Body -> Pretty** tab\n    - The `acess_token`, `id_token`, `refresh_token` will be extracted from the response and set in the collection variables\n- See the test results in the **Response -> Test Results** tab\n    - The response status code is expected to be 200\n    - Access token has valid \"iss\" claim\n        - if the \"iss\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Access token has valid \"aud\" claim\n        - if the \"aud\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Access token has valid \"iat\" claim\n        - if the \"iat\" claim value is before `Date.now()`\n    - Access token has valid \"exp\" claim\n        - if the \"exp\" claim value is after `Date.now()`\n    - Access token has valid \"nbf\" claim\n        - if the \"nbf\" claim value is before the \"exp\" claim value\n    - Access token has valid \"scope\" claim\n        - if the \"scope\" claim value is equal to {{scope}}\n    - Access token is valid\n        - if all the above tests are passing\n    - Id token has valid \"iss\" claim\n        - if the \"iss\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Id token has valid \"aud\" claim\n        - if the \"aud\" claim value is equal to {{client_id}}\n    - Id token has valid \"iat\" claim\n        - if the \"iat\" claim value is before `Date.now()`\n    - Id token has valid \"exp\" claim\n        - if the \"exp\" claim value is after `Date.now()`\n    - Id token has valid \"nbf\" claim\n        - if the \"nbf\" claim value is before the \"exp\" claim value\n    - Id token has valid \"nonce\" claim\n        - if the \"nonce\" claim value is equal to {{nonce}}\n    - Id token is valid\n        - if all the above tests are passing\n    - Access token grants access to resources\n        - automatically send the \"UserInfo endpoint\" request to make sure that the `acess_token` is accepted by the server\n    - Refresh token grants new tokens\n        - automatically send the \"Refresh token\" request to make sure that the `refresh_token` can be used to retrieve new tokens"
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "Invalid client id",
+									"item": [
+										{
+											"name": "Authorize",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pmutils(pm).testCallbacks.testResponseStatus200or302();\r",
+															"\r",
+															"pmutils(pm).postConfirmAuthorizeRequestIfNecessaryThenSetTokens('query', ({ authorization_code }) => {\r",
+															"    pmutils(pm).testCallbacks.testAuthorizationCode(authorization_code);\r",
+															"});\r",
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"protocolProfileBehavior": {
+												"followRedirects": false
+											},
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/authorize?response_type=code&client_id={{client_id}}&redirect_uri=https://oauth.pstmn.io/v1/callback&scope={{scope}}&state={{state}}&nonce={{nonce}}",
+													"host": [
+														"{{CFS Master URL}}"
+													],
+													"path": [
+														"oauth",
+														"{{Tenant Name}}",
+														"authorize"
+													],
+													"query": [
+														{
+															"key": "response_type",
+															"value": "code"
+														},
+														{
+															"key": "client_id",
+															"value": "{{client_id}}"
+														},
+														{
+															"key": "redirect_uri",
+															"value": "https://oauth.pstmn.io/v1/callback"
+														},
+														{
+															"key": "scope",
+															"value": "{{scope}}"
+														},
+														{
+															"key": "state",
+															"value": "{{state}}"
+														},
+														{
+															"key": "nonce",
+															"value": "{{nonce}}"
+														}
+													]
+												},
+												"description": "_If necessary, the consent screen will be automatically accepted. In a real use case, the user must click on the \"Accept\" button._\n\n- See the response `authorization_code` in the **Response -> Body -> Visualize** tab\n    - The `authorization_code` will be extracted from the callback url and set in the collection variables\n- See the test results in the **Response -> Test Results** tab\n    - The response status code is expected to be 302\n    - The `authorization_code` is expected to not be empty"
+											},
+											"response": []
+										},
+										{
+											"name": "Request for tokens",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pmutils(pm).testCallbacks.testResponseStatus(400);\r",
+															"\r",
+															"const responseData = pm.response.json();\r",
+															"\r",
+															"pm.test('Response body has error \"invalid_client\"', () => {\r",
+															"    pm.expect(responseData).to.have.property('error', 'invalid_client');\r",
+															"});\r",
+															"\r",
+															"pm.test('Response body has error_description', () => {\r",
+															"    pm.expect(responseData).to.have.property('error_description');\r",
+															"});\r",
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "urlencoded",
+													"urlencoded": [
+														{
+															"key": "redirect_uri",
+															"value": "https://oauth.pstmn.io/v1/callback",
+															"type": "text"
+														},
+														{
+															"key": "code",
+															"value": "{{authorization_code}}",
+															"type": "text"
+														},
+														{
+															"key": "grant_type",
+															"value": "authorization_code",
+															"type": "text"
+														},
+														{
+															"key": "client_id",
+															"value": "invalidClientId",
+															"type": "text"
+														},
+														{
+															"key": "client_secret",
+															"value": "{{client_secret}}",
+															"type": "text"
+														},
+														{
+															"key": "state",
+															"value": "{{state}}",
+															"type": "text"
+														}
+													]
+												},
+												"url": {
+													"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token",
+													"host": [
+														"{{CFS Master URL}}"
+													],
+													"path": [
+														"oauth",
+														"{{Tenant Name}}",
+														"token"
+													]
+												},
+												"description": "- See the response `access_token`, `id_token`, `refresh_token`, etc. in the **Response -> Body -> Pretty** tab\n    - The `acess_token`, `id_token`, `refresh_token` will be extracted from the response and set in the collection variables\n- See the test results in the **Response -> Test Results** tab\n    - The response status code is expected to be 200\n    - Access token has valid \"iss\" claim\n        - if the \"iss\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Access token has valid \"aud\" claim\n        - if the \"aud\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Access token has valid \"iat\" claim\n        - if the \"iat\" claim value is before `Date.now()`\n    - Access token has valid \"exp\" claim\n        - if the \"exp\" claim value is after `Date.now()`\n    - Access token has valid \"nbf\" claim\n        - if the \"nbf\" claim value is before the \"exp\" claim value\n    - Access token has valid \"scope\" claim\n        - if the \"scope\" claim value is equal to {{scope}}\n    - Access token is valid\n        - if all the above tests are passing\n    - Id token has valid \"iss\" claim\n        - if the \"iss\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Id token has valid \"aud\" claim\n        - if the \"aud\" claim value is equal to {{client_id}}\n    - Id token has valid \"iat\" claim\n        - if the \"iat\" claim value is before `Date.now()`\n    - Id token has valid \"exp\" claim\n        - if the \"exp\" claim value is after `Date.now()`\n    - Id token has valid \"nbf\" claim\n        - if the \"nbf\" claim value is before the \"exp\" claim value\n    - Id token has valid \"nonce\" claim\n        - if the \"nonce\" claim value is equal to {{nonce}}\n    - Id token is valid\n        - if all the above tests are passing\n    - Access token grants access to resources\n        - automatically send the \"UserInfo endpoint\" request to make sure that the `acess_token` is accepted by the server\n    - Refresh token grants new tokens\n        - automatically send the \"Refresh token\" request to make sure that the `refresh_token` can be used to retrieve new tokens"
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "Invalid client secret",
+									"item": [
+										{
+											"name": "Authorize",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pmutils(pm).testCallbacks.testResponseStatus200or302();\r",
+															"\r",
+															"pmutils(pm).postConfirmAuthorizeRequestIfNecessaryThenSetTokens('query', ({ authorization_code }) => {\r",
+															"    pmutils(pm).testCallbacks.testAuthorizationCode(authorization_code);\r",
+															"});\r",
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"protocolProfileBehavior": {
+												"followRedirects": false
+											},
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/authorize?response_type=code&client_id={{client_id}}&redirect_uri=https://oauth.pstmn.io/v1/callback&scope={{scope}}&state={{state}}&nonce={{nonce}}",
+													"host": [
+														"{{CFS Master URL}}"
+													],
+													"path": [
+														"oauth",
+														"{{Tenant Name}}",
+														"authorize"
+													],
+													"query": [
+														{
+															"key": "response_type",
+															"value": "code"
+														},
+														{
+															"key": "client_id",
+															"value": "{{client_id}}"
+														},
+														{
+															"key": "redirect_uri",
+															"value": "https://oauth.pstmn.io/v1/callback"
+														},
+														{
+															"key": "scope",
+															"value": "{{scope}}"
+														},
+														{
+															"key": "state",
+															"value": "{{state}}"
+														},
+														{
+															"key": "nonce",
+															"value": "{{nonce}}"
+														}
+													]
+												},
+												"description": "_If necessary, the consent screen will be automatically accepted. In a real use case, the user must click on the \"Accept\" button._\n\n- See the response `authorization_code` in the **Response -> Body -> Visualize** tab\n    - The `authorization_code` will be extracted from the callback url and set in the collection variables\n- See the test results in the **Response -> Test Results** tab\n    - The response status code is expected to be 302\n    - The `authorization_code` is expected to not be empty"
+											},
+											"response": []
+										},
+										{
+											"name": "Request for tokens",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pmutils(pm).testCallbacks.testResponseStatus(401);\r",
+															"\r",
+															"const responseData = pm.response.json();\r",
+															"\r",
+															"pm.test('Response body has error \"invalid_client\"', () => {\r",
+															"    pm.expect(responseData).to.have.property('error', 'invalid_client');\r",
+															"});\r",
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "urlencoded",
+													"urlencoded": [
+														{
+															"key": "redirect_uri",
+															"value": "https://oauth.pstmn.io/v1/callback",
+															"type": "text"
+														},
+														{
+															"key": "code",
+															"value": "{{authorization_code}}",
+															"type": "text"
+														},
+														{
+															"key": "grant_type",
+															"value": "authorization_code",
+															"type": "text"
+														},
+														{
+															"key": "client_id",
+															"value": "{{client_id}}",
+															"type": "text"
+														},
+														{
+															"key": "client_secret",
+															"value": "invalidClientSecret",
+															"type": "text"
+														},
+														{
+															"key": "state",
+															"value": "{{state}}",
+															"type": "text"
+														}
+													]
+												},
+												"url": {
+													"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token",
+													"host": [
+														"{{CFS Master URL}}"
+													],
+													"path": [
+														"oauth",
+														"{{Tenant Name}}",
+														"token"
+													]
+												},
+												"description": "- See the response `access_token`, `id_token`, `refresh_token`, etc. in the **Response -> Body -> Pretty** tab\n    - The `acess_token`, `id_token`, `refresh_token` will be extracted from the response and set in the collection variables\n- See the test results in the **Response -> Test Results** tab\n    - The response status code is expected to be 200\n    - Access token has valid \"iss\" claim\n        - if the \"iss\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Access token has valid \"aud\" claim\n        - if the \"aud\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Access token has valid \"iat\" claim\n        - if the \"iat\" claim value is before `Date.now()`\n    - Access token has valid \"exp\" claim\n        - if the \"exp\" claim value is after `Date.now()`\n    - Access token has valid \"nbf\" claim\n        - if the \"nbf\" claim value is before the \"exp\" claim value\n    - Access token has valid \"scope\" claim\n        - if the \"scope\" claim value is equal to {{scope}}\n    - Access token is valid\n        - if all the above tests are passing\n    - Id token has valid \"iss\" claim\n        - if the \"iss\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Id token has valid \"aud\" claim\n        - if the \"aud\" claim value is equal to {{client_id}}\n    - Id token has valid \"iat\" claim\n        - if the \"iat\" claim value is before `Date.now()`\n    - Id token has valid \"exp\" claim\n        - if the \"exp\" claim value is after `Date.now()`\n    - Id token has valid \"nbf\" claim\n        - if the \"nbf\" claim value is before the \"exp\" claim value\n    - Id token has valid \"nonce\" claim\n        - if the \"nonce\" claim value is equal to {{nonce}}\n    - Id token is valid\n        - if all the above tests are passing\n    - Access token grants access to resources\n        - automatically send the \"UserInfo endpoint\" request to make sure that the `acess_token` is accepted by the server\n    - Refresh token grants new tokens\n        - automatically send the \"Refresh token\" request to make sure that the `refresh_token` can be used to retrieve new tokens"
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "Invalid scope(s) + valid scope(s)",
+									"item": [
+										{
+											"name": "Authorize",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pmutils(pm).testCallbacks.testResponseStatus200or302();\r",
+															"\r",
+															"pmutils(pm).postConfirmAuthorizeRequestIfNecessaryThenSetTokens('query', ({ authorization_code }) => {\r",
+															"    pmutils(pm).testCallbacks.testAuthorizationCode(authorization_code);\r",
+															"});\r",
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"protocolProfileBehavior": {
+												"followRedirects": false
+											},
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/authorize?response_type=code&client_id={{client_id}}&redirect_uri=https://oauth.pstmn.io/v1/callback&scope=openid email invalidScope&state={{state}}&nonce={{nonce}}",
+													"host": [
+														"{{CFS Master URL}}"
+													],
+													"path": [
+														"oauth",
+														"{{Tenant Name}}",
+														"authorize"
+													],
+													"query": [
+														{
+															"key": "response_type",
+															"value": "code"
+														},
+														{
+															"key": "client_id",
+															"value": "{{client_id}}"
+														},
+														{
+															"key": "redirect_uri",
+															"value": "https://oauth.pstmn.io/v1/callback"
+														},
+														{
+															"key": "scope",
+															"value": "openid email invalidScope"
+														},
+														{
+															"key": "state",
+															"value": "{{state}}"
+														},
+														{
+															"key": "nonce",
+															"value": "{{nonce}}"
+														}
+													]
+												},
+												"description": "_If necessary, the consent screen will be automatically accepted. In a real use case, the user must click on the \"Accept\" button._\n\n- See the response `authorization_code` in the **Response -> Body -> Visualize** tab\n    - The `authorization_code` will be extracted from the callback url and set in the collection variables\n- See the test results in the **Response -> Test Results** tab\n    - The response status code is expected to be 302\n    - The `authorization_code` is expected to not be empty"
+											},
+											"response": []
+										},
+										{
+											"name": "Request for tokens",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pmutils(pm).testCallbacks.testResponseStatus200();\r",
+															"\r",
+															"const responseData = pm.response.json();\r",
+															"\r",
+															"pmutils(pm).testCallbacks.testAccessToken(responseData.access_token, {\r",
+															"    expectedScopes: ['openid', 'email']\r",
+															"});\r",
+															"pmutils(pm).testCallbacks.testIdToken(responseData.id_token);\r",
+															"\r",
+															"pm.collectionVariables.set(\"access_token\", responseData.access_token);\r",
+															"pm.collectionVariables.set(\"id_token\", responseData.id_token);\r",
+															"pm.collectionVariables.set(\"refresh_token\", responseData.refresh_token);\r",
+															"\r",
+															"pmutils(pm).testCallbacks.testAccessTokenGrantsAccessToResources(responseData.access_token);\r",
+															"pmutils(pm).testCallbacks.testRefreshTokenRefreshesTokens(responseData.refresh_token);\r",
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "urlencoded",
+													"urlencoded": [
+														{
+															"key": "redirect_uri",
+															"value": "https://oauth.pstmn.io/v1/callback",
+															"type": "text"
+														},
+														{
+															"key": "code",
+															"value": "{{authorization_code}}",
+															"type": "text"
+														},
+														{
+															"key": "grant_type",
+															"value": "authorization_code",
+															"type": "text"
+														},
+														{
+															"key": "client_id",
+															"value": "{{client_id}}",
+															"type": "text"
+														},
+														{
+															"key": "client_secret",
+															"value": "{{client_secret}}",
+															"type": "text"
+														},
+														{
+															"key": "state",
+															"value": "{{state}}",
+															"type": "text"
+														}
+													]
+												},
+												"url": {
+													"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token",
+													"host": [
+														"{{CFS Master URL}}"
+													],
+													"path": [
+														"oauth",
+														"{{Tenant Name}}",
+														"token"
+													]
+												},
+												"description": "- See the response `access_token`, `id_token`, `refresh_token`, etc. in the **Response -> Body -> Pretty** tab\n    - The `acess_token`, `id_token`, `refresh_token` will be extracted from the response and set in the collection variables\n- See the test results in the **Response -> Test Results** tab\n    - The response status code is expected to be 200\n    - Access token has valid \"iss\" claim\n        - if the \"iss\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Access token has valid \"aud\" claim\n        - if the \"aud\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Access token has valid \"iat\" claim\n        - if the \"iat\" claim value is before `Date.now()`\n    - Access token has valid \"exp\" claim\n        - if the \"exp\" claim value is after `Date.now()`\n    - Access token has valid \"nbf\" claim\n        - if the \"nbf\" claim value is before the \"exp\" claim value\n    - Access token has valid \"scope\" claim\n        - if the \"scope\" claim value is equal to {{scope}}\n    - Access token is valid\n        - if all the above tests are passing\n    - Id token has valid \"iss\" claim\n        - if the \"iss\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Id token has valid \"aud\" claim\n        - if the \"aud\" claim value is equal to {{client_id}}\n    - Id token has valid \"iat\" claim\n        - if the \"iat\" claim value is before `Date.now()`\n    - Id token has valid \"exp\" claim\n        - if the \"exp\" claim value is after `Date.now()`\n    - Id token has valid \"nbf\" claim\n        - if the \"nbf\" claim value is before the \"exp\" claim value\n    - Id token has valid \"nonce\" claim\n        - if the \"nonce\" claim value is equal to {{nonce}}\n    - Id token is valid\n        - if all the above tests are passing\n    - Access token grants access to resources\n        - automatically send the \"UserInfo endpoint\" request to make sure that the `acess_token` is accepted by the server\n    - Refresh token grants new tokens\n        - automatically send the \"Refresh token\" request to make sure that the `refresh_token` can be used to retrieve new tokens"
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "Invalid response access token",
+									"item": [
+										{
+											"name": "Authorize",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pmutils(pm).testCallbacks.testResponseStatus200or302();\r",
+															"\r",
+															"pmutils(pm).postConfirmAuthorizeRequestIfNecessaryThenSetTokens('query', ({ authorization_code }) => {\r",
+															"    pmutils(pm).testCallbacks.testAuthorizationCode(authorization_code);\r",
+															"});\r",
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"protocolProfileBehavior": {
+												"followRedirects": false
+											},
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/authorize?response_type=code&client_id={{client_id}}&redirect_uri=https://oauth.pstmn.io/v1/callback&scope={{scope}}&state={{state}}&nonce={{nonce}}",
+													"host": [
+														"{{CFS Master URL}}"
+													],
+													"path": [
+														"oauth",
+														"{{Tenant Name}}",
+														"authorize"
+													],
+													"query": [
+														{
+															"key": "response_type",
+															"value": "code"
+														},
+														{
+															"key": "client_id",
+															"value": "{{client_id}}"
+														},
+														{
+															"key": "redirect_uri",
+															"value": "https://oauth.pstmn.io/v1/callback"
+														},
+														{
+															"key": "scope",
+															"value": "{{scope}}"
+														},
+														{
+															"key": "state",
+															"value": "{{state}}"
+														},
+														{
+															"key": "nonce",
+															"value": "{{nonce}}"
+														}
+													]
+												},
+												"description": "_If necessary, the consent screen will be automatically accepted. In a real use case, the user must click on the \"Accept\" button._\n\n- See the response `authorization_code` in the **Response -> Body -> Visualize** tab\n    - The `authorization_code` will be extracted from the callback url and set in the collection variables\n- See the test results in the **Response -> Test Results** tab\n    - The response status code is expected to be 302\n    - The `authorization_code` is expected to not be empty"
+											},
+											"response": []
+										},
+										{
+											"name": "Request for tokens",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pmutils(pm).testCallbacks.testResponseStatus200();\r",
+															"\r",
+															"// pretend the server responded with an invalid access token\r",
+															"const access_token = \"invalidAccessToken\";\r",
+															"pm.test(\"Invalid access token decoding fails\", () => {\r",
+															"    const atob = require('atob');\r",
+															"\r",
+															"    pm.expect(() => JSON.parse(atob(access_token))).to.throw();\r",
+															"});\r",
+															"\r",
+															"pm.sendRequest(\r",
+															"    {\r",
+															"        url: pm.variables.get('CFS Master URL') + '/oauth/' + pm.variables.get('Tenant Name') + '/userinfo',\r",
+															"        method: 'GET',\r",
+															"        header: {\r",
+															"            Authorization: 'Bearer ' + access_token\r",
+															"        }\r",
+															"    },\r",
+															"    (err, response) => {\r",
+															"        pm.test(\"Invalid access token does not grant access to resources\", () => {\r",
+															"            pm.expect(err).to.be.null;\r",
+															"            if (err) {\r",
+															"                console.error(err);\r",
+															"                return;\r",
+															"            }\r",
+															"\r",
+															"            pm.expect(response.code).to.be.equal(401);\r",
+															"        });\r",
+															"    }\r",
+															");\r",
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "urlencoded",
+													"urlencoded": [
+														{
+															"key": "redirect_uri",
+															"value": "https://oauth.pstmn.io/v1/callback",
+															"type": "text"
+														},
+														{
+															"key": "code",
+															"value": "{{authorization_code}}",
+															"type": "text"
+														},
+														{
+															"key": "grant_type",
+															"value": "authorization_code",
+															"type": "text"
+														},
+														{
+															"key": "client_id",
+															"value": "{{client_id}}",
+															"type": "text"
+														},
+														{
+															"key": "client_secret",
+															"value": "{{client_secret}}",
+															"type": "text"
+														},
+														{
+															"key": "state",
+															"value": "{{state}}",
+															"type": "text"
+														}
+													]
+												},
+												"url": {
+													"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token",
+													"host": [
+														"{{CFS Master URL}}"
+													],
+													"path": [
+														"oauth",
+														"{{Tenant Name}}",
+														"token"
+													]
+												},
+												"description": "- See the response `access_token`, `id_token`, `refresh_token`, etc. in the **Response -> Body -> Pretty** tab\n    - The `acess_token`, `id_token`, `refresh_token` will be extracted from the response and set in the collection variables\n- See the test results in the **Response -> Test Results** tab\n    - The response status code is expected to be 200\n    - Access token has valid \"iss\" claim\n        - if the \"iss\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Access token has valid \"aud\" claim\n        - if the \"aud\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Access token has valid \"iat\" claim\n        - if the \"iat\" claim value is before `Date.now()`\n    - Access token has valid \"exp\" claim\n        - if the \"exp\" claim value is after `Date.now()`\n    - Access token has valid \"nbf\" claim\n        - if the \"nbf\" claim value is before the \"exp\" claim value\n    - Access token has valid \"scope\" claim\n        - if the \"scope\" claim value is equal to {{scope}}\n    - Access token is valid\n        - if all the above tests are passing\n    - Id token has valid \"iss\" claim\n        - if the \"iss\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Id token has valid \"aud\" claim\n        - if the \"aud\" claim value is equal to {{client_id}}\n    - Id token has valid \"iat\" claim\n        - if the \"iat\" claim value is before `Date.now()`\n    - Id token has valid \"exp\" claim\n        - if the \"exp\" claim value is after `Date.now()`\n    - Id token has valid \"nbf\" claim\n        - if the \"nbf\" claim value is before the \"exp\" claim value\n    - Id token has valid \"nonce\" claim\n        - if the \"nonce\" claim value is equal to {{nonce}}\n    - Id token is valid\n        - if all the above tests are passing\n    - Access token grants access to resources\n        - automatically send the \"UserInfo endpoint\" request to make sure that the `acess_token` is accepted by the server\n    - Refresh token grants new tokens\n        - automatically send the \"Refresh token\" request to make sure that the `refresh_token` can be used to retrieve new tokens"
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "Invalid response id token",
+									"item": [
+										{
+											"name": "Authorize",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pmutils(pm).testCallbacks.testResponseStatus200or302();\r",
+															"\r",
+															"pmutils(pm).postConfirmAuthorizeRequestIfNecessaryThenSetTokens('query', ({ authorization_code }) => {\r",
+															"    pmutils(pm).testCallbacks.testAuthorizationCode(authorization_code);\r",
+															"});\r",
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"protocolProfileBehavior": {
+												"followRedirects": false
+											},
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/authorize?response_type=code&client_id={{client_id}}&redirect_uri=https://oauth.pstmn.io/v1/callback&scope={{scope}}&state={{state}}&nonce={{nonce}}",
+													"host": [
+														"{{CFS Master URL}}"
+													],
+													"path": [
+														"oauth",
+														"{{Tenant Name}}",
+														"authorize"
+													],
+													"query": [
+														{
+															"key": "response_type",
+															"value": "code"
+														},
+														{
+															"key": "client_id",
+															"value": "{{client_id}}"
+														},
+														{
+															"key": "redirect_uri",
+															"value": "https://oauth.pstmn.io/v1/callback"
+														},
+														{
+															"key": "scope",
+															"value": "{{scope}}"
+														},
+														{
+															"key": "state",
+															"value": "{{state}}"
+														},
+														{
+															"key": "nonce",
+															"value": "{{nonce}}"
+														}
+													]
+												},
+												"description": "_If necessary, the consent screen will be automatically accepted. In a real use case, the user must click on the \"Accept\" button._\n\n- See the response `authorization_code` in the **Response -> Body -> Visualize** tab\n    - The `authorization_code` will be extracted from the callback url and set in the collection variables\n- See the test results in the **Response -> Test Results** tab\n    - The response status code is expected to be 302\n    - The `authorization_code` is expected to not be empty"
+											},
+											"response": []
+										},
+										{
+											"name": "Request for tokens",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pmutils(pm).testCallbacks.testResponseStatus200();\r",
+															"\r",
+															"// pretend the server responded with an invalid id token\r",
+															"const id_token = \"invalidIdToken\";\r",
+															"pm.test(\"Invalid id token decoding fails\", () => {\r",
+															"    const atob = require('atob');\r",
+															"\r",
+															"    pm.expect(() => JSON.parse(atob(id_token))).to.throw();\r",
+															"});\r",
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "urlencoded",
+													"urlencoded": [
+														{
+															"key": "redirect_uri",
+															"value": "https://oauth.pstmn.io/v1/callback",
+															"type": "text"
+														},
+														{
+															"key": "code",
+															"value": "{{authorization_code}}",
+															"type": "text"
+														},
+														{
+															"key": "grant_type",
+															"value": "authorization_code",
+															"type": "text"
+														},
+														{
+															"key": "client_id",
+															"value": "{{client_id}}",
+															"type": "text"
+														},
+														{
+															"key": "client_secret",
+															"value": "{{client_secret}}",
+															"type": "text"
+														},
+														{
+															"key": "state",
+															"value": "{{state}}",
+															"type": "text"
+														}
+													]
+												},
+												"url": {
+													"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token",
+													"host": [
+														"{{CFS Master URL}}"
+													],
+													"path": [
+														"oauth",
+														"{{Tenant Name}}",
+														"token"
+													]
+												},
+												"description": "- See the response `access_token`, `id_token`, `refresh_token`, etc. in the **Response -> Body -> Pretty** tab\n    - The `acess_token`, `id_token`, `refresh_token` will be extracted from the response and set in the collection variables\n- See the test results in the **Response -> Test Results** tab\n    - The response status code is expected to be 200\n    - Access token has valid \"iss\" claim\n        - if the \"iss\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Access token has valid \"aud\" claim\n        - if the \"aud\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Access token has valid \"iat\" claim\n        - if the \"iat\" claim value is before `Date.now()`\n    - Access token has valid \"exp\" claim\n        - if the \"exp\" claim value is after `Date.now()`\n    - Access token has valid \"nbf\" claim\n        - if the \"nbf\" claim value is before the \"exp\" claim value\n    - Access token has valid \"scope\" claim\n        - if the \"scope\" claim value is equal to {{scope}}\n    - Access token is valid\n        - if all the above tests are passing\n    - Id token has valid \"iss\" claim\n        - if the \"iss\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Id token has valid \"aud\" claim\n        - if the \"aud\" claim value is equal to {{client_id}}\n    - Id token has valid \"iat\" claim\n        - if the \"iat\" claim value is before `Date.now()`\n    - Id token has valid \"exp\" claim\n        - if the \"exp\" claim value is after `Date.now()`\n    - Id token has valid \"nbf\" claim\n        - if the \"nbf\" claim value is before the \"exp\" claim value\n    - Id token has valid \"nonce\" claim\n        - if the \"nonce\" claim value is equal to {{nonce}}\n    - Id token is valid\n        - if all the above tests are passing\n    - Access token grants access to resources\n        - automatically send the \"UserInfo endpoint\" request to make sure that the `acess_token` is accepted by the server\n    - Refresh token grants new tokens\n        - automatically send the \"Refresh token\" request to make sure that the `refresh_token` can be used to retrieve new tokens"
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "Invalid refresh token",
+									"item": [
+										{
+											"name": "Refresh token",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pmutils(pm).testCallbacks.testResponseStatus(400);\r",
+															"\r",
+															"const responseData = pm.response.json();\r",
+															"\r",
+															"pm.test('Response body has error \"invalid_request\"', () => {\r",
+															"    pm.expect(responseData).to.have.property('error', 'invalid_request');\r",
+															"});\r",
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "urlencoded",
+													"urlencoded": [
+														{
+															"key": "client_id",
+															"value": "{{client_id}}",
+															"type": "text"
+														},
+														{
+															"key": "grant_type",
+															"value": "refresh_token",
+															"type": "text"
+														},
+														{
+															"key": "client_secret",
+															"value": "{{client_secret}}",
+															"type": "text"
+														},
+														{
+															"key": "refresh_token",
+															"value": "invalidRefreshToken",
+															"type": "text"
+														}
+													]
+												},
+												"url": {
+													"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token",
+													"host": [
+														"{{CFS Master URL}}"
+													],
+													"path": [
+														"oauth",
+														"{{Tenant Name}}",
+														"token"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Authorization code flow with PKCE",
+					"item": [
+						{
+							"name": "Authorize",
+							"item": [
+								{
+									"name": "Invalid code challenge method",
+									"item": [
+										{
+											"name": "Authorize",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"const responseData = pm.response.json();\r",
+															"\r",
+															"pmutils(pm).testCallbacks.testResponseStatus(400);\r",
+															"\r",
+															"pm.test('Response body has error \"invalid_request\"', () => {\r",
+															"    pm.expect(responseData).to.have.property('error', 'invalid_request');\r",
+															"});\r",
+															"\r",
+															"pm.test('Response body has error_description', () => {\r",
+															"    pm.expect(responseData).to.have.property('error_description');\r",
+															"});\r",
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"protocolProfileBehavior": {
+												"followRedirects": false
+											},
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/authorize?scope={{scope}}&response_type=code&redirect_uri=https://oauth.pstmn.io/v1/callback&client_id={{client_id}}&code_challenge=rrsv_GL5iipUGp6yR5w5ra77fdggOxJ6htH9E217PeI&code_challenge_method=invalidCodeChallengeMethod&state={{state}}&nonce={{nonce}}",
+													"host": [
+														"{{CFS Master URL}}"
+													],
+													"path": [
+														"oauth",
+														"{{Tenant Name}}",
+														"authorize"
+													],
+													"query": [
+														{
+															"key": "scope",
+															"value": "{{scope}}"
+														},
+														{
+															"key": "response_type",
+															"value": "code"
+														},
+														{
+															"key": "redirect_uri",
+															"value": "https://oauth.pstmn.io/v1/callback"
+														},
+														{
+															"key": "client_id",
+															"value": "{{client_id}}"
+														},
+														{
+															"key": "code_challenge",
+															"value": "rrsv_GL5iipUGp6yR5w5ra77fdggOxJ6htH9E217PeI"
+														},
+														{
+															"key": "code_challenge_method",
+															"value": "invalidCodeChallengeMethod"
+														},
+														{
+															"key": "state",
+															"value": "{{state}}"
+														},
+														{
+															"key": "nonce",
+															"value": "{{nonce}}"
+														}
+													]
+												},
+												"description": "_If necessary, the consent screen will be automatically accepted. In a real use case, the user must click on the \"Accept\" button._\n\n- See the response `authorization_code` in the **Response -> Body -> Visualize** tab\n    - The `authorization_code` will be extracted from the callback url and set in the collection variables\n- See the test results in the **Response -> Test Results** tab\n    \n    - The response status code is expected to be 302\n    - The `authorization_code` is expected to not be empty"
+											},
+											"response": []
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "Token",
+							"item": [
+								{
+									"name": "Invalid code verifier",
+									"item": [
+										{
+											"name": "Authorize",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pmutils(pm).testCallbacks.testResponseStatus200or302();\r",
+															"\r",
+															"pmutils(pm).postConfirmAuthorizeRequestIfNecessaryThenSetTokens('query', ({ authorization_code }) => {\r",
+															"    pmutils(pm).testCallbacks.testAuthorizationCode(authorization_code);\r",
+															"});\r",
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"protocolProfileBehavior": {
+												"followRedirects": false
+											},
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/authorize?scope={{scope}}&response_type=code&redirect_uri=https://oauth.pstmn.io/v1/callback&client_id={{client_id}}&code_challenge=rrsv_GL5iipUGp6yR5w5ra77fdggOxJ6htH9E217PeI&code_challenge_method=S256&state={{state}}&nonce={{nonce}}",
+													"host": [
+														"{{CFS Master URL}}"
+													],
+													"path": [
+														"oauth",
+														"{{Tenant Name}}",
+														"authorize"
+													],
+													"query": [
+														{
+															"key": "scope",
+															"value": "{{scope}}"
+														},
+														{
+															"key": "response_type",
+															"value": "code"
+														},
+														{
+															"key": "redirect_uri",
+															"value": "https://oauth.pstmn.io/v1/callback"
+														},
+														{
+															"key": "client_id",
+															"value": "{{client_id}}"
+														},
+														{
+															"key": "code_challenge",
+															"value": "rrsv_GL5iipUGp6yR5w5ra77fdggOxJ6htH9E217PeI"
+														},
+														{
+															"key": "code_challenge_method",
+															"value": "S256"
+														},
+														{
+															"key": "state",
+															"value": "{{state}}"
+														},
+														{
+															"key": "nonce",
+															"value": "{{nonce}}"
+														}
+													]
+												},
+												"description": "_If necessary, the consent screen will be automatically accepted. In a real use case, the user must click on the \"Accept\" button._\n\n- See the response `authorization_code` in the **Response -> Body -> Visualize** tab\n    - The `authorization_code` will be extracted from the callback url and set in the collection variables\n- See the test results in the **Response -> Test Results** tab\n    \n    - The response status code is expected to be 302\n    - The `authorization_code` is expected to not be empty"
+											},
+											"response": []
+										},
+										{
+											"name": "Request for tokens",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pmutils(pm).testCallbacks.testResponseStatus(400);\r",
+															"\r",
+															"const responseData = pm.response.json();\r",
+															"\r",
+															"pm.test('Response body has error \"invalid_request\"', () => {\r",
+															"    pm.expect(responseData).to.have.property('error', 'invalid_request');\r",
+															"});\r",
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "urlencoded",
+													"urlencoded": [
+														{
+															"key": "redirect_uri",
+															"value": "https://oauth.pstmn.io/v1/callback",
+															"type": "text"
+														},
+														{
+															"key": "code",
+															"value": "{{authorization_code}}",
+															"type": "text"
+														},
+														{
+															"key": "grant_type",
+															"value": "authorization_code",
+															"type": "text"
+														},
+														{
+															"key": "client_id",
+															"value": "{{client_id}}",
+															"type": "text"
+														},
+														{
+															"key": "code_verifier",
+															"value": "invalidCodeVerifierMR~lBQbZeIHsG3RnZuvgWmrAr8y1Ia~muw2zBrJdPlz5A7carMvqfm3MxiWCMN7KOjzfbZo0is3FxyWDf6e4Ad0sU6Of10.PvukuaqO2ez~YLU.lCrLYDC4.xDb420z2",
+															"type": "text"
+														},
+														{
+															"key": "state",
+															"value": "{{state}}",
+															"type": "text"
+														}
+													]
+												},
+												"url": {
+													"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token",
+													"host": [
+														"{{CFS Master URL}}"
+													],
+													"path": [
+														"oauth",
+														"{{Tenant Name}}",
+														"token"
+													]
+												},
+												"description": "- See the response `access_token`, `id_token`, `refresh_token`, etc. in the **Response -> Body -> Pretty** tab\n    - The `acess_token`, `id_token`, `refresh_token` will be extracted from the response and set in the collection variables\n- See the test results in the **Response -> Test Results** tab\n    - The response status code is expected to be 200\n    - Access token has valid \"iss\" claim\n        - if the \"iss\" claim value is equal to [https://cfs01/cfs/oauth/mytenant](https://cfs01/cfs/oauth/mytenant)\n    - Access token has valid \"aud\" claim\n        - if the \"aud\" claim value is equal to [https://cfs01/cfs/oauth/mytenant](https://cfs01/cfs/oauth/mytenant)\n    - Access token has valid \"iat\" claim\n        - if the \"iat\" claim value is before `Date.now()`\n    - Access token has valid \"exp\" claim\n        - if the \"exp\" claim value is after `Date.now()`\n    - Access token has valid \"nbf\" claim\n        - if the \"nbf\" claim value is before the \"exp\" claim value\n    - Access token has valid \"scope\" claim\n        - if the \"scope\" claim value is equal to openid email profile\n    - Access token is valid\n        - if all the above tests are passing\n    - Id token has valid \"iss\" claim\n        - if the \"iss\" claim value is equal to [https://cfs01/cfs/oauth/mytenant](https://cfs01/cfs/oauth/mytenant)\n    - Id token has valid \"aud\" claim\n        - if the \"aud\" claim value is equal to stLJwW9b3L5BPaiFFVx9cB\n    - Id token has valid \"iat\" claim\n        - if the \"iat\" claim value is before `Date.now()`\n    - Id token has valid \"exp\" claim\n        - if the \"exp\" claim value is after `Date.now()`\n    - Id token has valid \"nbf\" claim\n        - if the \"nbf\" claim value is before the \"exp\" claim value\n    - Id token has valid \"nonce\" claim\n        - if the \"nonce\" claim value is equal to xyz\n    - Id token is valid\n        - if all the above tests are passing\n    - Access token grants access to resources\n        - automatically send the \"UserInfo endpoint\" request to make sure that the `acess_token` is accepted by the server\n    - Refresh token grants new tokens\n        - automatically send the \"Refresh token\" request to make sure that the `refresh_token` can be used to retrieve new tokens"
+											},
+											"response": []
+										}
+									]
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Implicit Flow + Hybrid Flow",
+					"item": [
+						{
+							"name": "Authorize",
+							"item": [
+								{
+									"name": "User denies consent",
+									"item": [
+										{
+											"name": "Authorize - id_token token",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pmutils(pm).testCallbacks.testResponseStatus200or302();\r",
+															"\r",
+															"pmutils(pm).postDenyAuthorizeRequest(response => {\r",
+															"    const URL = require('url');\r",
+															"    const qs = require('querystring');\r",
+															"\r",
+															"    const responseLocation = response.headers.get('Location');\r",
+															"    const url = URL.parse(responseLocation);\r",
+															"    const queryStringValue = url.query;\r",
+															"    const queryString = qs.parse(queryStringValue);\r",
+															"\r",
+															"    pm.test(\"Response location has query string parameter \\\"error=access_denied\\\"\", () => {\r",
+															"        pm.expect(queryString).to.have.property('error', 'access_denied');\r",
+															"    });\r",
+															"});\r",
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"protocolProfileBehavior": {
+												"followRedirects": false
+											},
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/authorize?scope={{scope}}&response_type=id_token token&redirect_uri=https://oauth.pstmn.io/v1/callback&client_id={{client_id}}&state={{state}}&nonce={{nonce}}",
+													"host": [
+														"{{CFS Master URL}}"
+													],
+													"path": [
+														"oauth",
+														"{{Tenant Name}}",
+														"authorize"
+													],
+													"query": [
+														{
+															"key": "scope",
+															"value": "{{scope}}"
+														},
+														{
+															"key": "response_type",
+															"value": "id_token token"
+														},
+														{
+															"key": "redirect_uri",
+															"value": "https://oauth.pstmn.io/v1/callback"
+														},
+														{
+															"key": "client_id",
+															"value": "{{client_id}}"
+														},
+														{
+															"key": "state",
+															"value": "{{state}}"
+														},
+														{
+															"key": "nonce",
+															"value": "{{nonce}}"
+														}
+													]
+												}
+											},
+											"response": []
+										}
+									],
+									"description": "These tests simulate the case where the user would deny consent, i.e. clicking the \"Cancel\" button on the consent screen\n\n<img src=\"https://content.pstmn.io/6258ac22-09a1-4f5b-8ecf-35a397b0c33c/aW1hZ2UucG5n\" alt=\"\" height=\"924\" width=\"1619\">"
+								}
+							]
 						}
 					]
 				}
