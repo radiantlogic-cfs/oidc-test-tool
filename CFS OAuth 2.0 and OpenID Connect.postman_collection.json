@@ -2,7 +2,7 @@
 	"info": {
 		"_postman_id": "99b90132-8042-4516-b4b7-44ae06ff2924",
 		"name": "CFS OAuth 2.0 and OpenID Connect",
-		"description": "This postman collection is used to try out the **OpenID Connect feature of CFS**.\n\n## Pre-requisities\n\n- Configure an OpenID Connect Application in CFS.\n    - Go to **Administration -> Applications -> OpenID Connect**\n        \n        <img src=\"https://content.pstmn.io/8135220b-8129-4db7-b70d-5b14eac68332/aW1hZ2UucG5n\" width=\"1619\" height=\"924\">\n        \n    - Click the \"New OpenID Connect Application\" button\n    - Fill in the fields\n        \n        <img src=\"https://content.pstmn.io/0049d2a0-4d58-4d20-8bea-2588ef7d2a8d/aW1hZ2UucG5n\" width=\"1619\" height=\"924\">\n        \n    - For the Callback URL field, use the value: `https://oauth.pstmn.io/v1/callback`\n- Fill in the Postman Collection Variables with appropriate values for `CFS Master URL`, `Tenant Name`, `client_id`, `client_secret`, `username`, and `password` respectively.\n    \n    <img src=\"https://content.pstmn.io/79d7290f-e98b-48d5-b811-fa76f09c6da5/aW1hZ2UucG5n\" width=\"1619\" height=\"924\">\n    \n    <img src=\"https://content.pstmn.io/62a83ecf-0335-42c0-beb1-0e9abfc74501/aW1hZ2UucG5n\" width=\"1619\" height=\"924\">\n    \n\nNow you can test the OAuth requests directly in Postman.\n\n## Collection Variables\n\n| **Variable Name** | **Current Value** | **Description** |\n| --- | --- | --- |\n| CFS Master URL | {{CFS Master URL}} | The base URL for the CFS Master instance |\n| Tenant Name | {{Tenant Name}} | The name of the CFS tenant |\n| username | {{username}} | The username used to log in to the CFS Master tenant's portal |\n| password | {{password}} | The password used to log in to the CFS Master tenant's portal |\n| client_id | {{client_id}} | The client identifier  <br>[https://datatracker.ietf.org/doc/html/rfc6749#section-2.2](https://datatracker.ietf.org/doc/html/rfc6749#section-2.2) |\n| client_secret | {{client_secret}} | The client secret  <br>[https://datatracker.ietf.org/doc/html/rfc6749#section-2.3.1](https://datatracker.ietf.org/doc/html/rfc6749#section-2.3.1) |\n| scope | {{scope}} | The space separated list of requested scopes  <br>[https://datatracker.ietf.org/doc/html/rfc6749#section-3.3](https://datatracker.ietf.org/doc/html/rfc6749#section-3.3) |\n| state | {{state}} | State parameter used for protection against CSRF  <br>[https://datatracker.ietf.org/doc/html/rfc6749#section-10.12](https://datatracker.ietf.org/doc/html/rfc6749#section-10.12) |\n| nonce | {{nonce}} | Nonce parameter used for protection agaisnt replay attacks  <br>[https://openid.net/specs/openid-connect-core-1_0.html#IDToken](https://openid.net/specs/openid-connect-core-1_0.html#IDToken) |\n| redirect_uri | {{redirect_uri}} | The callback URL configured for the OIDC Application  <br>[https://datatracker.ietf.org/doc/html/rfc6749#section-3.1.2](https://datatracker.ietf.org/doc/html/rfc6749#section-3.1.2) |\n| code_challenge | `{{code_challenge}}` | Code Challenge for PKCE  <br>[https://datatracker.ietf.org/doc/html/rfc7636#section-4.2](https://datatracker.ietf.org/doc/html/rfc7636#section-4.2) |\n| code_verifier | `{{code_verifier}}` | Code Verifier for PKCE  <br>[https://datatracker.ietf.org/doc/html/rfc7636#section-4.1](https://datatracker.ietf.org/doc/html/rfc7636#section-4.1) |\n| code_method | {{code_method}} | Code Challenge Method for PKCE  <br>[https://datatracker.ietf.org/doc/html/rfc7636#section-4.3](https://datatracker.ietf.org/doc/html/rfc7636#section-4.3) |\n| authorization_code | `{{authorization_code}}` | **This variable is managed by the Postman Collection itself, do not modify it manually!**  <br>  <br>The OAuth authorization code  <br>[https://datatracker.ietf.org/doc/html/rfc6749#section-1.3.1](https://datatracker.ietf.org/doc/html/rfc6749#section-1.3.1) |\n| id_token | `{{id_token}}` | **This variable is managed by the collection itself, do not modify it manually!**  <br>  <br>The OIDC Id token  <br>[https://openid.net/specs/openid-connect-core-1_0.html#TokenResponse](https://openid.net/specs/openid-connect-core-1_0.html#TokenResponse) |\n| access_token | `{{access_token}}` | **This variable is managed by the collection itself, do not modify it manually!**  <br>  <br>The OAuth acess token  <br>[https://datatracker.ietf.org/doc/html/rfc6749#section-5.1](https://datatracker.ietf.org/doc/html/rfc6749#section-5.1) |\n| refresh_token | `{{refresh_token}}` | **This variable is managed by the collection itself, do not modify it manually!**  <br>  <br>The OAuth refresh token  <br>[https://datatracker.ietf.org/doc/html/rfc6749#section-5.1](https://datatracker.ietf.org/doc/html/rfc6749#section-5.1) |\n\nThe \"Authorize\" requests will automatically set the values for the `authorization_code`, `id_token`, `access_token` collection variable(s), while the \"Request for tokens\" requests will automatically set the values for the `id_token`, `access_token`, and `refresh_token` collections variable(s) where appropriate.\n\n**N.B.:** The \"Automatically follow redirects\" setting must be **disabled** in Postman in order to run the requests in the \"[Implicit Flow](https://speeding-sunset-964902.postman.co/workspace/CFS5~8ebc958a-523b-46bd-931a-968060aa59a4/folder/25667693-0adeda1d-0730-496d-b6d8-79fd4cb9ee10?ctx=documentation)\" and \"[Hybrid Flow](https://speeding-sunset-964902.postman.co/workspace/CFS5~8ebc958a-523b-46bd-931a-968060aa59a4/folder/25667693-38b7714c-3ef1-4f1f-9f42-14ac1e5d6c0b?ctx=documentation)\" folders!\n\n<img src=\"https://content.pstmn.io/bb3aa626-370b-4bfc-88b9-b0daec95b702/aW1hZ2UucG5n\" width=\"846\" height=\"840\">",
+		"description": "This postman collection is used to try out the **OpenID Connect feature of CFS**.\n\n## Pre-requisities\n\n- Configure an OpenID Connect Application in CFS.\n    - Go to **Administration -> Applications -> OpenID Connect**\n        \n        <img src=\"https://content.pstmn.io/8135220b-8129-4db7-b70d-5b14eac68332/aW1hZ2UucG5n\" width=\"1619\" height=\"924\">\n        \n    - Click the \"New OpenID Connect Application\" button\n    - Fill in the fields\n        \n        <img src=\"https://content.pstmn.io/0049d2a0-4d58-4d20-8bea-2588ef7d2a8d/aW1hZ2UucG5n\" width=\"1619\" height=\"924\">\n        \n    - For the Callback URL field, use the value: `https://oauth.pstmn.io/v1/callback`\n- Fill in the Postman Collection Variables with appropriate values for `CFS Master URL`, `Tenant Name`, `client_id`, `client_secret`, `username`, and `password` respectively.\n    \n    <img src=\"https://content.pstmn.io/79d7290f-e98b-48d5-b811-fa76f09c6da5/aW1hZ2UucG5n\" width=\"1619\" height=\"924\">\n    \n    <img src=\"https://content.pstmn.io/62a83ecf-0335-42c0-beb1-0e9abfc74501/aW1hZ2UucG5n\" width=\"1619\" height=\"924\">\n    \n\nNow you can test the OAuth requests directly in Postman.\n\n## Collection Variables\n\n| **Variable Name** | **Current Value** | **Description** |\n| --- | --- | --- |\n| CFS Master URL | {{CFS Master URL}} | The base URL for the CFS Master instance |\n| Tenant Name | {{Tenant Name}} | The name of the CFS tenant |\n| username | {{username}} | The username used to log in to the CFS Master tenant's portal |\n| password | {{password}} | The password used to log in to the CFS Master tenant's portal |\n| client_id | {{client_id}} | The client identifier  <br>[https://datatracker.ietf.org/doc/html/rfc6749#section-2.2](https://datatracker.ietf.org/doc/html/rfc6749#section-2.2) |\n| client_secret | {{client_secret}} | The client secret  <br>[https://datatracker.ietf.org/doc/html/rfc6749#section-2.3.1](https://datatracker.ietf.org/doc/html/rfc6749#section-2.3.1) |\n| scope | {{scope}} | The space separated list of requested scopes  <br>[https://datatracker.ietf.org/doc/html/rfc6749#section-3.3](https://datatracker.ietf.org/doc/html/rfc6749#section-3.3) |\n| state | {{state}} | State parameter used for protection against CSRF  <br>[https://datatracker.ietf.org/doc/html/rfc6749#section-10.12](https://datatracker.ietf.org/doc/html/rfc6749#section-10.12) |\n| nonce | {{nonce}} | Nonce parameter used for protection agaisnt replay attacks  <br>[https://openid.net/specs/openid-connect-core-1_0.html#IDToken](https://openid.net/specs/openid-connect-core-1_0.html#IDToken) |\n| redirect_uri | {{redirect_uri}} | The callback URL configured for the OIDC Application  <br>[https://datatracker.ietf.org/doc/html/rfc6749#section-3.1.2](https://datatracker.ietf.org/doc/html/rfc6749#section-3.1.2) |\n| code_challenge | `{{code_challenge}}` | Code Challenge for PKCE  <br>[https://datatracker.ietf.org/doc/html/rfc7636#section-4.2](https://datatracker.ietf.org/doc/html/rfc7636#section-4.2) |\n| code_verifier | `{{code_verifier}}` | Code Verifier for PKCE  <br>[https://datatracker.ietf.org/doc/html/rfc7636#section-4.1](https://datatracker.ietf.org/doc/html/rfc7636#section-4.1) |\n| code_method | {{code_method}} | Code Challenge Method for PKCE  <br>[https://datatracker.ietf.org/doc/html/rfc7636#section-4.3](https://datatracker.ietf.org/doc/html/rfc7636#section-4.3) |\n| validations_common_response_type | {{validations_common_response_type}} | The response type to use for the requests in the **Validations -> Common** folder |\n| authorization_code | `{{authorization_code}}` | **This variable is managed by the Postman Collection itself, do not modify it manually!**  <br>  <br>The OAuth authorization code  <br>[https://datatracker.ietf.org/doc/html/rfc6749#section-1.3.1](https://datatracker.ietf.org/doc/html/rfc6749#section-1.3.1) |\n| id_token | `{{id_token}}` | **This variable is managed by the collection itself, do not modify it manually!**  <br>  <br>The OIDC Id token  <br>[https://openid.net/specs/openid-connect-core-1_0.html#TokenResponse](https://openid.net/specs/openid-connect-core-1_0.html#TokenResponse) |\n| access_token | `{{access_token}}` | **This variable is managed by the collection itself, do not modify it manually!**  <br>  <br>The OAuth acess token  <br>[https://datatracker.ietf.org/doc/html/rfc6749#section-5.1](https://datatracker.ietf.org/doc/html/rfc6749#section-5.1) |\n| refresh_token | `{{refresh_token}}` | **This variable is managed by the collection itself, do not modify it manually!**  <br>  <br>The OAuth refresh token  <br>[https://datatracker.ietf.org/doc/html/rfc6749#section-5.1](https://datatracker.ietf.org/doc/html/rfc6749#section-5.1) |\n\nThe \"Authorize\" requests will automatically set the values for the `authorization_code`, `id_token`, `access_token` collection variable(s), while the \"Request for tokens\" requests will automatically set the values for the `id_token`, `access_token`, and `refresh_token` collections variable(s) where appropriate.\n\n**N.B.:** The \"Automatically follow redirects\" setting must be **disabled** in Postman in order to run the requests in the \"[Implicit Flow](https://speeding-sunset-964902.postman.co/workspace/CFS5~8ebc958a-523b-46bd-931a-968060aa59a4/folder/25667693-0adeda1d-0730-496d-b6d8-79fd4cb9ee10?ctx=documentation)\" and \"[Hybrid Flow](https://speeding-sunset-964902.postman.co/workspace/CFS5~8ebc958a-523b-46bd-931a-968060aa59a4/folder/25667693-38b7714c-3ef1-4f1f-9f42-14ac1e5d6c0b?ctx=documentation)\" folders!\n\n<img src=\"https://content.pstmn.io/bb3aa626-370b-4bfc-88b9-b0daec95b702/aW1hZ2UucG5n\" width=\"846\" height=\"840\">\n\n## Tests\n\nAll requests contain tests to validate their respective responses. Most of the testing code is extracted to methods defined in the collection's Pre-request Script.\n\nSee the test results in the **Response -> Test Results** tab.\n\n### Authorize\n\nSee the response in `authorization_code`, `access_token`, `id_token`, in the **Response -> Body -> Visualize** tab.\n\nThe \"Authorize\" requests test the responses in the following ways:\n\n- Asserts that the response status code is 200 Ok or 302 Found\n    - If it's 200 Ok, it means we received CFS's consent screen, which will be automatically accepted by the test script, but in a real world scenario the user will have to accept/decline by clicking on the respective buttons;\n    - If it's 302 Found, we extract the respective variables from the Location header's value, depending on the flow: `authorization_code`, `access_token`, `id_token`, `refresh_token` and set their values in the collection to be used by subsequent requests.\n\n### Token\n\nSee the response `access_token`, `id_token`, `refresh_token` in the **Response -> Body -> Pretty** tab.\n\nThe \"Token\" requests test the responses in the following ways:\n\n- Asserts that the response status code is 200 Ok.\n    - We extract the respective variables from the response body, depending on the flow: `access_token`, `id_token`, `refresh_token` and set their values in the collection to be used by subsequent requests.\n\n### Common tests\n\nBoth Authorize and Token requests validate the variables in the following ways:\n\n#### authorization_code\n\n- Authorization code is valid\n    - if it's not empty\n\n#### access_token\n\n- Access token has valid \"iss\" claim\n    - if the \"iss\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n- Access token has valid \"aud\" claim\n    - if the \"aud\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n- Access token has valid \"iat\" claim\n    - if the \"iat\" claim value is before `Date.now()`\n- Access token has valid \"exp\" claim\n    - if the \"exp\" claim value is after `Date.now()`\n- Access token has valid \"nbf\" claim\n    - if the \"nbf\" claim value is before `Date.now()`\n- Access token has valid \"scope\" claim\n    - if the \"scope\" claim value is equal to {{scope}}\n- Access token is valid\n    - if all the above tests are passing\n- Access token grants access to resources\n    - automatically sends a request to the UserInfo endpoint to make sure that the `acess_token` is accepted by the server\n\n#### id_token\n\n- Id token has valid \"iss\" claim\n    - if the \"iss\" claim value is equal to [https://cfs01/cfs/oauth/mytenant](https://cfs01/cfs/oauth/mytenant)\n- Id token has valid \"aud\" claim\n    - if the \"aud\" claim value is equal to stLJwW9b3L5BPaiFFVx9cB\n- Id token has valid \"iat\" claim\n    - if the \"iat\" claim value is before `Date.now()`\n- Id token has valid \"exp\" claim\n    - if the \"exp\" claim value is after `Date.now()`\n- Id token has valid \"nbf\" claim\n    - if the \"nbf\" claim value is before `Date.now()`\n- Id token has valid \"nonce\" claim\n    - if the \"nonce\" claim value is equal to {{nonce}}\n- Id token is valid\n    - if all the above tests are passing\n\n#### refresh_token\n\n- Refresh token grants new tokens\n    - automatically send the \"Refresh token\" request to make sure that the `refresh_token` can be used to retrieve new tokens",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "25667693",
 		"_collection_link": "https://speeding-sunset-964902.postman.co/workspace/CFS5~8ebc958a-523b-46bd-931a-968060aa59a4/collection/25667693-99b90132-8042-4516-b4b7-44ae06ff2924?action=share&source=collection_link&creator=25667693"
@@ -73,8 +73,7 @@
 									"value": "{{nonce}}"
 								}
 							]
-						},
-						"description": "_If necessary, the consent screen will be automatically accepted. In a real use case, the user must click on the \"Accept\" button._\n\n- See the response `authorization_code` in the **Response -> Body -> Visualize** tab\n    - The `authorization_code` will be extracted from the callback url and set in the collection variables\n- See the test results in the **Response -> Test Results** tab\n    - The response status code is expected to be 302\n    - The `authorization_code` is expected to not be empty"
+						}
 					},
 					"response": [
 						{
@@ -83,13 +82,17 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/authorize?response_type=code&client_id={{client_id}}&redirect_uri=https://oauth.pstmn.io/v1/callback&scope={{scope}}&state={{state}}&nonce={{nonce}}",
+									"raw": "https://cfs01.example.com/cfs/oauth/mytenant/authorize?response_type=code&client_id=stLJwW9b3L5BPaiFFVx9cB&redirect_uri=https://oauth.pstmn.io/v1/callback&scope=openid email profile&state=6879bf2ef296d720f3a54eb8faabee9c&nonce=c4fdef35f2e05abe2ceb88ae0f743ee4",
+									"protocol": "https",
 									"host": [
-										"{{CFS Master URL}}"
+										"cfs01",
+										"example",
+										"com"
 									],
 									"path": [
+										"cfs",
 										"oauth",
-										"{{Tenant Name}}",
+										"mytenant",
 										"authorize"
 									],
 									"query": [
@@ -100,7 +103,7 @@
 										},
 										{
 											"key": "client_id",
-											"value": "{{client_id}}"
+											"value": "stLJwW9b3L5BPaiFFVx9cB"
 										},
 										{
 											"key": "redirect_uri",
@@ -108,15 +111,15 @@
 										},
 										{
 											"key": "scope",
-											"value": "{{scope}}"
+											"value": "openid email profile"
 										},
 										{
 											"key": "state",
-											"value": "{{state}}"
+											"value": "6879bf2ef296d720f3a54eb8faabee9c"
 										},
 										{
 											"key": "nonce",
-											"value": "{{nonce}}"
+											"value": "c4fdef35f2e05abe2ceb88ae0f743ee4"
 										}
 									]
 								}
@@ -205,16 +208,6 @@
 							"mode": "urlencoded",
 							"urlencoded": [
 								{
-									"key": "redirect_uri",
-									"value": "https://oauth.pstmn.io/v1/callback",
-									"type": "text"
-								},
-								{
-									"key": "code",
-									"value": "{{authorization_code}}",
-									"type": "text"
-								},
-								{
 									"key": "grant_type",
 									"value": "authorization_code",
 									"type": "text"
@@ -230,8 +223,13 @@
 									"type": "text"
 								},
 								{
-									"key": "state",
-									"value": "{{state}}",
+									"key": "redirect_uri",
+									"value": "https://oauth.pstmn.io/v1/callback",
+									"type": "text"
+								},
+								{
+									"key": "code",
+									"value": "{{authorization_code}}",
 									"type": "text"
 								}
 							]
@@ -246,8 +244,7 @@
 								"{{Tenant Name}}",
 								"token"
 							]
-						},
-						"description": "- See the response `access_token`, `id_token`, `refresh_token`, etc. in the **Response -> Body -> Pretty** tab\n    - The `acess_token`, `id_token`, `refresh_token` will be extracted from the response and set in the collection variables\n- See the test results in the **Response -> Test Results** tab\n    - The response status code is expected to be 200\n    - Access token has valid \"iss\" claim\n        - if the \"iss\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Access token has valid \"aud\" claim\n        - if the \"aud\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Access token has valid \"iat\" claim\n        - if the \"iat\" claim value is before `Date.now()`\n    - Access token has valid \"exp\" claim\n        - if the \"exp\" claim value is after `Date.now()`\n    - Access token has valid \"nbf\" claim\n        - if the \"nbf\" claim value is before the \"exp\" claim value\n    - Access token has valid \"scope\" claim\n        - if the \"scope\" claim value is equal to {{scope}}\n    - Access token is valid\n        - if all the above tests are passing\n    - Id token has valid \"iss\" claim\n        - if the \"iss\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Id token has valid \"aud\" claim\n        - if the \"aud\" claim value is equal to {{client_id}}\n    - Id token has valid \"iat\" claim\n        - if the \"iat\" claim value is before `Date.now()`\n    - Id token has valid \"exp\" claim\n        - if the \"exp\" claim value is after `Date.now()`\n    - Id token has valid \"nbf\" claim\n        - if the \"nbf\" claim value is before the \"exp\" claim value\n    - Id token has valid \"nonce\" claim\n        - if the \"nonce\" claim value is equal to {{nonce}}\n    - Id token is valid\n        - if all the above tests are passing\n    - Access token grants access to resources\n        - automatically send the \"UserInfo endpoint\" request to make sure that the `acess_token` is accepted by the server\n    - Refresh token grants new tokens\n        - automatically send the \"Refresh token\" request to make sure that the `refresh_token` can be used to retrieve new tokens"
+						}
 					},
 					"response": [
 						{
@@ -265,7 +262,7 @@
 										},
 										{
 											"key": "code",
-											"value": "{{authorization_code}}",
+											"value": "",
 											"type": "text"
 										},
 										{
@@ -275,29 +272,33 @@
 										},
 										{
 											"key": "client_id",
-											"value": "{{client_id}}",
+											"value": "stLJwW9b3L5BPaiFFVx9cB",
 											"type": "text"
 										},
 										{
 											"key": "client_secret",
-											"value": "{{client_secret}}",
+											"value": "jqvQwFVQgK92xRg4D1DryiiO7F3X5Hl6UeYZE4fZUQ95",
 											"type": "text"
 										},
 										{
 											"key": "state",
-											"value": "{{state}}",
+											"value": "6879bf2ef296d720f3a54eb8faabee9c",
 											"type": "text"
 										}
 									]
 								},
 								"url": {
-									"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token",
+									"raw": "https://cfs01.example.com/cfs/oauth/mytenant/token",
+									"protocol": "https",
 									"host": [
-										"{{CFS Master URL}}"
+										"cfs01",
+										"example",
+										"com"
 									],
 									"path": [
+										"cfs",
 										"oauth",
-										"{{Tenant Name}}",
+										"mytenant",
 										"token"
 									]
 								}
@@ -349,7 +350,7 @@
 					]
 				}
 			],
-			"description": "- Run the \"GET Authorize\" request\n    - The response will contain an `authorization_code` that will be automatically captured and set as a collection variable to be used by the next request\n- Run the \"POST Request for tokens\" request\n    - The response will contain an `access_token`, `id_token`, `refresh_token` that will be automatically captured and set as collection variables to be used for any subsequent requests that require authentication",
+			"description": "- Run the \"GET Authorize\" request\n    - The response will contain an `authorization_code` that will be automatically captured and set as a collection variable to be used by the next request\n- Run the \"POST Request for tokens\" request\n    - The response will contain an `access_token`, `id_token`, `refresh_token` that will be automatically captured and set as collection variables to be used for any subsequent requests that require authentication\n\n## The Authorization Endpoint Request\n\n- Method: `GET`\n- Agent: Browser\n- Response Type: Redirect to pre-registered callback URL at client with query parameters\n    \n\n### Request Parameters\n\n| Parameter | Value | Mandatory | Description |\n| --- | --- | --- | --- |\n| response_type | `code` | yes | Defines the flow type: authorization code flow |\n| client_id | The Client ID | yes | The ID of the OAuth client |\n| redirect_uri | The client callback URL | yes | The callback URL configured for the client. |\n| scope | Space separated string of scopes | yes | List the scopes the client is requesting access to. **OpenID Connect requests MUST contain the** **`openid`** **scope**. |\n| state | A random value | no | Will be provided back to the client in the redirect URL. Useful to keep track of the session in the client or to prevent unsolicited flows. |\n| nonce | A random value | no | A string value used to mitigate replay attacks by associating the client session with the ID token. |\n\n### Response\n\nA redirect back to the “redirect_uri”. Response parameters are provided on the query string.\n\n| Parameter | Value | Mandatory | Description |\n| --- | --- | --- | --- |\n| code | An Authorization Code | yes | An authorization code nonce, to be used in the token request. |\n\n## The Token Endpoint Request\n\n### Request Parameters\n\n- Method: `POST`\n- Content-Type: `application/x-www-form-urlencoded`\n- Agent: `HTTP client`\n- Response Type: `json`\n    \n\n| Parameter | Value | Mandatory | Description |\n| --- | --- | --- | --- |\n| grant_type | `authorization_code` | yes | Tells the token endpoint to do the second part of the code flow. |\n| client_id | The Client ID | yes | The ID of the requesting client. |\n| client_secret | The client secret | yes | The secret of the client. |\n| redirect_uri | The callback URL of the Client | yes | The same redirect URI as was sent in the Authorization request. |\n| code | The authorization code | yes | The code given in the response of the Authorization request. |\n\n### Response\n\n- Response Type: `application/json`\n    \n\n| Parameter | Value | Mandatory | Description |\n| --- | --- | --- | --- |\n| access_token | A newly issued access token | yes | The resulting access token for the code flow. |\n| token_type | `Bearer` or other token type | yes | Describes how the token can be used. Most commonly Bearer token usage. |\n| expires_in | Expiration in seconds | yes | The time to live of the access token in seconds. |\n| scope | Space separated string | yes | The issued scopes may differ from the requested scopes. |\n| refresh_token | A newly issued refresh token | yes | The resulting refresh token for the code flow. |\n| id_token | A newly issued ID token | yes | The resulting ID token for the code flow. |\n",
 			"event": [
 				{
 					"listen": "prerequest",
@@ -442,8 +443,7 @@
 									"value": "{{nonce}}"
 								}
 							]
-						},
-						"description": "_If necessary, the consent screen will be automatically accepted. In a real use case, the user must click on the \"Accept\" button._\n\n- See the response `authorization_code` in the **Response -> Body -> Visualize** tab\n    - The `authorization_code` will be extracted from the callback url and set in the collection variables\n- See the test results in the **Response -> Test Results** tab\n    \n    - The response status code is expected to be 302\n    - The `authorization_code` is expected to not be empty"
+						}
 					},
 					"response": [
 						{
@@ -452,19 +452,23 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/authorize?scope={{scope}}&response_type=code&redirect_uri=https://oauth.pstmn.io/v1/callback&client_id={{client_id}}&code_challenge={{code_challenge}}&code_challenge_method={{code_method}}&state={{state}}&nonce={{nonce}}",
+									"raw": "https://cfs01.example.com/cfs/oauth/mytenant/authorize?scope=openid email profile&response_type=code&redirect_uri=https://oauth.pstmn.io/v1/callback&client_id=stLJwW9b3L5BPaiFFVx9cB&code_challenge=rrsv_GL5iipUGp6yR5w5ra77fdggOxJ6htH9E217PeI&code_challenge_method=S256&state=6879bf2ef296d720f3a54eb8faabee9c&nonce=c4fdef35f2e05abe2ceb88ae0f743ee4",
+									"protocol": "https",
 									"host": [
-										"{{CFS Master URL}}"
+										"cfs01",
+										"example",
+										"com"
 									],
 									"path": [
+										"cfs",
 										"oauth",
-										"{{Tenant Name}}",
+										"mytenant",
 										"authorize"
 									],
 									"query": [
 										{
 											"key": "scope",
-											"value": "{{scope}}"
+											"value": "openid email profile"
 										},
 										{
 											"key": "response_type",
@@ -476,23 +480,23 @@
 										},
 										{
 											"key": "client_id",
-											"value": "{{client_id}}"
+											"value": "stLJwW9b3L5BPaiFFVx9cB"
 										},
 										{
 											"key": "code_challenge",
-											"value": "{{code_challenge}}"
+											"value": "rrsv_GL5iipUGp6yR5w5ra77fdggOxJ6htH9E217PeI"
 										},
 										{
 											"key": "code_challenge_method",
-											"value": "{{code_method}}"
+											"value": "S256"
 										},
 										{
 											"key": "state",
-											"value": "{{state}}"
+											"value": "6879bf2ef296d720f3a54eb8faabee9c"
 										},
 										{
 											"key": "nonce",
-											"value": "{{nonce}}"
+											"value": "c4fdef35f2e05abe2ceb88ae0f743ee4"
 										}
 									]
 								}
@@ -621,8 +625,7 @@
 								"{{Tenant Name}}",
 								"token"
 							]
-						},
-						"description": "- See the response `access_token`, `id_token`, `refresh_token`, etc. in the **Response -> Body -> Pretty** tab\n    - The `acess_token`, `id_token`, `refresh_token` will be extracted from the response and set in the collection variables\n- See the test results in the **Response -> Test Results** tab\n    - The response status code is expected to be 200\n    - Access token has valid \"iss\" claim\n        - if the \"iss\" claim value is equal to [https://cfs01/cfs/oauth/mytenant](https://cfs01/cfs/oauth/mytenant)\n    - Access token has valid \"aud\" claim\n        - if the \"aud\" claim value is equal to [https://cfs01/cfs/oauth/mytenant](https://cfs01/cfs/oauth/mytenant)\n    - Access token has valid \"iat\" claim\n        - if the \"iat\" claim value is before `Date.now()`\n    - Access token has valid \"exp\" claim\n        - if the \"exp\" claim value is after `Date.now()`\n    - Access token has valid \"nbf\" claim\n        - if the \"nbf\" claim value is before the \"exp\" claim value\n    - Access token has valid \"scope\" claim\n        - if the \"scope\" claim value is equal to openid email profile\n    - Access token is valid\n        - if all the above tests are passing\n    - Id token has valid \"iss\" claim\n        - if the \"iss\" claim value is equal to [https://cfs01/cfs/oauth/mytenant](https://cfs01/cfs/oauth/mytenant)\n    - Id token has valid \"aud\" claim\n        - if the \"aud\" claim value is equal to stLJwW9b3L5BPaiFFVx9cB\n    - Id token has valid \"iat\" claim\n        - if the \"iat\" claim value is before `Date.now()`\n    - Id token has valid \"exp\" claim\n        - if the \"exp\" claim value is after `Date.now()`\n    - Id token has valid \"nbf\" claim\n        - if the \"nbf\" claim value is before the \"exp\" claim value\n    - Id token has valid \"nonce\" claim\n        - if the \"nonce\" claim value is equal to xyz\n    - Id token is valid\n        - if all the above tests are passing\n    - Access token grants access to resources\n        - automatically send the \"UserInfo endpoint\" request to make sure that the `acess_token` is accepted by the server\n    - Refresh token grants new tokens\n        - automatically send the \"Refresh token\" request to make sure that the `refresh_token` can be used to retrieve new tokens"
+						}
 					},
 					"response": [
 						{
@@ -640,7 +643,7 @@
 										},
 										{
 											"key": "code",
-											"value": "{{authorization_code}}",
+											"value": "",
 											"type": "text"
 										},
 										{
@@ -650,29 +653,33 @@
 										},
 										{
 											"key": "client_id",
-											"value": "{{client_id}}",
+											"value": "stLJwW9b3L5BPaiFFVx9cB",
 											"type": "text"
 										},
 										{
 											"key": "code_verifier",
-											"value": "{{code_verifier}}",
+											"value": "MR~lBQbZeIHsG3RnZuvgWmrAr8y1Ia~muw2zBrJdPlz5A7carMvqfm3MxiWCMN7KOjzfbZo0is3FxyWDf6e4Ad0sU6Of10.PvukuaqO2ez~YLU.lCrLYDC4.xDb420z2",
 											"type": "text"
 										},
 										{
 											"key": "state",
-											"value": "{{state}}",
+											"value": "6879bf2ef296d720f3a54eb8faabee9c",
 											"type": "text"
 										}
 									]
 								},
 								"url": {
-									"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token",
+									"raw": "https://cfs01.example.com/cfs/oauth/mytenant/token",
+									"protocol": "https",
 									"host": [
-										"{{CFS Master URL}}"
+										"cfs01",
+										"example",
+										"com"
 									],
 									"path": [
+										"cfs",
 										"oauth",
-										"{{Tenant Name}}",
+										"mytenant",
 										"token"
 									]
 								}
@@ -724,7 +731,6 @@
 					]
 				}
 			],
-			"description": "- Run the \"GET Authorize\" request\n    \n- Run the \"POST Request for tokens\" request",
 			"event": [
 				{
 					"listen": "prerequest",
@@ -809,8 +815,7 @@
 									"value": "{{nonce}}"
 								}
 							]
-						},
-						"description": "_The consent screen will be automatically accepted. In a real use case, the user must click on the \"Accept\" button._\n\n- See the response `id_token` in the **Response -> Body -> Visualize** tab\n    - The `id_token` will be extracted from the callback url and set in the collection variables\n- See the test results in the **Response -> Test Results** tab\n    - The response status code is expected to be 200 because we're always getting the consent form back in the case of Implicit Flow\n    - Id token has valid \"iss\" claim\n        - if the \"iss\" claim value is equal to [https://cfs01/cfs/oauth/mytenant](https://cfs01/cfs/oauth/mytenant)\n    - Id token has valid \"aud\" claim\n        - if the \"aud\" claim value is equal to stLJwW9b3L5BPaiFFVx9cB\n    - Id token has valid \"iat\" claim\n        - if the \"iat\" claim value is before `Date.now()`\n    - Id token has valid \"exp\" claim\n        - if the \"exp\" claim value is after `Date.now()`\n    - Id token has valid \"nbf\" claim\n        - if the \"nbf\" claim value is before the \"exp\" claim value\n    - Id token has valid \"nonce\" claim\n        - if the \"nonce\" claim value is equal to xyz\n    - Id token is valid\n        - if all the above tests are passing"
+						}
 					},
 					"response": [
 						{
@@ -819,19 +824,23 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/authorize?scope={{scope}}&response_type=id_token&redirect_uri=https://oauth.pstmn.io/v1/callback&client_id={{client_id}}&state={{state}}&nonce={{nonce}}",
+									"raw": "https://cfs01.example.com/cfs/oauth/mytenant/authorize?scope=openid email profile&response_type=id_token&redirect_uri=https://oauth.pstmn.io/v1/callback&client_id=stLJwW9b3L5BPaiFFVx9cB&state=6879bf2ef296d720f3a54eb8faabee9c&nonce=c4fdef35f2e05abe2ceb88ae0f743ee4",
+									"protocol": "https",
 									"host": [
-										"{{CFS Master URL}}"
+										"cfs01",
+										"example",
+										"com"
 									],
 									"path": [
+										"cfs",
 										"oauth",
-										"{{Tenant Name}}",
+										"mytenant",
 										"authorize"
 									],
 									"query": [
 										{
 											"key": "scope",
-											"value": "{{scope}}"
+											"value": "openid email profile"
 										},
 										{
 											"key": "response_type",
@@ -843,15 +852,15 @@
 										},
 										{
 											"key": "client_id",
-											"value": "{{client_id}}"
+											"value": "stLJwW9b3L5BPaiFFVx9cB"
 										},
 										{
 											"key": "state",
-											"value": "{{state}}"
+											"value": "6879bf2ef296d720f3a54eb8faabee9c"
 										},
 										{
 											"key": "nonce",
-											"value": "{{nonce}}"
+											"value": "c4fdef35f2e05abe2ceb88ae0f743ee4"
 										}
 									]
 								}
@@ -965,8 +974,7 @@
 									"value": "{{nonce}}"
 								}
 							]
-						},
-						"description": "_The consent screen will be automatically accepted. In a real use case, the user must click on the \"Accept\" button._\n\n- See the response `access_token`, `id_token` in the **Response -> Body -> Visualize** tab\n    - The `access_token`, `id_token` will be extracted from the callback url and set in the collection variables\n- See the test results in the **Response -> Test Results** tab\n    - The response status code is expected to be 200 because we're always getting the consent form back in the case of Implicit Flow\n    - Access token has valid \"iss\" claim\n        - if the \"iss\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Access token has valid \"aud\" claim\n        - if the \"aud\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Access token has valid \"iat\" claim\n        - if the \"iat\" claim value is before `Date.now()`\n    - Access token has valid \"exp\" claim\n        - if the \"exp\" claim value is after `Date.now()`\n    - Access token has valid \"nbf\" claim\n        - if the \"nbf\" claim value is before the \"exp\" claim value\n    - Access token has valid \"scope\" claim\n        - if the \"scope\" claim value is equal to {{scope}}\n    - Access token is valid\n        - if all the above tests are passing\n    - Id token has valid \"iss\" claim\n        - if the \"iss\" claim value is equal to [https://cfs01/cfs/oauth/mytenant](https://cfs01/cfs/oauth/mytenant)\n    - Id token has valid \"aud\" claim\n        - if the \"aud\" claim value is equal to stLJwW9b3L5BPaiFFVx9cB\n    - Id token has valid \"iat\" claim\n        - if the \"iat\" claim value is before `Date.now()`\n    - Id token has valid \"exp\" claim\n        - if the \"exp\" claim value is after `Date.now()`\n    - Id token has valid \"nbf\" claim\n        - if the \"nbf\" claim value is before the \"exp\" claim value\n    - Id token has valid \"nonce\" claim\n        - if the \"nonce\" claim value is equal to xyz\n    - Id token is valid\n        - if all the above tests are passing"
+						}
 					},
 					"response": [
 						{
@@ -975,19 +983,23 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/authorize?scope={{scope}}&response_type=id_token token&redirect_uri=https://oauth.pstmn.io/v1/callback&client_id={{client_id}}&state={{state}}&nonce={{nonce}}",
+									"raw": "https://cfs01.example.com/cfs/oauth/mytenant/authorize?scope=openid email profile&response_type=id_token token&redirect_uri=https://oauth.pstmn.io/v1/callback&client_id=stLJwW9b3L5BPaiFFVx9cB&state=6879bf2ef296d720f3a54eb8faabee9c&nonce=c4fdef35f2e05abe2ceb88ae0f743ee4",
+									"protocol": "https",
 									"host": [
-										"{{CFS Master URL}}"
+										"cfs01",
+										"example",
+										"com"
 									],
 									"path": [
+										"cfs",
 										"oauth",
-										"{{Tenant Name}}",
+										"mytenant",
 										"authorize"
 									],
 									"query": [
 										{
 											"key": "scope",
-											"value": "{{scope}}"
+											"value": "openid email profile"
 										},
 										{
 											"key": "response_type",
@@ -999,15 +1011,15 @@
 										},
 										{
 											"key": "client_id",
-											"value": "{{client_id}}"
+											"value": "stLJwW9b3L5BPaiFFVx9cB"
 										},
 										{
 											"key": "state",
-											"value": "{{state}}"
+											"value": "6879bf2ef296d720f3a54eb8faabee9c"
 										},
 										{
 											"key": "nonce",
-											"value": "{{nonce}}"
+											"value": "c4fdef35f2e05abe2ceb88ae0f743ee4"
 										}
 									]
 								}
@@ -1059,7 +1071,7 @@
 					]
 				}
 			],
-			"description": "Run any of the \"GET Authorize\" requests\n\n**N.B.:** The \"Automatically follow redirects\" setting must be **disabled** in Postman in order to run the requests in this folder!\n\n<img src=\"https://content.pstmn.io/e3542bce-db42-4b74-b2b5-6a4a0cabd789/aW1hZ2UucG5n\" width=\"846\" height=\"840\">"
+			"description": "- Run any of the \"GET Authorize\" requests\n    - The response will contain an `access_token`, an `id_token`, or both that will be automatically captured and set as collection variables\n\n**N.B.:** The \"Automatically follow redirects\" setting must be **disabled** in Postman in order to run the requests in this folder!\n\n<img src=\"https://content.pstmn.io/e3542bce-db42-4b74-b2b5-6a4a0cabd789/aW1hZ2UucG5n\" width=\"846\" height=\"840\">"
 		},
 		{
 			"name": "Hybrid Flow",
@@ -1128,8 +1140,7 @@
 											"value": "{{nonce}}"
 										}
 									]
-								},
-								"description": "_The consent screen will be automatically accepted. In a real use case, the user must click on the \"Accept\" button._\n\n- See the response `authorization_code`, `id_token` in the **Response -> Body -> Visualize** tab\n    - The `authorization_code`, `id_token` will be extracted from the callback url and set in the collection variables\n- See the test results in the **Response -> Test Results** tab\n    \n    - The response status code is expected to be 200 because we're always getting the consent form back in the case of Hybrid Flow\n    - The `authorization_code` is expected to not be empty\n    - Id token has valid \"iss\" claim\n        - if the \"iss\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Id token has valid \"aud\" claim\n        - if the \"aud\" claim value is equal to {{client_id}}\n    - Id token has valid \"iat\" claim\n        - if the \"iat\" claim value is before `Date.now()`\n    - Id token has valid \"exp\" claim\n        - if the \"exp\" claim value is after `Date.now()`\n    - Id token has valid \"nbf\" claim\n        - if the \"nbf\" claim value is before the \"exp\" claim value\n    - Id token has valid \"nonce\" claim\n        - if the \"nonce\" claim value is equal to {{nonce}}\n    - Id token is valid\n        \n        - if all the above tests are passing"
+								}
 							},
 							"response": [
 								{
@@ -1138,19 +1149,23 @@
 										"method": "GET",
 										"header": [],
 										"url": {
-											"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/authorize?scope={{scope}}&response_type=code id_token&redirect_uri=https://oauth.pstmn.io/v1/callback&client_id={{client_id}}&state={{state}}&nonce={{nonce}}",
+											"raw": "https://cfs01.example.com/cfs/oauth/mytenant/authorize?scope=openid email profile&response_type=code id_token&redirect_uri=https://oauth.pstmn.io/v1/callback&client_id=stLJwW9b3L5BPaiFFVx9cB&state=6879bf2ef296d720f3a54eb8faabee9c&nonce=c4fdef35f2e05abe2ceb88ae0f743ee4",
+											"protocol": "https",
 											"host": [
-												"{{CFS Master URL}}"
+												"cfs01",
+												"example",
+												"com"
 											],
 											"path": [
+												"cfs",
 												"oauth",
-												"{{Tenant Name}}",
+												"mytenant",
 												"authorize"
 											],
 											"query": [
 												{
 													"key": "scope",
-													"value": "{{scope}}"
+													"value": "openid email profile"
 												},
 												{
 													"key": "response_type",
@@ -1162,15 +1177,15 @@
 												},
 												{
 													"key": "client_id",
-													"value": "{{client_id}}"
+													"value": "stLJwW9b3L5BPaiFFVx9cB"
 												},
 												{
 													"key": "state",
-													"value": "{{state}}"
+													"value": "6879bf2ef296d720f3a54eb8faabee9c"
 												},
 												{
 													"key": "nonce",
-													"value": "{{nonce}}"
+													"value": "c4fdef35f2e05abe2ceb88ae0f743ee4"
 												}
 											]
 										}
@@ -1300,8 +1315,7 @@
 										"{{Tenant Name}}",
 										"token"
 									]
-								},
-								"description": "- See the response `access_token`, `id_token`, `refresh_token`, etc. in the **Response -> Body -> Pretty** tab\n    \n    - The `acess_token`, `id_token`, `refresh_token` will be extracted from the response and set in the collection variables\n        \n- See the test results in the **Response -> Test Results** tab\n    \n    - The response status code is expected to be 200\n        \n    - Access token has valid \"iss\" claim\n        \n        - if the \"iss\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n            \n    - Access token has valid \"aud\" claim\n        \n        - if the \"aud\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n            \n    - Access token has valid \"iat\" claim\n        \n        - if the \"iat\" claim value is before `Date.now()`\n            \n    - Access token has valid \"exp\" claim\n        \n        - if the \"exp\" claim value is after `Date.now()`\n            \n    - Access token has valid \"nbf\" claim\n        \n        - if the \"nbf\" claim value is before the \"exp\" claim value\n            \n    - Access token has valid \"scope\" claim\n        \n        - if the \"scope\" claim value is equal to {{scope}}\n            \n    - Access token is valid\n        \n        - if all the above tests are passing\n            \n    - Id token has valid \"iss\" claim\n        \n        - if the \"iss\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n            \n    - Id token has valid \"aud\" claim\n        \n        - if the \"aud\" claim value is equal to {{client_id}}\n            \n    - Id token has valid \"iat\" claim\n        \n        - if the \"iat\" claim value is before `Date.now()`\n            \n    - Id token has valid \"exp\" claim\n        \n        - if the \"exp\" claim value is after `Date.now()`\n            \n    - Id token has valid \"nbf\" claim\n        \n        - if the \"nbf\" claim value is before the \"exp\" claim value\n            \n    - Id token has valid \"nonce\" claim\n        \n        - if the \"nonce\" claim value is equal to {{nonce}}\n            \n    - Id token is valid\n        \n        - if all the above tests are passing\n            \n    - Access token grants access to resources\n        \n        - automatically send the \"UserInfo endpoint\" request to make sure that the `acess_token` is accepted by the server\n            \n    - Refresh token grants new tokens\n        \n        - automatically send the \"Refresh token\" request to make sure that the `refresh_token` can be used to retrieve new tokens"
+								}
 							},
 							"response": [
 								{
@@ -1319,7 +1333,7 @@
 												},
 												{
 													"key": "code",
-													"value": "{{authorization_code}}",
+													"value": "",
 													"type": "text"
 												},
 												{
@@ -1329,34 +1343,38 @@
 												},
 												{
 													"key": "client_id",
-													"value": "{{client_id}}",
+													"value": "stLJwW9b3L5BPaiFFVx9cB",
 													"type": "text"
 												},
 												{
 													"key": "assertion",
-													"value": "{{id_token}}",
+													"value": "",
 													"type": "text"
 												},
 												{
 													"key": "client_secret",
-													"value": "{{client_secret}}",
+													"value": "jqvQwFVQgK92xRg4D1DryiiO7F3X5Hl6UeYZE4fZUQ95",
 													"type": "text"
 												},
 												{
 													"key": "state",
-													"value": "{{state}}",
+													"value": "6879bf2ef296d720f3a54eb8faabee9c",
 													"type": "text"
 												}
 											]
 										},
 										"url": {
-											"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token",
+											"raw": "https://cfs01.example.com/cfs/oauth/mytenant/token",
+											"protocol": "https",
 											"host": [
-												"{{CFS Master URL}}"
+												"cfs01",
+												"example",
+												"com"
 											],
 											"path": [
+												"cfs",
 												"oauth",
-												"{{Tenant Name}}",
+												"mytenant",
 												"token"
 											]
 										}
@@ -1408,7 +1426,7 @@
 							]
 						}
 					],
-					"description": "- Run the \"GET Authorize\" request\n    \n- Run the \"POST Request for tokens\" request"
+					"description": "- Run the \"GET Authorize\" request\n- Run the \"POST Request for tokens\" request"
 				},
 				{
 					"name": "Token - code token id_token",
@@ -1476,8 +1494,7 @@
 											"value": "{{nonce}}"
 										}
 									]
-								},
-								"description": "_The consent screen will be automatically accepted. In a real use case, the user must click on the \"Accept\" button._\n\n- See the response `authorization_code`, `access_token`, `id_token` in the **Response -> Body -> Visualize** tab\n    \n    - The `authorization_code`, `access_token`, `id_token` will be extracted from the callback url and set in the collection variables\n        \n- See the test results in the **Response -> Test Results** tab\n    \n    - The response status code is expected to be 200 because we're always getting the consent form back in the case of Hybrid Flow\n        \n    - The `authorization_code` is expected to not be empty\n        \n    - Access token has valid \"iss\" claim\n        \n        - if the \"iss\" claim value is equal to [https://cfs01/cfs/oauth/mytenant](https://cfs01/cfs/oauth/mytenant)\n            \n    - Access token has valid \"aud\" claim\n        \n        - if the \"aud\" claim value is equal to [https://cfs01/cfs/oauth/mytenant](https://cfs01/cfs/oauth/mytenant)\n            \n    - Access token has valid \"iat\" claim\n        \n        - if the \"iat\" claim value is before `Date.now()`\n            \n    - Access token has valid \"exp\" claim\n        \n        - if the \"exp\" claim value is after `Date.now()`\n            \n    - Access token has valid \"nbf\" claim\n        \n        - if the \"nbf\" claim value is before the \"exp\" claim value\n            \n    - Access token has valid \"scope\" claim\n        \n        - if the \"scope\" claim value is equal to openid email profile\n            \n    - Access token is valid\n        \n        - if all the above tests are passing\n            \n    - Id token has valid \"iss\" claim\n        \n        - if the \"iss\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n            \n    - Id token has valid \"aud\" claim\n        \n        - if the \"aud\" claim value is equal to {{client_id}}\n            \n    - Id token has valid \"iat\" claim\n        \n        - if the \"iat\" claim value is before `Date.now()`\n            \n    - Id token has valid \"exp\" claim\n        \n        - if the \"exp\" claim value is after `Date.now()`\n            \n    - Id token has valid \"nbf\" claim\n        \n        - if the \"nbf\" claim value is before the \"exp\" claim value\n            \n    - Id token has valid \"nonce\" claim\n        \n        - if the \"nonce\" claim value is equal to {{nonce}}\n            \n    - Id token is valid\n        \n        - if all the above tests are passing\n            \n    - Access token grants access to resources\n        \n        - automatically send the \"UserInfo endpoint\" request to make sure that the `acess_token` is accepted by the server"
+								}
 							},
 							"response": [
 								{
@@ -1486,19 +1503,23 @@
 										"method": "GET",
 										"header": [],
 										"url": {
-											"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/authorize?scope={{scope}}&response_type=code id_token token&redirect_uri=https://oauth.pstmn.io/v1/callback&client_id={{client_id}}&state={{state}}&nonce={{nonce}}",
+											"raw": "https://cfs01.example.com/cfs/oauth/mytenant/authorize?scope=openid email profile&response_type=code id_token token&redirect_uri=https://oauth.pstmn.io/v1/callback&client_id=stLJwW9b3L5BPaiFFVx9cB&state=6879bf2ef296d720f3a54eb8faabee9c&nonce=c4fdef35f2e05abe2ceb88ae0f743ee4",
+											"protocol": "https",
 											"host": [
-												"{{CFS Master URL}}"
+												"cfs01",
+												"example",
+												"com"
 											],
 											"path": [
+												"cfs",
 												"oauth",
-												"{{Tenant Name}}",
+												"mytenant",
 												"authorize"
 											],
 											"query": [
 												{
 													"key": "scope",
-													"value": "{{scope}}"
+													"value": "openid email profile"
 												},
 												{
 													"key": "response_type",
@@ -1510,15 +1531,15 @@
 												},
 												{
 													"key": "client_id",
-													"value": "{{client_id}}"
+													"value": "stLJwW9b3L5BPaiFFVx9cB"
 												},
 												{
 													"key": "state",
-													"value": "{{state}}"
+													"value": "6879bf2ef296d720f3a54eb8faabee9c"
 												},
 												{
 													"key": "nonce",
-													"value": "{{nonce}}"
+													"value": "c4fdef35f2e05abe2ceb88ae0f743ee4"
 												}
 											]
 										}
@@ -1648,8 +1669,7 @@
 										"{{Tenant Name}}",
 										"token"
 									]
-								},
-								"description": "- See the response `access_token`, `id_token`, `refresh_token`, etc. in the **Response -> Body -> Pretty** tab\n    \n    - The `acess_token`, `id_token`, `refresh_token` will be extracted from the response and set in the collection variables\n        \n- See the test results in the **Response -> Test Results** tab\n    \n    - The response status code is expected to be 200\n        \n    - Access token has valid \"iss\" claim\n        \n        - if the \"iss\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n            \n    - Access token has valid \"aud\" claim\n        \n        - if the \"aud\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n            \n    - Access token has valid \"iat\" claim\n        \n        - if the \"iat\" claim value is before `Date.now()`\n            \n    - Access token has valid \"exp\" claim\n        \n        - if the \"exp\" claim value is after `Date.now()`\n            \n    - Access token has valid \"nbf\" claim\n        \n        - if the \"nbf\" claim value is before the \"exp\" claim value\n            \n    - Access token has valid \"scope\" claim\n        \n        - if the \"scope\" claim value is equal to {{scope}}\n            \n    - Access token is valid\n        \n        - if all the above tests are passing\n            \n    - Id token has valid \"iss\" claim\n        \n        - if the \"iss\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n            \n    - Id token has valid \"aud\" claim\n        \n        - if the \"aud\" claim value is equal to {{client_id}}\n            \n    - Id token has valid \"iat\" claim\n        \n        - if the \"iat\" claim value is before `Date.now()`\n            \n    - Id token has valid \"exp\" claim\n        \n        - if the \"exp\" claim value is after `Date.now()`\n            \n    - Id token has valid \"nbf\" claim\n        \n        - if the \"nbf\" claim value is before the \"exp\" claim value\n            \n    - Id token has valid \"nonce\" claim\n        \n        - if the \"nonce\" claim value is equal to {{nonce}}\n            \n    - Id token is valid\n        \n        - if all the above tests are passing\n            \n    - Access token grants access to resources\n        \n        - automatically send the \"UserInfo endpoint\" request to make sure that the `acess_token` is accepted by the server\n            \n    - Refresh token grants new tokens\n        \n        - automatically send the \"Refresh token\" request to make sure that the `refresh_token` can be used to retrieve new tokens"
+								}
 							},
 							"response": [
 								{
@@ -1667,7 +1687,7 @@
 												},
 												{
 													"key": "code",
-													"value": "{{authorization_code}}",
+													"value": "",
 													"type": "text"
 												},
 												{
@@ -1677,34 +1697,38 @@
 												},
 												{
 													"key": "client_id",
-													"value": "{{client_id}}",
+													"value": "stLJwW9b3L5BPaiFFVx9cB",
 													"type": "text"
 												},
 												{
 													"key": "assertion",
-													"value": "{{id_token}}",
+													"value": "",
 													"type": "text"
 												},
 												{
 													"key": "client_secret",
-													"value": "{{client_secret}}",
+													"value": "jqvQwFVQgK92xRg4D1DryiiO7F3X5Hl6UeYZE4fZUQ95",
 													"type": "text"
 												},
 												{
 													"key": "state",
-													"value": "{{state}}",
+													"value": "6879bf2ef296d720f3a54eb8faabee9c",
 													"type": "text"
 												}
 											]
 										},
 										"url": {
-											"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token",
+											"raw": "https://cfs01.example.com/cfs/oauth/mytenant/token",
+											"protocol": "https",
 											"host": [
-												"{{CFS Master URL}}"
+												"cfs01",
+												"example",
+												"com"
 											],
 											"path": [
+												"cfs",
 												"oauth",
-												"{{Tenant Name}}",
+												"mytenant",
 												"token"
 											]
 										}
@@ -1823,8 +1847,7 @@
 											"value": "{{nonce}}"
 										}
 									]
-								},
-								"description": "_The consent screen will be automatically accepted. In a real use case, the user must click on the \"Accept\" button._\n\n- See the response `authorization_code`, `access_token` in the **Response -> Body -> Visualize** tab\n    \n    - The `authorization_code`, `access_token` will be extracted from the callback url and set in the collection variables\n        \n- See the test results in the **Response -> Test Results** tab\n    \n    - The response status code is expected to be 200 because we're always getting the consent form back in the case of Hybrid Flow\n        \n    - The `authorization_code` is expected to not be empty\n        \n    - Access token has valid \"iss\" claim\n        \n        - if the \"iss\" claim value is equal to [https://cfs01/cfs/oauth/mytenant](https://cfs01/cfs/oauth/mytenant)\n            \n    - Access token has valid \"aud\" claim\n        \n        - if the \"aud\" claim value is equal to [https://cfs01/cfs/oauth/mytenant](https://cfs01/cfs/oauth/mytenant)\n            \n    - Access token has valid \"iat\" claim\n        \n        - if the \"iat\" claim value is before `Date.now()`\n            \n    - Access token has valid \"exp\" claim\n        \n        - if the \"exp\" claim value is after `Date.now()`\n            \n    - Access token has valid \"nbf\" claim\n        \n        - if the \"nbf\" claim value is before the \"exp\" claim value\n            \n    - Access token has valid \"scope\" claim\n        \n        - if the \"scope\" claim value is equal to openid email profile\n            \n    - Access token is valid\n        \n        - if all the above tests are passing\n            \n    - Access token grants access to resources\n        \n        - automatically send the \"UserInfo endpoint\" request to make sure that the `acess_token` is accepted by the server"
+								}
 							},
 							"response": [
 								{
@@ -1833,19 +1856,23 @@
 										"method": "GET",
 										"header": [],
 										"url": {
-											"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/authorize?scope={{scope}}&response_type=code token&redirect_uri=https://oauth.pstmn.io/v1/callback&client_id={{client_id}}&state={{state}}&nonce={{nonce}}",
+											"raw": "https://cfs01.example.com/cfs/oauth/mytenant/authorize?scope=openid email profile&response_type=code token&redirect_uri=https://oauth.pstmn.io/v1/callback&client_id=stLJwW9b3L5BPaiFFVx9cB&state=6879bf2ef296d720f3a54eb8faabee9c&nonce=c4fdef35f2e05abe2ceb88ae0f743ee4",
+											"protocol": "https",
 											"host": [
-												"{{CFS Master URL}}"
+												"cfs01",
+												"example",
+												"com"
 											],
 											"path": [
+												"cfs",
 												"oauth",
-												"{{Tenant Name}}",
+												"mytenant",
 												"authorize"
 											],
 											"query": [
 												{
 													"key": "scope",
-													"value": "{{scope}}"
+													"value": "openid email profile"
 												},
 												{
 													"key": "response_type",
@@ -1857,15 +1884,15 @@
 												},
 												{
 													"key": "client_id",
-													"value": "{{client_id}}"
+													"value": "stLJwW9b3L5BPaiFFVx9cB"
 												},
 												{
 													"key": "state",
-													"value": "{{state}}"
+													"value": "6879bf2ef296d720f3a54eb8faabee9c"
 												},
 												{
 													"key": "nonce",
-													"value": "{{nonce}}"
+													"value": "c4fdef35f2e05abe2ceb88ae0f743ee4"
 												}
 											]
 										}
@@ -1995,8 +2022,7 @@
 										"{{Tenant Name}}",
 										"token"
 									]
-								},
-								"description": "- See the response `access_token`, `id_token`, `refresh_token`, etc. in the **Response -> Body -> Pretty** tab\n    - The `acess_token`, `id_token`, `refresh_token` will be extracted from the response and set in the collection variables\n- See the test results in the **Response -> Test Results** tab\n    - The response status code is expected to be 200\n    - Access token has valid \"iss\" claim\n        - if the \"iss\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Access token has valid \"aud\" claim\n        - if the \"aud\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Access token has valid \"iat\" claim\n        - if the \"iat\" claim value is before `Date.now()`\n    - Access token has valid \"exp\" claim\n        - if the \"exp\" claim value is after `Date.now()`\n    - Access token has valid \"nbf\" claim\n        - if the \"nbf\" claim value is before the \"exp\" claim value\n    - Access token has valid \"scope\" claim\n        - if the \"scope\" claim value is equal to {{scope}}\n    - Access token is valid\n        - if all the above tests are passing\n    - Id token has valid \"iss\" claim\n        - if the \"iss\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Id token has valid \"aud\" claim\n        - if the \"aud\" claim value is equal to {{client_id}}\n    - Id token has valid \"iat\" claim\n        - if the \"iat\" claim value is before `Date.now()`\n    - Id token has valid \"exp\" claim\n        - if the \"exp\" claim value is after `Date.now()`\n    - Id token has valid \"nbf\" claim\n        - if the \"nbf\" claim value is before the \"exp\" claim value\n    - Id token has valid \"nonce\" claim\n        - if the \"nonce\" claim value is equal to {{nonce}}\n    - Id token is valid\n        - if all the above tests are passing\n    - Access token grants access to resources\n        - automatically send the \"UserInfo endpoint\" request to make sure that the `acess_token` is accepted by the server\n    - Refresh token grants new tokens\n        - automatically send the \"Refresh token\" request to make sure that the `refresh_token` can be used to retrieve new tokens"
+								}
 							},
 							"response": [
 								{
@@ -2014,7 +2040,7 @@
 												},
 												{
 													"key": "code",
-													"value": "{{authorization_code}}",
+													"value": "",
 													"type": "text"
 												},
 												{
@@ -2024,34 +2050,38 @@
 												},
 												{
 													"key": "client_id",
-													"value": "{{client_id}}",
+													"value": "stLJwW9b3L5BPaiFFVx9cB",
 													"type": "text"
 												},
 												{
 													"key": "assertion",
-													"value": "{{id_token}}",
+													"value": "",
 													"type": "text"
 												},
 												{
 													"key": "client_secret",
-													"value": "{{client_secret}}",
+													"value": "jqvQwFVQgK92xRg4D1DryiiO7F3X5Hl6UeYZE4fZUQ95",
 													"type": "text"
 												},
 												{
 													"key": "state",
-													"value": "{{state}}",
+													"value": "6879bf2ef296d720f3a54eb8faabee9c",
 													"type": "text"
 												}
 											]
 										},
 										"url": {
-											"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token",
+											"raw": "https://cfs01.example.com/cfs/oauth/mytenant/token",
+											"protocol": "https",
 											"host": [
-												"{{CFS Master URL}}"
+												"cfs01",
+												"example",
+												"com"
 											],
 											"path": [
+												"cfs",
 												"oauth",
-												"{{Tenant Name}}",
+												"mytenant",
 												"token"
 											]
 										}
@@ -2106,7 +2136,7 @@
 					"description": "- Run the \"GET Authorize\" request\n    \n- Run the \"POST Request for tokens\" request"
 				}
 			],
-			"description": "**N.B.:** The \"Automatically follow redirects\" setting must be **disabled** in Postman in order to run the requests in this folder!\n\n<img src=\"https://content.pstmn.io/e920769a-172e-49da-a73d-9b6a531ce945/aW1hZ2UucG5n\" width=\"846\" height=\"840\">"
+			"description": "- Run the \"GET Authorize\" request\n    \n    - The response will contain an `authorization_code` and an `access_token`, an `id_token`, or both that will be automatically captured and set as collection variables\n        \n- Run the \"POST Request for tokens\" request\n    - The response will contain an `access_token`, `id_token`, `refresh_token` that will be automatically captured and set as collection variables to be used for any subsequent requests that require authentication\n\n**N.B.:** The \"Automatically follow redirects\" setting must be **disabled** in Postman in order to run the requests in this folder!\n\n<img src=\"https://content.pstmn.io/e920769a-172e-49da-a73d-9b6a531ce945/aW1hZ2UucG5n\" width=\"846\" height=\"840\">"
 		},
 		{
 			"name": "Client credentials",
@@ -2181,8 +2211,7 @@
 								"{{Tenant Name}}",
 								"token"
 							]
-						},
-						"description": "- See the response `access_token`, etc. in the **Response -> Body -> Pretty** tab\n    \n    - The `acess_token`, will be extracted from the response and set in the collection variables\n        \n- See the test results in the **Response -> Test Results** tab\n    \n    - The response status code is expected to be 200\n        \n    - Access token has valid \"iss\" claim\n        \n        - if the \"iss\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n            \n    - Access token has valid \"aud\" claim\n        \n        - if the \"aud\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n            \n    - Access token has valid \"iat\" claim\n        \n        - if the \"iat\" claim value is before `Date.now()`\n            \n    - Access token has valid \"exp\" claim\n        \n        - if the \"exp\" claim value is after `Date.now()`\n            \n    - Access token has valid \"nbf\" claim\n        \n        - if the \"nbf\" claim value is before the \"exp\" claim value\n            \n    - Access token has valid \"scope\" claim\n        \n        - if the \"scope\" claim value is equal to {{scope}}\n            \n    - Access token is valid\n        \n        - if all the above tests are passing\n            \n    - Access token grants access to resources\n        \n        - automatically send the \"UserInfo endpoint\" request to make sure that the `acess_token` is accepted by the server"
+						}
 					},
 					"response": [
 						{
@@ -2200,39 +2229,43 @@
 										},
 										{
 											"key": "client_id",
-											"value": "{{client_id}}",
+											"value": "stLJwW9b3L5BPaiFFVx9cB",
 											"type": "text"
 										},
 										{
 											"key": "client_secret",
-											"value": "{{client_secret}}",
+											"value": "jqvQwFVQgK92xRg4D1DryiiO7F3X5Hl6UeYZE4fZUQ95",
 											"type": "text"
 										},
 										{
 											"key": "scope",
-											"value": "{{scope}}",
+											"value": "openid email profile",
 											"type": "text"
 										},
 										{
 											"key": "state",
-											"value": "{{state}}",
+											"value": "6879bf2ef296d720f3a54eb8faabee9c",
 											"type": "text"
 										},
 										{
 											"key": "nonce",
-											"value": "{{nonce}}",
+											"value": "c4fdef35f2e05abe2ceb88ae0f743ee4",
 											"type": "text"
 										}
 									]
 								},
 								"url": {
-									"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token",
+									"raw": "https://cfs01.example.com/cfs/oauth/mytenant/token",
+									"protocol": "https",
 									"host": [
-										"{{CFS Master URL}}"
+										"cfs01",
+										"example",
+										"com"
 									],
 									"path": [
+										"cfs",
 										"oauth",
-										"{{Tenant Name}}",
+										"mytenant",
 										"token"
 									]
 								}
@@ -2284,7 +2317,7 @@
 					]
 				}
 			],
-			"description": "Run the \"Request for access token\" request"
+			"description": "- Run the \"POST Request for access token\" request\n    - The response will contain an `access_token`, that will be automatically captured and set as a collection variable to be used for any subsequent requests that require authentication\n\nNote that this `access_token`'s `sub` claim's value is the client_id (`{{client_id}}`) instead of the username (`{{username}}`) since the token is not associated with a specific user, but with the OAuth client itself."
 		},
 		{
 			"name": "Resource owner password credentials",
@@ -2370,8 +2403,7 @@
 								"{{Tenant Name}}",
 								"token"
 							]
-						},
-						"description": "- See the response `access_token`, etc. in the **Response -> Body -> Pretty** tab\n    \n    - The `acess_token`, will be extracted from the response and set in the collection variables\n        \n- See the test results in the **Response -> Test Results** tab\n    \n    - The response status code is expected to be 200\n        \n    - Access token has valid \"iss\" claim\n        \n        - if the \"iss\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n            \n    - Access token has valid \"aud\" claim\n        \n        - if the \"aud\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n            \n    - Access token has valid \"iat\" claim\n        \n        - if the \"iat\" claim value is before `Date.now()`\n            \n    - Access token has valid \"exp\" claim\n        \n        - if the \"exp\" claim value is after `Date.now()`\n            \n    - Access token has valid \"nbf\" claim\n        \n        - if the \"nbf\" claim value is before the \"exp\" claim value\n            \n    - Access token has valid \"scope\" claim\n        \n        - if the \"scope\" claim value is equal to {{scope}}\n            \n    - Access token is valid\n        \n        - if all the above tests are passing\n            \n    - Access token grants access to resources\n        \n        - automatically send the \"UserInfo endpoint\" request to make sure that the `acess_token` is accepted by the server"
+						}
 					},
 					"response": [
 						{
@@ -2389,39 +2421,43 @@
 										},
 										{
 											"key": "client_id",
-											"value": "{{client_id}}",
+											"value": "stLJwW9b3L5BPaiFFVx9cB",
 											"type": "text"
 										},
 										{
 											"key": "client_secret",
-											"value": "{{client_secret}}",
+											"value": "jqvQwFVQgK92xRg4D1DryiiO7F3X5Hl6UeYZE4fZUQ95",
 											"type": "text"
 										},
 										{
 											"key": "scope",
-											"value": "{{scope}}",
+											"value": "openid email profile",
 											"type": "text"
 										},
 										{
 											"key": "state",
-											"value": "{{state}}",
+											"value": "6879bf2ef296d720f3a54eb8faabee9c",
 											"type": "text"
 										},
 										{
 											"key": "nonce",
-											"value": "{{nonce}}",
+											"value": "c4fdef35f2e05abe2ceb88ae0f743ee4",
 											"type": "text"
 										}
 									]
 								},
 								"url": {
-									"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token",
+									"raw": "https://cfs01.example.com/cfs/oauth/mytenant/token",
+									"protocol": "https",
 									"host": [
-										"{{CFS Master URL}}"
+										"cfs01",
+										"example",
+										"com"
 									],
 									"path": [
+										"cfs",
 										"oauth",
-										"{{Tenant Name}}",
+										"mytenant",
 										"token"
 									]
 								}
@@ -2476,7 +2512,8 @@
 						}
 					]
 				}
-			]
+			],
+			"description": "- Run the \"POST Request for access token\" request\n    \n    - The response will contain an `access_token`, that will be automatically captured and set as a collection variable to be used for any subsequent requests that require authentication"
 		},
 		{
 			"name": "Validations",
@@ -2557,8 +2594,7 @@
 															"value": "{{nonce}}"
 														}
 													]
-												},
-												"description": "_If necessary, the consent screen will be automatically accepted. In a real use case, the user must click on the \"Accept\" button._\n\n- See the response `authorization_code` in the **Response -> Body -> Visualize** tab\n    - The `authorization_code` will be extracted from the callback url and set in the collection variables\n- See the test results in the **Response -> Test Results** tab\n    - The response status code is expected to be 302\n    - The `authorization_code` is expected to not be empty"
+												}
 											},
 											"response": []
 										}
@@ -2634,8 +2670,7 @@
 															"value": "{{nonce}}"
 														}
 													]
-												},
-												"description": "_If necessary, the consent screen will be automatically accepted. In a real use case, the user must click on the \"Accept\" button._\n\n- See the response `authorization_code` in the **Response -> Body -> Visualize** tab\n    - The `authorization_code` will be extracted from the callback url and set in the collection variables\n- See the test results in the **Response -> Test Results** tab\n    - The response status code is expected to be 302\n    - The `authorization_code` is expected to not be empty"
+												}
 											},
 											"response": []
 										}
@@ -2711,8 +2746,7 @@
 															"value": "{{nonce}}"
 														}
 													]
-												},
-												"description": "_If necessary, the consent screen will be automatically accepted. In a real use case, the user must click on the \"Accept\" button._\n\n- See the response `authorization_code` in the **Response -> Body -> Visualize** tab\n    - The `authorization_code` will be extracted from the callback url and set in the collection variables\n- See the test results in the **Response -> Test Results** tab\n    - The response status code is expected to be 302\n    - The `authorization_code` is expected to not be empty"
+												}
 											},
 											"response": []
 										}
@@ -2810,8 +2844,7 @@
 															"value": "{{nonce}}"
 														}
 													]
-												},
-												"description": "_The consent screen will be automatically accepted. In a real use case, the user must click on the \"Accept\" button._\n\n- See the response `access_token`, `id_token` in the **Response -> Body -> Visualize** tab\n    - The `access_token`, `id_token` will be extracted from the callback url and set in the collection variables\n- See the test results in the **Response -> Test Results** tab\n    - The response status code is expected to be 200 because we're always getting the consent form back in the case of Implicit Flow\n    - Access token has valid \"iss\" claim\n        - if the \"iss\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Access token has valid \"aud\" claim\n        - if the \"aud\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Access token has valid \"iat\" claim\n        - if the \"iat\" claim value is before `Date.now()`\n    - Access token has valid \"exp\" claim\n        - if the \"exp\" claim value is after `Date.now()`\n    - Access token has valid \"nbf\" claim\n        - if the \"nbf\" claim value is before the \"exp\" claim value\n    - Access token has valid \"scope\" claim\n        - if the \"scope\" claim value is equal to {{scope}}\n    - Access token is valid\n        - if all the above tests are passing\n    - Id token has valid \"iss\" claim\n        - if the \"iss\" claim value is equal to [https://cfs01/cfs/oauth/mytenant](https://cfs01/cfs/oauth/mytenant)\n    - Id token has valid \"aud\" claim\n        - if the \"aud\" claim value is equal to stLJwW9b3L5BPaiFFVx9cB\n    - Id token has valid \"iat\" claim\n        - if the \"iat\" claim value is before `Date.now()`\n    - Id token has valid \"exp\" claim\n        - if the \"exp\" claim value is after `Date.now()`\n    - Id token has valid \"nbf\" claim\n        - if the \"nbf\" claim value is before the \"exp\" claim value\n    - Id token has valid \"nonce\" claim\n        - if the \"nonce\" claim value is equal to xyz\n    - Id token is valid\n        - if all the above tests are passing"
+												}
 											},
 											"response": []
 										}
@@ -2899,8 +2932,7 @@
 														"{{Tenant Name}}",
 														"token"
 													]
-												},
-												"description": "- See the response `access_token`, `id_token`, `refresh_token`, etc. in the **Response -> Body -> Pretty** tab\n    - The `acess_token`, `id_token`, `refresh_token` will be extracted from the response and set in the collection variables\n- See the test results in the **Response -> Test Results** tab\n    - The response status code is expected to be 200\n    - Access token has valid \"iss\" claim\n        - if the \"iss\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Access token has valid \"aud\" claim\n        - if the \"aud\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Access token has valid \"iat\" claim\n        - if the \"iat\" claim value is before `Date.now()`\n    - Access token has valid \"exp\" claim\n        - if the \"exp\" claim value is after `Date.now()`\n    - Access token has valid \"nbf\" claim\n        - if the \"nbf\" claim value is before the \"exp\" claim value\n    - Access token has valid \"scope\" claim\n        - if the \"scope\" claim value is equal to {{scope}}\n    - Access token is valid\n        - if all the above tests are passing\n    - Id token has valid \"iss\" claim\n        - if the \"iss\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Id token has valid \"aud\" claim\n        - if the \"aud\" claim value is equal to {{client_id}}\n    - Id token has valid \"iat\" claim\n        - if the \"iat\" claim value is before `Date.now()`\n    - Id token has valid \"exp\" claim\n        - if the \"exp\" claim value is after `Date.now()`\n    - Id token has valid \"nbf\" claim\n        - if the \"nbf\" claim value is before the \"exp\" claim value\n    - Id token has valid \"nonce\" claim\n        - if the \"nonce\" claim value is equal to {{nonce}}\n    - Id token is valid\n        - if all the above tests are passing\n    - Access token grants access to resources\n        - automatically send the \"UserInfo endpoint\" request to make sure that the `acess_token` is accepted by the server\n    - Refresh token grants new tokens\n        - automatically send the \"Refresh token\" request to make sure that the `refresh_token` can be used to retrieve new tokens"
+												}
 											},
 											"response": []
 										}
@@ -2970,8 +3002,7 @@
 															"value": "{{nonce}}"
 														}
 													]
-												},
-												"description": "_If necessary, the consent screen will be automatically accepted. In a real use case, the user must click on the \"Accept\" button._\n\n- See the response `authorization_code` in the **Response -> Body -> Visualize** tab\n    - The `authorization_code` will be extracted from the callback url and set in the collection variables\n- See the test results in the **Response -> Test Results** tab\n    - The response status code is expected to be 302\n    - The `authorization_code` is expected to not be empty"
+												}
 											},
 											"response": []
 										},
@@ -3048,8 +3079,7 @@
 														"{{Tenant Name}}",
 														"token"
 													]
-												},
-												"description": "- See the response `access_token`, `id_token`, `refresh_token`, etc. in the **Response -> Body -> Pretty** tab\n    - The `acess_token`, `id_token`, `refresh_token` will be extracted from the response and set in the collection variables\n- See the test results in the **Response -> Test Results** tab\n    - The response status code is expected to be 200\n    - Access token has valid \"iss\" claim\n        - if the \"iss\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Access token has valid \"aud\" claim\n        - if the \"aud\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Access token has valid \"iat\" claim\n        - if the \"iat\" claim value is before `Date.now()`\n    - Access token has valid \"exp\" claim\n        - if the \"exp\" claim value is after `Date.now()`\n    - Access token has valid \"nbf\" claim\n        - if the \"nbf\" claim value is before the \"exp\" claim value\n    - Access token has valid \"scope\" claim\n        - if the \"scope\" claim value is equal to {{scope}}\n    - Access token is valid\n        - if all the above tests are passing\n    - Id token has valid \"iss\" claim\n        - if the \"iss\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Id token has valid \"aud\" claim\n        - if the \"aud\" claim value is equal to {{client_id}}\n    - Id token has valid \"iat\" claim\n        - if the \"iat\" claim value is before `Date.now()`\n    - Id token has valid \"exp\" claim\n        - if the \"exp\" claim value is after `Date.now()`\n    - Id token has valid \"nbf\" claim\n        - if the \"nbf\" claim value is before the \"exp\" claim value\n    - Id token has valid \"nonce\" claim\n        - if the \"nonce\" claim value is equal to {{nonce}}\n    - Id token is valid\n        - if all the above tests are passing\n    - Access token grants access to resources\n        - automatically send the \"UserInfo endpoint\" request to make sure that the `acess_token` is accepted by the server\n    - Refresh token grants new tokens\n        - automatically send the \"Refresh token\" request to make sure that the `refresh_token` can be used to retrieve new tokens"
+												}
 											},
 											"response": []
 										}
@@ -3119,8 +3149,7 @@
 															"value": "{{nonce}}"
 														}
 													]
-												},
-												"description": "_If necessary, the consent screen will be automatically accepted. In a real use case, the user must click on the \"Accept\" button._\n\n- See the response `authorization_code` in the **Response -> Body -> Visualize** tab\n    - The `authorization_code` will be extracted from the callback url and set in the collection variables\n- See the test results in the **Response -> Test Results** tab\n    - The response status code is expected to be 302\n    - The `authorization_code` is expected to not be empty"
+												}
 											},
 											"response": []
 										},
@@ -3193,8 +3222,7 @@
 														"{{Tenant Name}}",
 														"token"
 													]
-												},
-												"description": "- See the response `access_token`, `id_token`, `refresh_token`, etc. in the **Response -> Body -> Pretty** tab\n    - The `acess_token`, `id_token`, `refresh_token` will be extracted from the response and set in the collection variables\n- See the test results in the **Response -> Test Results** tab\n    - The response status code is expected to be 200\n    - Access token has valid \"iss\" claim\n        - if the \"iss\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Access token has valid \"aud\" claim\n        - if the \"aud\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Access token has valid \"iat\" claim\n        - if the \"iat\" claim value is before `Date.now()`\n    - Access token has valid \"exp\" claim\n        - if the \"exp\" claim value is after `Date.now()`\n    - Access token has valid \"nbf\" claim\n        - if the \"nbf\" claim value is before the \"exp\" claim value\n    - Access token has valid \"scope\" claim\n        - if the \"scope\" claim value is equal to {{scope}}\n    - Access token is valid\n        - if all the above tests are passing\n    - Id token has valid \"iss\" claim\n        - if the \"iss\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Id token has valid \"aud\" claim\n        - if the \"aud\" claim value is equal to {{client_id}}\n    - Id token has valid \"iat\" claim\n        - if the \"iat\" claim value is before `Date.now()`\n    - Id token has valid \"exp\" claim\n        - if the \"exp\" claim value is after `Date.now()`\n    - Id token has valid \"nbf\" claim\n        - if the \"nbf\" claim value is before the \"exp\" claim value\n    - Id token has valid \"nonce\" claim\n        - if the \"nonce\" claim value is equal to {{nonce}}\n    - Id token is valid\n        - if all the above tests are passing\n    - Access token grants access to resources\n        - automatically send the \"UserInfo endpoint\" request to make sure that the `acess_token` is accepted by the server\n    - Refresh token grants new tokens\n        - automatically send the \"Refresh token\" request to make sure that the `refresh_token` can be used to retrieve new tokens"
+												}
 											},
 											"response": []
 										}
@@ -3264,8 +3292,7 @@
 															"value": "{{nonce}}"
 														}
 													]
-												},
-												"description": "_If necessary, the consent screen will be automatically accepted. In a real use case, the user must click on the \"Accept\" button._\n\n- See the response `authorization_code` in the **Response -> Body -> Visualize** tab\n    - The `authorization_code` will be extracted from the callback url and set in the collection variables\n- See the test results in the **Response -> Test Results** tab\n    - The response status code is expected to be 302\n    - The `authorization_code` is expected to not be empty"
+												}
 											},
 											"response": []
 										},
@@ -3346,8 +3373,7 @@
 														"{{Tenant Name}}",
 														"token"
 													]
-												},
-												"description": "- See the response `access_token`, `id_token`, `refresh_token`, etc. in the **Response -> Body -> Pretty** tab\n    - The `acess_token`, `id_token`, `refresh_token` will be extracted from the response and set in the collection variables\n- See the test results in the **Response -> Test Results** tab\n    - The response status code is expected to be 200\n    - Access token has valid \"iss\" claim\n        - if the \"iss\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Access token has valid \"aud\" claim\n        - if the \"aud\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Access token has valid \"iat\" claim\n        - if the \"iat\" claim value is before `Date.now()`\n    - Access token has valid \"exp\" claim\n        - if the \"exp\" claim value is after `Date.now()`\n    - Access token has valid \"nbf\" claim\n        - if the \"nbf\" claim value is before the \"exp\" claim value\n    - Access token has valid \"scope\" claim\n        - if the \"scope\" claim value is equal to {{scope}}\n    - Access token is valid\n        - if all the above tests are passing\n    - Id token has valid \"iss\" claim\n        - if the \"iss\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Id token has valid \"aud\" claim\n        - if the \"aud\" claim value is equal to {{client_id}}\n    - Id token has valid \"iat\" claim\n        - if the \"iat\" claim value is before `Date.now()`\n    - Id token has valid \"exp\" claim\n        - if the \"exp\" claim value is after `Date.now()`\n    - Id token has valid \"nbf\" claim\n        - if the \"nbf\" claim value is before the \"exp\" claim value\n    - Id token has valid \"nonce\" claim\n        - if the \"nonce\" claim value is equal to {{nonce}}\n    - Id token is valid\n        - if all the above tests are passing\n    - Access token grants access to resources\n        - automatically send the \"UserInfo endpoint\" request to make sure that the `acess_token` is accepted by the server\n    - Refresh token grants new tokens\n        - automatically send the \"Refresh token\" request to make sure that the `refresh_token` can be used to retrieve new tokens"
+												}
 											},
 											"response": []
 										}
@@ -3417,8 +3443,7 @@
 															"value": "{{nonce}}"
 														}
 													]
-												},
-												"description": "_If necessary, the consent screen will be automatically accepted. In a real use case, the user must click on the \"Accept\" button._\n\n- See the response `authorization_code` in the **Response -> Body -> Visualize** tab\n    - The `authorization_code` will be extracted from the callback url and set in the collection variables\n- See the test results in the **Response -> Test Results** tab\n    - The response status code is expected to be 302\n    - The `authorization_code` is expected to not be empty"
+												}
 											},
 											"response": []
 										},
@@ -3514,8 +3539,7 @@
 														"{{Tenant Name}}",
 														"token"
 													]
-												},
-												"description": "- See the response `access_token`, `id_token`, `refresh_token`, etc. in the **Response -> Body -> Pretty** tab\n    - The `acess_token`, `id_token`, `refresh_token` will be extracted from the response and set in the collection variables\n- See the test results in the **Response -> Test Results** tab\n    - The response status code is expected to be 200\n    - Access token has valid \"iss\" claim\n        - if the \"iss\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Access token has valid \"aud\" claim\n        - if the \"aud\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Access token has valid \"iat\" claim\n        - if the \"iat\" claim value is before `Date.now()`\n    - Access token has valid \"exp\" claim\n        - if the \"exp\" claim value is after `Date.now()`\n    - Access token has valid \"nbf\" claim\n        - if the \"nbf\" claim value is before the \"exp\" claim value\n    - Access token has valid \"scope\" claim\n        - if the \"scope\" claim value is equal to {{scope}}\n    - Access token is valid\n        - if all the above tests are passing\n    - Id token has valid \"iss\" claim\n        - if the \"iss\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Id token has valid \"aud\" claim\n        - if the \"aud\" claim value is equal to {{client_id}}\n    - Id token has valid \"iat\" claim\n        - if the \"iat\" claim value is before `Date.now()`\n    - Id token has valid \"exp\" claim\n        - if the \"exp\" claim value is after `Date.now()`\n    - Id token has valid \"nbf\" claim\n        - if the \"nbf\" claim value is before the \"exp\" claim value\n    - Id token has valid \"nonce\" claim\n        - if the \"nonce\" claim value is equal to {{nonce}}\n    - Id token is valid\n        - if all the above tests are passing\n    - Access token grants access to resources\n        - automatically send the \"UserInfo endpoint\" request to make sure that the `acess_token` is accepted by the server\n    - Refresh token grants new tokens\n        - automatically send the \"Refresh token\" request to make sure that the `refresh_token` can be used to retrieve new tokens"
+												}
 											},
 											"response": []
 										}
@@ -3585,8 +3609,7 @@
 															"value": "{{nonce}}"
 														}
 													]
-												},
-												"description": "_If necessary, the consent screen will be automatically accepted. In a real use case, the user must click on the \"Accept\" button._\n\n- See the response `authorization_code` in the **Response -> Body -> Visualize** tab\n    - The `authorization_code` will be extracted from the callback url and set in the collection variables\n- See the test results in the **Response -> Test Results** tab\n    - The response status code is expected to be 302\n    - The `authorization_code` is expected to not be empty"
+												}
 											},
 											"response": []
 										},
@@ -3661,8 +3684,7 @@
 														"{{Tenant Name}}",
 														"token"
 													]
-												},
-												"description": "- See the response `access_token`, `id_token`, `refresh_token`, etc. in the **Response -> Body -> Pretty** tab\n    - The `acess_token`, `id_token`, `refresh_token` will be extracted from the response and set in the collection variables\n- See the test results in the **Response -> Test Results** tab\n    - The response status code is expected to be 200\n    - Access token has valid \"iss\" claim\n        - if the \"iss\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Access token has valid \"aud\" claim\n        - if the \"aud\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Access token has valid \"iat\" claim\n        - if the \"iat\" claim value is before `Date.now()`\n    - Access token has valid \"exp\" claim\n        - if the \"exp\" claim value is after `Date.now()`\n    - Access token has valid \"nbf\" claim\n        - if the \"nbf\" claim value is before the \"exp\" claim value\n    - Access token has valid \"scope\" claim\n        - if the \"scope\" claim value is equal to {{scope}}\n    - Access token is valid\n        - if all the above tests are passing\n    - Id token has valid \"iss\" claim\n        - if the \"iss\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n    - Id token has valid \"aud\" claim\n        - if the \"aud\" claim value is equal to {{client_id}}\n    - Id token has valid \"iat\" claim\n        - if the \"iat\" claim value is before `Date.now()`\n    - Id token has valid \"exp\" claim\n        - if the \"exp\" claim value is after `Date.now()`\n    - Id token has valid \"nbf\" claim\n        - if the \"nbf\" claim value is before the \"exp\" claim value\n    - Id token has valid \"nonce\" claim\n        - if the \"nonce\" claim value is equal to {{nonce}}\n    - Id token is valid\n        - if all the above tests are passing\n    - Access token grants access to resources\n        - automatically send the \"UserInfo endpoint\" request to make sure that the `acess_token` is accepted by the server\n    - Refresh token grants new tokens\n        - automatically send the \"Refresh token\" request to make sure that the `refresh_token` can be used to retrieve new tokens"
+												}
 											},
 											"response": []
 										}
@@ -3824,8 +3846,7 @@
 															"value": "{{nonce}}"
 														}
 													]
-												},
-												"description": "_If necessary, the consent screen will be automatically accepted. In a real use case, the user must click on the \"Accept\" button._\n\n- See the response `authorization_code` in the **Response -> Body -> Visualize** tab\n    - The `authorization_code` will be extracted from the callback url and set in the collection variables\n- See the test results in the **Response -> Test Results** tab\n    \n    - The response status code is expected to be 302\n    - The `authorization_code` is expected to not be empty"
+												}
 											},
 											"response": []
 										}
@@ -3908,8 +3929,7 @@
 															"value": "{{nonce}}"
 														}
 													]
-												},
-												"description": "_If necessary, the consent screen will be automatically accepted. In a real use case, the user must click on the \"Accept\" button._\n\n- See the response `authorization_code` in the **Response -> Body -> Visualize** tab\n    - The `authorization_code` will be extracted from the callback url and set in the collection variables\n- See the test results in the **Response -> Test Results** tab\n    \n    - The response status code is expected to be 302\n    - The `authorization_code` is expected to not be empty"
+												}
 											},
 											"response": []
 										},
@@ -3982,8 +4002,7 @@
 														"{{Tenant Name}}",
 														"token"
 													]
-												},
-												"description": "- See the response `access_token`, `id_token`, `refresh_token`, etc. in the **Response -> Body -> Pretty** tab\n    - The `acess_token`, `id_token`, `refresh_token` will be extracted from the response and set in the collection variables\n- See the test results in the **Response -> Test Results** tab\n    - The response status code is expected to be 200\n    - Access token has valid \"iss\" claim\n        - if the \"iss\" claim value is equal to [https://cfs01/cfs/oauth/mytenant](https://cfs01/cfs/oauth/mytenant)\n    - Access token has valid \"aud\" claim\n        - if the \"aud\" claim value is equal to [https://cfs01/cfs/oauth/mytenant](https://cfs01/cfs/oauth/mytenant)\n    - Access token has valid \"iat\" claim\n        - if the \"iat\" claim value is before `Date.now()`\n    - Access token has valid \"exp\" claim\n        - if the \"exp\" claim value is after `Date.now()`\n    - Access token has valid \"nbf\" claim\n        - if the \"nbf\" claim value is before the \"exp\" claim value\n    - Access token has valid \"scope\" claim\n        - if the \"scope\" claim value is equal to openid email profile\n    - Access token is valid\n        - if all the above tests are passing\n    - Id token has valid \"iss\" claim\n        - if the \"iss\" claim value is equal to [https://cfs01/cfs/oauth/mytenant](https://cfs01/cfs/oauth/mytenant)\n    - Id token has valid \"aud\" claim\n        - if the \"aud\" claim value is equal to stLJwW9b3L5BPaiFFVx9cB\n    - Id token has valid \"iat\" claim\n        - if the \"iat\" claim value is before `Date.now()`\n    - Id token has valid \"exp\" claim\n        - if the \"exp\" claim value is after `Date.now()`\n    - Id token has valid \"nbf\" claim\n        - if the \"nbf\" claim value is before the \"exp\" claim value\n    - Id token has valid \"nonce\" claim\n        - if the \"nonce\" claim value is equal to xyz\n    - Id token is valid\n        - if all the above tests are passing\n    - Access token grants access to resources\n        - automatically send the \"UserInfo endpoint\" request to make sure that the `acess_token` is accepted by the server\n    - Refresh token grants new tokens\n        - automatically send the \"Refresh token\" request to make sure that the `refresh_token` can be used to retrieve new tokens"
+												}
 											},
 											"response": []
 										}
@@ -4083,7 +4102,8 @@
 						}
 					]
 				}
-			]
+			],
+			"description": "All requests in this folder's subfolders fail for different reasons. The purpose is to demonstrate the expected error responses in those cases.\n\nThe folders are grouped by flow type.\n\nEach subfolder under a flow type represents a different case why a request would fail.\n\nSee the tests in the **Tests** tab of each request to see what the expected errors are for each case."
 		},
 		{
 			"name": "Get OIDC metadata",
@@ -4197,13 +4217,17 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/.well-known/openid-configuration",
+							"raw": "https://cfs01.example.com/cfs/oauth/mytenant/.well-known/openid-configuration",
+							"protocol": "https",
 							"host": [
-								"{{CFS Master URL}}"
+								"cfs01",
+								"example",
+								"com"
 							],
 							"path": [
+								"cfs",
 								"oauth",
-								"{{Tenant Name}}",
+								"mytenant",
 								".well-known",
 								"openid-configuration"
 							]
@@ -4327,7 +4351,7 @@
 							"urlencoded": [
 								{
 									"key": "client_id",
-									"value": "{{client_id}}",
+									"value": "stLJwW9b3L5BPaiFFVx9cB",
 									"type": "text"
 								},
 								{
@@ -4337,24 +4361,28 @@
 								},
 								{
 									"key": "client_secret",
-									"value": "{{client_secret}}",
+									"value": "jqvQwFVQgK92xRg4D1DryiiO7F3X5Hl6UeYZE4fZUQ95",
 									"type": "text"
 								},
 								{
 									"key": "refresh_token",
-									"value": "{{refresh_token}}",
+									"value": "",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token",
+							"raw": "https://cfs01.example.com/cfs/oauth/mytenant/token",
+							"protocol": "https",
 							"host": [
-								"{{CFS Master URL}}"
+								"cfs01",
+								"example",
+								"com"
 							],
 							"path": [
+								"cfs",
 								"oauth",
-								"{{Tenant Name}}",
+								"mytenant",
 								"token"
 							]
 						}
@@ -4483,13 +4511,17 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/userinfo",
+							"raw": "https://cfs01.example.com/cfs/oauth/mytenant/userinfo",
+							"protocol": "https",
 							"host": [
-								"{{CFS Master URL}}"
+								"cfs01",
+								"example",
+								"com"
 							],
 							"path": [
+								"cfs",
 								"oauth",
-								"{{Tenant Name}}",
+								"mytenant",
 								"userinfo"
 							]
 						}
@@ -4587,13 +4619,17 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/.well-known/keys",
+							"raw": "https://cfs01.example.com/cfs/oauth/mytenant/.well-known/keys",
+							"protocol": "https",
 							"host": [
-								"{{CFS Master URL}}"
+								"cfs01",
+								"example",
+								"com"
 							],
 							"path": [
+								"cfs",
 								"oauth",
-								"{{Tenant Name}}",
+								"mytenant",
 								".well-known",
 								"keys"
 							]
@@ -4666,15 +4702,19 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "{{CFS Master URL}}/Portal/Settings/RevokeApplicationAccess/{{Application Id}}",
+							"raw": "https://cfs01.example.com/cfs/Portal/Settings/RevokeApplicationAccess/1f734c83-3ca4-433e-bfb0-27bc711f3b4e",
+							"protocol": "https",
 							"host": [
-								"{{CFS Master URL}}"
+								"cfs01",
+								"example",
+								"com"
 							],
 							"path": [
+								"cfs",
 								"Portal",
 								"Settings",
 								"RevokeApplicationAccess",
-								"{{Application Id}}"
+								"1f734c83-3ca4-433e-bfb0-27bc711f3b4e"
 							]
 						}
 					},
@@ -5312,6 +5352,11 @@
 			"type": "string"
 		},
 		{
+			"key": "validations_common_response_type",
+			"value": "code",
+			"type": "string"
+		},
+		{
 			"key": "authorization_code",
 			"value": "",
 			"type": "string"
@@ -5329,11 +5374,6 @@
 		{
 			"key": "refresh_token",
 			"value": "",
-			"type": "string"
-		},
-		{
-			"key": "validations_common_response_type",
-			"value": "code",
 			"type": "string"
 		}
 	]
