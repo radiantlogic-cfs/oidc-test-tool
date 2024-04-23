@@ -2,7 +2,7 @@
 	"info": {
 		"_postman_id": "99b90132-8042-4516-b4b7-44ae06ff2924",
 		"name": "CFS OAuth 2.0 and OpenID Connect",
-		"description": "This postman collection is used to try out the **OpenID Connect feature of CFS**.\n\n## Pre-requisities\n\n- Configure an OpenID Connect Application in CFS.\n    - Go to **Administration -> Applications -> OpenID Connect**\n        \n        <img src=\"https://content.pstmn.io/8135220b-8129-4db7-b70d-5b14eac68332/aW1hZ2UucG5n\" width=\"1619\" height=\"924\">\n        \n    - Click the \"New OpenID Connect Application\" button\n    - Fill in the fields\n        \n        <img src=\"https://content.pstmn.io/0049d2a0-4d58-4d20-8bea-2588ef7d2a8d/aW1hZ2UucG5n\" width=\"1619\" height=\"924\">\n        \n    - For the Callback URL field, use the value: `https://oauth.pstmn.io/v1/callback`\n- Fill in the Postman Collection Variables with appropriate values for `CFS Master URL`, `Tenant Name`, `client_id`, `client_secret`, `username`, and `password` respectively.\n    \n    <img src=\"https://content.pstmn.io/79d7290f-e98b-48d5-b811-fa76f09c6da5/aW1hZ2UucG5n\" width=\"1619\" height=\"924\">\n    \n    <img src=\"https://content.pstmn.io/62a83ecf-0335-42c0-beb1-0e9abfc74501/aW1hZ2UucG5n\" width=\"1619\" height=\"924\">\n    \n\nNow you can test the OAuth requests directly in Postman.\n\n## Collection Variables\n\n| **Variable Name** | **Current Value** | **Description** |\n| --- | --- | --- |\n| CFS Master URL | {{CFS Master URL}} | The base URL for the CFS Master instance |\n| Tenant Name | {{Tenant Name}} | The name of the CFS tenant |\n| username | {{username}} | The username used to log in to the CFS Master tenant's portal |\n| password | {{password}} | The password used to log in to the CFS Master tenant's portal |\n| client_id | {{client_id}} | The client identifier  <br>[https://datatracker.ietf.org/doc/html/rfc6749#section-2.2](https://datatracker.ietf.org/doc/html/rfc6749#section-2.2) |\n| client_secret | {{client_secret}} | The client secret  <br>[https://datatracker.ietf.org/doc/html/rfc6749#section-2.3.1](https://datatracker.ietf.org/doc/html/rfc6749#section-2.3.1) |\n| scope | {{scope}} | The space separated list of requested scopes  <br>[https://datatracker.ietf.org/doc/html/rfc6749#section-3.3](https://datatracker.ietf.org/doc/html/rfc6749#section-3.3) |\n| state | {{state}} | State parameter used for protection against CSRF  <br>[https://datatracker.ietf.org/doc/html/rfc6749#section-10.12](https://datatracker.ietf.org/doc/html/rfc6749#section-10.12) |\n| nonce | {{nonce}} | Nonce parameter used for protection agaisnt replay attacks  <br>[https://openid.net/specs/openid-connect-core-1_0.html#IDToken](https://openid.net/specs/openid-connect-core-1_0.html#IDToken) |\n| redirect_uri | {{redirect_uri}} | The callback URL configured for the OIDC Application  <br>[https://datatracker.ietf.org/doc/html/rfc6749#section-3.1.2](https://datatracker.ietf.org/doc/html/rfc6749#section-3.1.2) |\n| code_challenge | `{{code_challenge}}` | Code Challenge for PKCE  <br>[https://datatracker.ietf.org/doc/html/rfc7636#section-4.2](https://datatracker.ietf.org/doc/html/rfc7636#section-4.2) |\n| code_verifier | `{{code_verifier}}` | Code Verifier for PKCE  <br>[https://datatracker.ietf.org/doc/html/rfc7636#section-4.1](https://datatracker.ietf.org/doc/html/rfc7636#section-4.1) |\n| code_method | {{code_method}} | Code Challenge Method for PKCE  <br>[https://datatracker.ietf.org/doc/html/rfc7636#section-4.3](https://datatracker.ietf.org/doc/html/rfc7636#section-4.3) |\n| validations_common_response_type | {{validations_common_response_type}} | The response type to use for the requests in the **Validations -> Common** folder |\n| authorization_code | `{{authorization_code}}` | **This variable is managed by the Postman Collection itself, do not modify it manually!**  <br>  <br>The OAuth authorization code  <br>[https://datatracker.ietf.org/doc/html/rfc6749#section-1.3.1](https://datatracker.ietf.org/doc/html/rfc6749#section-1.3.1) |\n| id_token | `{{id_token}}` | **This variable is managed by the collection itself, do not modify it manually!**  <br>  <br>The OIDC Id token  <br>[https://openid.net/specs/openid-connect-core-1_0.html#TokenResponse](https://openid.net/specs/openid-connect-core-1_0.html#TokenResponse) |\n| access_token | `{{access_token}}` | **This variable is managed by the collection itself, do not modify it manually!**  <br>  <br>The OAuth acess token  <br>[https://datatracker.ietf.org/doc/html/rfc6749#section-5.1](https://datatracker.ietf.org/doc/html/rfc6749#section-5.1) |\n| refresh_token | `{{refresh_token}}` | **This variable is managed by the collection itself, do not modify it manually!**  <br>  <br>The OAuth refresh token  <br>[https://datatracker.ietf.org/doc/html/rfc6749#section-5.1](https://datatracker.ietf.org/doc/html/rfc6749#section-5.1) |\n\nThe \"Authorize\" requests will automatically set the values for the `authorization_code`, `id_token`, `access_token` collection variable(s), while the \"Request for tokens\" requests will automatically set the values for the `id_token`, `access_token`, and `refresh_token` collections variable(s) where appropriate.\n\n**N.B.:** The \"Automatically follow redirects\" setting must be **disabled** in Postman in order to run the requests in the \"[Implicit Flow](https://speeding-sunset-964902.postman.co/workspace/CFS5~8ebc958a-523b-46bd-931a-968060aa59a4/folder/25667693-0adeda1d-0730-496d-b6d8-79fd4cb9ee10?ctx=documentation)\" and \"[Hybrid Flow](https://speeding-sunset-964902.postman.co/workspace/CFS5~8ebc958a-523b-46bd-931a-968060aa59a4/folder/25667693-38b7714c-3ef1-4f1f-9f42-14ac1e5d6c0b?ctx=documentation)\" folders!\n\n<img src=\"https://content.pstmn.io/bb3aa626-370b-4bfc-88b9-b0daec95b702/aW1hZ2UucG5n\" width=\"846\" height=\"840\">\n\n## Tests\n\nAll requests contain tests to validate their respective responses. Most of the testing code is extracted to methods defined in the collection's Pre-request Script.\n\nSee the test results in the **Response -> Test Results** tab.\n\n### Authorize\n\nSee the response in `authorization_code`, `access_token`, `id_token`, in the **Response -> Body -> Visualize** tab.\n\nThe \"Authorize\" requests test the responses in the following ways:\n\n- Asserts that the response status code is 200 Ok or 302 Found\n    - If it's 200 Ok, it means we received CFS's consent screen, which will be automatically accepted by the test script, but in a real world scenario the user will have to accept/decline by clicking on the respective buttons;\n    - If it's 302 Found, we extract the respective variables from the Location header's value, depending on the flow: `authorization_code`, `access_token`, `id_token`, `refresh_token` and set their values in the collection to be used by subsequent requests.\n\n### Token\n\nSee the response `access_token`, `id_token`, `refresh_token` in the **Response -> Body -> Pretty** tab.\n\nThe \"Token\" requests test the responses in the following ways:\n\n- Asserts that the response status code is 200 Ok.\n    - We extract the respective variables from the response body, depending on the flow: `access_token`, `id_token`, `refresh_token` and set their values in the collection to be used by subsequent requests.\n\n### Common tests\n\nBoth Authorize and Token requests validate the variables in the following ways:\n\n#### authorization_code\n\n- Authorization code is valid\n    - if it's not empty\n\n#### access_token\n\n- Access token has valid \"iss\" claim\n    - if the \"iss\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n- Access token has valid \"aud\" claim\n    - if the \"aud\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n- Access token has valid \"iat\" claim\n    - if the \"iat\" claim value is before `Date.now()`\n- Access token has valid \"exp\" claim\n    - if the \"exp\" claim value is after `Date.now()`\n- Access token has valid \"nbf\" claim\n    - if the \"nbf\" claim value is before `Date.now()`\n- Access token has valid \"scope\" claim\n    - if the \"scope\" claim value is equal to {{scope}}\n- Access token is valid\n    - if all the above tests are passing\n- Access token grants access to resources\n    - automatically sends a request to the UserInfo endpoint to make sure that the `acess_token` is accepted by the server\n\n#### id_token\n\n- Id token has valid \"iss\" claim\n    - if the \"iss\" claim value is equal to [https://cfs01/cfs/oauth/mytenant](https://cfs01/cfs/oauth/mytenant)\n- Id token has valid \"aud\" claim\n    - if the \"aud\" claim value is equal to stLJwW9b3L5BPaiFFVx9cB\n- Id token has valid \"iat\" claim\n    - if the \"iat\" claim value is before `Date.now()`\n- Id token has valid \"exp\" claim\n    - if the \"exp\" claim value is after `Date.now()`\n- Id token has valid \"nbf\" claim\n    - if the \"nbf\" claim value is before `Date.now()`\n- Id token has valid \"nonce\" claim\n    - if the \"nonce\" claim value is equal to {{nonce}}\n- Id token is valid\n    - if all the above tests are passing\n\n#### refresh_token\n\n- Refresh token grants new tokens\n    - automatically send the \"Refresh token\" request to make sure that the `refresh_token` can be used to retrieve new tokens",
+		"description": "This postman collection is used to try out the **OpenID Connect feature of CFS**.\n\n## Pre-requisities\n\n- Configure an OpenID Connect Application in CFS.\n    - Go to **Administration -> Applications -> OpenID Connect**\n        \n        <img src=\"https://content.pstmn.io/8135220b-8129-4db7-b70d-5b14eac68332/aW1hZ2UucG5n\" width=\"1619\" height=\"924\">\n        \n    - Click the \"New OpenID Connect Application\" button\n    - Fill in the fields\n        \n        <img src=\"https://content.pstmn.io/0049d2a0-4d58-4d20-8bea-2588ef7d2a8d/aW1hZ2UucG5n\" width=\"1619\" height=\"924\">\n        \n    - For the Callback URL field, use the value: `https://oauth.pstmn.io/v1/callback`\n- Fill in the Postman Collection Variables with appropriate values for `CFS Master URL`, `Tenant Name`, `client_id`, `client_secret`, `username`, and `password` respectively.\n    \n    <img src=\"https://content.pstmn.io/79d7290f-e98b-48d5-b811-fa76f09c6da5/aW1hZ2UucG5n\" width=\"1619\" height=\"924\">\n    \n    <img src=\"https://content.pstmn.io/62a83ecf-0335-42c0-beb1-0e9abfc74501/aW1hZ2UucG5n\" width=\"1619\" height=\"924\">\n    \n\nNow you can test the OAuth requests directly in Postman.\n\n## Collection Variables\n\n| **Variable Name** | **Current Value** | **Description** |\n| --- | --- | --- |\n| CFS Master URL | {{CFS Master URL}} | The base URL for the CFS Master instance |\n| Tenant Name | {{Tenant Name}} | The name of the CFS tenant |\n| Application Id | {{Application Id}} | The application id used for the **Revoke Application Access** request |\n| username | {{username}} | The username used to log in to the CFS Master tenant's portal |\n| password | {{password}} | The password used to log in to the CFS Master tenant's portal |\n| client_id | {{client_id}} | The client identifier  <br>[https://datatracker.ietf.org/doc/html/rfc6749#section-2.2](https://datatracker.ietf.org/doc/html/rfc6749#section-2.2) |\n| client_secret | {{client_secret}} | The client secret  <br>[https://datatracker.ietf.org/doc/html/rfc6749#section-2.3.1](https://datatracker.ietf.org/doc/html/rfc6749#section-2.3.1) |\n| scope | {{scope}} | The space separated list of requested scopes  <br>[https://datatracker.ietf.org/doc/html/rfc6749#section-3.3](https://datatracker.ietf.org/doc/html/rfc6749#section-3.3) |\n| state | {{state}} | State parameter used for protection against CSRF  <br>[https://datatracker.ietf.org/doc/html/rfc6749#section-10.12](https://datatracker.ietf.org/doc/html/rfc6749#section-10.12) |\n| nonce | {{nonce}} | Nonce parameter used for protection agaisnt replay attacks  <br>[https://openid.net/specs/openid-connect-core-1_0.html#IDToken](https://openid.net/specs/openid-connect-core-1_0.html#IDToken) |\n| redirect_uri | {{redirect_uri}} | The callback URL configured for the OIDC Application  <br>[https://datatracker.ietf.org/doc/html/rfc6749#section-3.1.2](https://datatracker.ietf.org/doc/html/rfc6749#section-3.1.2) |\n| code_challenge | `{{code_challenge}}` | Code Challenge for PKCE  <br>[https://datatracker.ietf.org/doc/html/rfc7636#section-4.2](https://datatracker.ietf.org/doc/html/rfc7636#section-4.2) |\n| code_verifier | `{{code_verifier}}` | Code Verifier for PKCE  <br>[https://datatracker.ietf.org/doc/html/rfc7636#section-4.1](https://datatracker.ietf.org/doc/html/rfc7636#section-4.1) |\n| code_method | {{code_method}} | Code Challenge Method for PKCE  <br>[https://datatracker.ietf.org/doc/html/rfc7636#section-4.3](https://datatracker.ietf.org/doc/html/rfc7636#section-4.3) |\n| validations_common_response_type | {{validations_common_response_type}} | The response type to use for the requests in the **Validations -> Common** folder |\n| authorization_code | `{{authorization_code}}` | **This variable is managed by the Postman Collection itself, do not modify it manually!**  <br>  <br>The OAuth authorization code  <br>[https://datatracker.ietf.org/doc/html/rfc6749#section-1.3.1](https://datatracker.ietf.org/doc/html/rfc6749#section-1.3.1) |\n| id_token | `{{id_token}}` | **This variable is managed by the collection itself, do not modify it manually!**  <br>  <br>The OIDC Id token  <br>[https://openid.net/specs/openid-connect-core-1_0.html#TokenResponse](https://openid.net/specs/openid-connect-core-1_0.html#TokenResponse) |\n| access_token | `{{access_token}}` | **This variable is managed by the collection itself, do not modify it manually!**  <br>  <br>The OAuth acess token  <br>[https://datatracker.ietf.org/doc/html/rfc6749#section-5.1](https://datatracker.ietf.org/doc/html/rfc6749#section-5.1) |\n| refresh_token | `{{refresh_token}}` | **This variable is managed by the collection itself, do not modify it manually!**  <br>  <br>The OAuth refresh token  <br>[https://datatracker.ietf.org/doc/html/rfc6749#section-5.1](https://datatracker.ietf.org/doc/html/rfc6749#section-5.1) |\n\nThe \"Authorize\" requests will automatically set the values for the `authorization_code`, `id_token`, `access_token` collection variable(s), while the \"Request for tokens\" requests will automatically set the values for the `id_token`, `access_token`, and `refresh_token` collections variable(s) where appropriate.\n\n**N.B.:** The \"Automatically follow redirects\" setting must be **disabled** in Postman in order to run the requests in the \"[Implicit Flow](https://speeding-sunset-964902.postman.co/workspace/CFS5~8ebc958a-523b-46bd-931a-968060aa59a4/folder/25667693-0adeda1d-0730-496d-b6d8-79fd4cb9ee10?ctx=documentation)\" and \"[Hybrid Flow](https://speeding-sunset-964902.postman.co/workspace/CFS5~8ebc958a-523b-46bd-931a-968060aa59a4/folder/25667693-38b7714c-3ef1-4f1f-9f42-14ac1e5d6c0b?ctx=documentation)\" folders!\n\n<img src=\"https://content.pstmn.io/bb3aa626-370b-4bfc-88b9-b0daec95b702/aW1hZ2UucG5n\" width=\"846\" height=\"840\">\n\n## Tests\n\nAll requests contain tests to validate their respective responses. Most of the testing code is extracted to methods defined in the collection's Pre-request Script.\n\nSee the test results in the **Response -> Test Results** tab.\n\n### Authorize\n\nSee the response in `authorization_code`, `access_token`, `id_token`, in the **Response -> Body -> Visualize** tab.\n\nThe \"Authorize\" requests test the responses in the following ways:\n\n- Asserts that the response status code is 200 Ok or 302 Found\n    - If it's 200 Ok, it means we received CFS's consent screen, which will be automatically accepted by the test script, but in a real world scenario the user will have to accept/decline by clicking on the respective buttons;\n    - If it's 302 Found, we extract the respective variables from the Location header's value, depending on the flow: `authorization_code`, `access_token`, `id_token`, `refresh_token` and set their values in the collection to be used by subsequent requests.\n\n### Token\n\nSee the response `access_token`, `id_token`, `refresh_token` in the **Response -> Body -> Pretty** tab.\n\nThe \"Token\" requests test the responses in the following ways:\n\n- Asserts that the response status code is 200 Ok.\n    - We extract the respective variables from the response body, depending on the flow: `access_token`, `id_token`, `refresh_token` and set their values in the collection to be used by subsequent requests.\n\n### Common tests\n\nBoth Authorize and Token requests validate the variables in the following ways:\n\n#### authorization_code\n\n- Authorization code is valid\n    - if it's not empty\n\n#### access_token\n\n- Access token has valid \"iss\" claim\n    - if the \"iss\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n- Access token has valid \"aud\" claim\n    - if the \"aud\" claim value is equal to {{CFS Master URL}}/oauth/{{Tenant Name}}\n- Access token has valid \"iat\" claim\n    - if the \"iat\" claim value is before `Date.now()`\n- Access token has valid \"exp\" claim\n    - if the \"exp\" claim value is after `Date.now()`\n- Access token has valid \"nbf\" claim\n    - if the \"nbf\" claim value is before `Date.now()`\n- Access token has valid \"scope\" claim\n    - if the \"scope\" claim value is equal to {{scope}}\n- Access token is valid\n    - if all the above tests are passing\n- Access token grants access to resources\n    - automatically sends a request to the UserInfo endpoint to make sure that the `acess_token` is accepted by the server\n\n#### id_token\n\n- Id token has valid \"iss\" claim\n    - if the \"iss\" claim value is equal to [https://cfs01/cfs/oauth/mytenant](https://cfs01/cfs/oauth/mytenant)\n- Id token has valid \"aud\" claim\n    - if the \"aud\" claim value is equal to stLJwW9b3L5BPaiFFVx9cB\n- Id token has valid \"iat\" claim\n    - if the \"iat\" claim value is before `Date.now()`\n- Id token has valid \"exp\" claim\n    - if the \"exp\" claim value is after `Date.now()`\n- Id token has valid \"nbf\" claim\n    - if the \"nbf\" claim value is before `Date.now()`\n- Id token has valid \"nonce\" claim\n    - if the \"nonce\" claim value is equal to {{nonce}}\n- Id token is valid\n    - if all the above tests are passing\n\n#### refresh_token\n\n- Refresh token grants new tokens\n    - automatically send the \"Refresh token\" request to make sure that the `refresh_token` can be used to retrieve new tokens",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "25667693",
 		"_collection_link": "https://speeding-sunset-964902.postman.co/workspace/CFS5~8ebc958a-523b-46bd-931a-968060aa59a4/collection/25667693-99b90132-8042-4516-b4b7-44ae06ff2924?action=share&source=collection_link&creator=25667693"
@@ -49,8 +49,7 @@
 							"query": [
 								{
 									"key": "response_type",
-									"value": "code",
-									"description": "Response type is \"code\" for the authorization code grant type\nhttps://datatracker.ietf.org/doc/html/rfc6749#section-4.1.1"
+									"value": "code"
 								},
 								{
 									"key": "client_id",
@@ -77,7 +76,7 @@
 					},
 					"response": [
 						{
-							"name": "Authorize",
+							"name": "Authorize Status 200",
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
@@ -120,6 +119,106 @@
 										{
 											"key": "nonce",
 											"value": "c4fdef35f2e05abe2ceb88ae0f743ee4"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "html",
+							"header": [
+								{
+									"key": "Cache-Control",
+									"value": "private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/html; charset=utf-8"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Server",
+									"value": "Microsoft-IIS/10.0"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "authorization"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "X-SourceFiles",
+									"value": "=?UTF-8?B?WDpcc291cmNlXHJhZGlhbnRsb2dpY1xjZnNcc3JjXENGU1xSTEkuQ0ZTLldlYlxvYXV0aFxzdG9ybXdpbmRcYXV0aG9yaXpl?="
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "ASP.NET"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 23 Apr 2024 10:37:58 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1930"
+								}
+							],
+							"cookie": [],
+							"body": "<!DOCTYPE html>\n<html xmlns=\"http://www.w3.org/1999/xhtml\" lang=\"en-US\">\n    <head>\n        <title>Cloud Federation Service - Authorize the application</title>\n        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n        <meta name=\"robots\" content=\"noindex,nofollow\" />\n        <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\" />\n        <link rel=\"stylesheet\" href=\"/Content/css/base.min.css\" />\n        <link rel=\"stylesheet\" href=\"/Content/css/login.min.css\" />\n        <link rel=\"stylesheet\" href=\"/Css/Login/stormwind.css\" />\n    </head>\n    <body>\n        <div>\n            <div class=\"title\">\n                <img class=\"login-picture\" src=\"/Images/Index/stormwind.png\" alt=\"Stormwind\" />\n            </div>\n            <div data-cfs-page-name=\"oauth2-authorize-login\" class=\"guest-content\">\n                <p class=\"alert alert-warning\">\n                    <strong>You can use your account to sign in to other sites and services.</strong>\n        By signing here, you can use My Application without sharing your password.\n                </p>\n                <h3 class=\"dark\">Authorize My Application to use your account?</h3>\n                <p class=\"dark\">This application \n                    <span class=\"text-success\">will be able to</span>:\n                </p>\n                <ul class=\"dark\">\n                    <li>Get your email address.</li>\n                    <li>Get your basic profile information.</li>\n                    <li>Get your address.</li>\n                </ul>\n                <p id=\"javascriptDisabled\" class=\"alert alert-danger\">\n                    <strong>Javascript appears to be disabled in your browser.</strong>\n        This page requires Javascript to be enabled to better protect your security.\n                </p>\n                <form action=\"/oauth/stormwind/authorizelogin\" method=\"post\">\n                    <input name=\"__RequestVerificationToken\" type=\"hidden\" value=\"QQTS79uH1UnM1WKd3TG9jC7UPFINQznoTs61OCscwNHCDb1f8HpoSwhYgbgKs3LlLvXC1lZRC4Y-0IcQpcMvEMGHV19maLFEY3-GxKgj8Z01\" />\n                    <input id=\"IsApproved\" name=\"IsApproved\" type=\"hidden\" value=\"\" />\n                    <input id=\"client_id\" name=\"client_id\" type=\"hidden\" value=\"1s2o985lIf2Fa2Di5Zg0mJ\" />\n                    <input id=\"redirect_uri\" name=\"redirect_uri\" type=\"hidden\" value=\"https://oauth.pstmn.io/v1/callback\" />\n                    <input id=\"state\" name=\"state\" type=\"hidden\" value=\"6879bf2ef296d720f3a54eb8faabee9c\" />\n                    <input id=\"scope\" name=\"scope\" type=\"hidden\" value=\"openid email profile address\" />\n                    <input id=\"response_type\" name=\"response_type\" type=\"hidden\" value=\"code\" />\n                    <input id=\"response_mode\" name=\"response_mode\" type=\"hidden\" value=\"\" />\n                    <input id=\"nonce\" name=\"nonce\" type=\"hidden\" value=\"c4fdef35f2e05abe2ceb88ae0f743ee4\" />\n                    <input id=\"code_challenge\" name=\"code_challenge\" type=\"hidden\" value=\"\" />\n                    <input id=\"code_challenge_method\" name=\"code_challenge_method\" type=\"hidden\" value=\"\" />\n                    <input class=\"form-group form-control input-lg\" id=\"Username\" name=\"Username\" placeholder=\"Email Address\" type=\"text\" value=\"\" />\n                    <input class=\"form-group form-control input-lg\" id=\"Password\" name=\"Password\" placeholder=\"Password\" type=\"password\" />\n                    <div id=\"responseButtonsDiv\" class=\"clearfix\" style=\"margin-top: 15px; margin-bottom: 15px;\">\n                        <div class=\"col-xs-6\">\n                            <button type=\"submit\" class=\"btn btn-primary btn-lg btn-block no-border\" onclick=\"document.getElementsByName('IsApproved')[0].value = true; return true;\">\n                    Sign In\n                </button>\n                        </div>\n                        <div class=\"col-xs-6\">\n                            <button type=\"submit\" class=\"btn btn-warning btn-lg btn-block no-border\" onclick=\"document.getElementsByName('IsApproved')[0].value = false; return true;\">\n                    Cancel\n                </button>\n                        </div>\n                    </div>\n                </form>\n                <div class=\"clearfix\">\n                    <p class=\"alert alert-info alert-footer\">You can revoke access to any application at any time from your Security page.</p>\n                </div>\n            </div>\n        </div>\n        <script src=\"/Scripts/base.min.js\"></script>\n        <script language=\"javascript\" type=\"text/javascript\">\n        document.getElementById('responseButtonsDiv').style.display = 'block';\n        document.getElementById('javascriptDisabled').style.display = 'none';\n\n        if (document.location !== window.top.location) {\n            window.top.location = document.location;\n        }\n    </script>\n    </body>\n</html>"
+						},
+						{
+							"name": "Authorize Status 302",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/authorize?response_type=code&client_id={{client_id}}&redirect_uri=https://oauth.pstmn.io/v1/callback&scope={{scope}}&state={{state}}&nonce={{nonce}}",
+									"host": [
+										"{{CFS Master URL}}"
+									],
+									"path": [
+										"oauth",
+										"{{Tenant Name}}",
+										"authorize"
+									],
+									"query": [
+										{
+											"key": "response_type",
+											"value": "code",
+											"description": "Response type is \"code\" for the authorization code grant type\nhttps://datatracker.ietf.org/doc/html/rfc6749#section-4.1.1"
+										},
+										{
+											"key": "client_id",
+											"value": "{{client_id}}"
+										},
+										{
+											"key": "redirect_uri",
+											"value": "https://oauth.pstmn.io/v1/callback"
+										},
+										{
+											"key": "scope",
+											"value": "{{scope}}"
+										},
+										{
+											"key": "state",
+											"value": "{{state}}"
+										},
+										{
+											"key": "nonce",
+											"value": "{{nonce}}"
 										}
 									]
 								}
@@ -350,7 +449,7 @@
 					]
 				}
 			],
-			"description": "- Run the \"GET Authorize\" request\n    - The response will contain an `authorization_code` that will be automatically captured and set as a collection variable to be used by the next request\n- Run the \"POST Request for tokens\" request\n    - The response will contain an `access_token`, `id_token`, `refresh_token` that will be automatically captured and set as collection variables to be used for any subsequent requests that require authentication\n\n## The Authorization Endpoint Request\n\n- Method: `GET`\n- Agent: Browser\n- Response Type: Redirect to pre-registered callback URL at client with query parameters\n    \n\n### Request Parameters\n\n| Parameter | Value | Mandatory | Description |\n| --- | --- | --- | --- |\n| response_type | `code` | yes | Defines the flow type: authorization code flow |\n| client_id | The Client ID | yes | The ID of the OAuth client |\n| redirect_uri | The client callback URL | yes | The callback URL configured for the client. |\n| scope | Space separated string of scopes | yes | List the scopes the client is requesting access to. **OpenID Connect requests MUST contain the** **`openid`** **scope**. |\n| state | A random value | no | Will be provided back to the client in the redirect URL. Useful to keep track of the session in the client or to prevent unsolicited flows. |\n| nonce | A random value | no | A string value used to mitigate replay attacks by associating the client session with the ID token. |\n\n### Response\n\nA redirect back to the “redirect_uri”. Response parameters are provided on the query string.\n\n| Parameter | Value | Mandatory | Description |\n| --- | --- | --- | --- |\n| code | An Authorization Code | yes | An authorization code nonce, to be used in the token request. |\n\n## The Token Endpoint Request\n\n### Request Parameters\n\n- Method: `POST`\n- Content-Type: `application/x-www-form-urlencoded`\n- Agent: `HTTP client`\n- Response Type: `json`\n    \n\n| Parameter | Value | Mandatory | Description |\n| --- | --- | --- | --- |\n| grant_type | `authorization_code` | yes | Tells the token endpoint to do the second part of the code flow. |\n| client_id | The Client ID | yes | The ID of the requesting client. |\n| client_secret | The client secret | yes | The secret of the client. |\n| redirect_uri | The callback URL of the Client | yes | The same redirect URI as was sent in the Authorization request. |\n| code | The authorization code | yes | The code given in the response of the Authorization request. |\n\n### Response\n\n- Response Type: `application/json`\n    \n\n| Parameter | Value | Mandatory | Description |\n| --- | --- | --- | --- |\n| access_token | A newly issued access token | yes | The resulting access token for the code flow. |\n| token_type | `Bearer` or other token type | yes | Describes how the token can be used. Most commonly Bearer token usage. |\n| expires_in | Expiration in seconds | yes | The time to live of the access token in seconds. |\n| scope | Space separated string | yes | The issued scopes may differ from the requested scopes. |\n| refresh_token | A newly issued refresh token | yes | The resulting refresh token for the code flow. |\n| id_token | A newly issued ID token | yes | The resulting ID token for the code flow. |\n",
+			"description": "- Run the \"GET Authorize\" request\n    - The response will contain an `authorization_code` that will be automatically captured and set as a collection variable to be used by the next request\n- Run the \"POST Request for tokens\" request\n    - The response will contain an `access_token`, `id_token`, `refresh_token` that will be automatically captured and set as collection variables to be used for any subsequent requests that require authentication\n\n## The Authorization Endpoint Request\n\n- Method: `GET`\n- Agent: Browser\n- Response Type: Redirect to pre-registered callback URL at client with query parameters\n    \n\n### Request Parameters\n\n| Parameter | Value | Mandatory | Description |\n| --- | --- | --- | --- |\n| response_type | `code` | yes | Defines the flow type: authorization code flow |\n| client_id | The Client ID | yes | The ID of the OAuth client. |\n| redirect_uri | The client callback URL | yes | The callback URL configured for the client. |\n| scope | Space separated string of scopes | yes | List the scopes the client is requesting access to. **OpenID Connect requests MUST contain the** **`openid`** **scope**. |\n| state | A random value | no | Will be provided back to the client in the redirect URL. Useful to keep track of the session in the client or to prevent unsolicited flows. |\n| nonce | A random value | no | A string value used to mitigate replay attacks by associating the client session with the ID token. |\n\n### Response\n\nA redirect back to the “redirect_uri”. Response parameters are provided on the query string.\n\n| Parameter | Value | Mandatory | Description |\n| --- | --- | --- | --- |\n| code | An Authorization Code | yes | An authorization code nonce, to be used in the token request. |\n\n## The Token Endpoint Request\n\n### Request Parameters\n\n- Method: `POST`\n- Content-Type: `application/x-www-form-urlencoded`\n- Agent: `HTTP client`\n- Response Type: `json`\n    \n\n| Parameter | Value | Mandatory | Description |\n| --- | --- | --- | --- |\n| grant_type | `authorization_code` | yes | Tells the token endpoint to do the second part of the code flow. |\n| client_id | The Client ID | yes | The ID of the OAuth client. |\n| client_secret | The client secret | yes | The secret of the OAuth client. |\n| redirect_uri | The callback URL of the Client | yes | The same redirect URI as was sent in the Authorization request. |\n| code | The authorization code | yes | The code given in the response of the Authorization request. |\n\n### Response\n\n- Response Type: `application/json`\n    \n\n| Parameter | Value | Mandatory | Description |\n| --- | --- | --- | --- |\n| access_token | A newly issued access token | yes | The resulting access token for the code flow. |\n| token_type | `Bearer` or other token type | yes | Describes how the token can be used. Most commonly Bearer token usage. |\n| expires_in | Expiration in seconds | yes | The time to live of the access token in seconds. |\n| scope | Space separated string | yes | The issued scopes may differ from the requested scopes. |\n| refresh_token | A newly issued refresh token | yes | The resulting refresh token for the code flow. |\n| id_token | A newly issued ID token | yes | The resulting ID token for the code flow. |",
 			"event": [
 				{
 					"listen": "prerequest",
@@ -389,7 +488,8 @@
 									"});\r",
 									""
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -400,7 +500,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/authorize?scope={{scope}}&response_type=code&redirect_uri=https://oauth.pstmn.io/v1/callback&client_id={{client_id}}&code_challenge={{code_challenge}}&code_challenge_method={{code_method}}&state={{state}}&nonce={{nonce}}",
+							"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/authorize?response_type=code&client_id={{client_id}}&redirect_uri=https://oauth.pstmn.io/v1/callback&scope={{scope}}&code_challenge={{code_challenge}}&code_challenge_method={{code_method}}&state={{state}}&nonce={{nonce}}",
 							"host": [
 								"{{CFS Master URL}}"
 							],
@@ -411,20 +511,20 @@
 							],
 							"query": [
 								{
-									"key": "scope",
-									"value": "{{scope}}"
-								},
-								{
 									"key": "response_type",
 									"value": "code"
+								},
+								{
+									"key": "client_id",
+									"value": "{{client_id}}"
 								},
 								{
 									"key": "redirect_uri",
 									"value": "https://oauth.pstmn.io/v1/callback"
 								},
 								{
-									"key": "client_id",
-									"value": "{{client_id}}"
+									"key": "scope",
+									"value": "{{scope}}"
 								},
 								{
 									"key": "code_challenge",
@@ -447,7 +547,7 @@
 					},
 					"response": [
 						{
-							"name": "Authorize",
+							"name": "Authorize Status 200",
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
@@ -497,6 +597,113 @@
 										{
 											"key": "nonce",
 											"value": "c4fdef35f2e05abe2ceb88ae0f743ee4"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "html",
+							"header": [
+								{
+									"key": "Cache-Control",
+									"value": "private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/html; charset=utf-8"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Server",
+									"value": "Microsoft-IIS/10.0"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "authorization"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "X-SourceFiles",
+									"value": "=?UTF-8?B?WDpcc291cmNlXHJhZGlhbnRsb2dpY1xjZnNcc3JjXENGU1xSTEkuQ0ZTLldlYlxvYXV0aFxzdG9ybXdpbmRcYXV0aG9yaXpl?="
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "ASP.NET"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 23 Apr 2024 10:38:43 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1989"
+								}
+							],
+							"cookie": [],
+							"body": "<!DOCTYPE html>\n<html xmlns=\"http://www.w3.org/1999/xhtml\" lang=\"en-US\">\n    <head>\n        <title>Cloud Federation Service - Authorize the application</title>\n        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n        <meta name=\"robots\" content=\"noindex,nofollow\" />\n        <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\" />\n        <link rel=\"stylesheet\" href=\"/Content/css/base.min.css\" />\n        <link rel=\"stylesheet\" href=\"/Content/css/login.min.css\" />\n        <link rel=\"stylesheet\" href=\"/Css/Login/stormwind.css\" />\n    </head>\n    <body>\n        <div>\n            <div class=\"title\">\n                <img class=\"login-picture\" src=\"/Images/Index/stormwind.png\" alt=\"Stormwind\" />\n            </div>\n            <div data-cfs-page-name=\"oauth2-authorize\" class=\"guest-content\">\n                <p class=\"alert alert-warning\">\n                    <strong>You can use your account to sign in to other sites and services.</strong>\n        By signing here, you can use My Application without sharing your password.\n                </p>\n                <h3 class=\"dark\">Authorize My Application to use your account?</h3>\n                <p class=\"dark\">This application \n                    <span class=\"text-success\">will be able to</span>:\n                </p>\n                <ul class=\"dark\">\n                    <li>Get your email address.</li>\n                    <li>Get your basic profile information.</li>\n                    <li>Get your address.</li>\n                </ul>\n                <p id=\"javascriptDisabled\" class=\"alert alert-danger\">\n                    <strong>Javascript appears to be disabled in your browser.</strong>\n        This page requires Javascript to be enabled to better protect your security.\n                </p>\n                <form action=\"/oauth/stormwind/authorize?scope=openid%20email%20profile%20address&amp;response_type=code&amp;redirect_uri=https://oauth.pstmn.io/v1/callback&amp;client_id=1s2o985lIf2Fa2Di5Zg0mJ&amp;code_challenge=rrsv_GL5iipUGp6yR5w5ra77fdggOxJ6htH9E217PeI&amp;code_challenge_method=S256&amp;state=6879bf2ef296d720f3a54eb8faabee9c&amp;nonce=c4fdef35f2e05abe2ceb88ae0f743ee4\" method=\"post\">\n                    <input name=\"__RequestVerificationToken\" type=\"hidden\" value=\"iwlSVXd-_4bK7lP_wdRUCYSdAgVGSe8FtevwQPzO9rdbER4kTXpceXJSHgqgP17sxjlRD_0x6msWzIkMCFM9kUabGl_U-NMQq5rGLgGMXOrBgy0GHFkdHs7jXeiR0cX9ar9QeDX8h00Hyk7wXKIFSQ2\" />\n                    <input id=\"IsApproved\" name=\"IsApproved\" type=\"hidden\" value=\"\" />\n                    <input id=\"client_id\" name=\"client_id\" type=\"hidden\" value=\"1s2o985lIf2Fa2Di5Zg0mJ\" />\n                    <input id=\"redirect_uri\" name=\"redirect_uri\" type=\"hidden\" value=\"https://oauth.pstmn.io/v1/callback\" />\n                    <input id=\"state\" name=\"state\" type=\"hidden\" value=\"6879bf2ef296d720f3a54eb8faabee9c\" />\n                    <input id=\"scope\" name=\"scope\" type=\"hidden\" value=\"openid email profile address\" />\n                    <input id=\"response_type\" name=\"response_type\" type=\"hidden\" value=\"code\" />\n                    <input id=\"nonce\" name=\"nonce\" type=\"hidden\" value=\"c4fdef35f2e05abe2ceb88ae0f743ee4\" />\n                    <div id=\"responseButtonsDiv\" class=\"clearfix\" style=\"margin-top: 15px; margin-bottom: 15px;\">\n                        <div class=\"col-xs-6\">\n                            <button type=\"submit\" class=\"btn btn-primary btn-lg btn-block no-border\" onclick=\"document.getElementsByName('IsApproved')[0].value = true; return true;\">\n                    Accept\n                </button>\n                        </div>\n                        <div class=\"col-xs-6\">\n                            <button type=\"submit\" class=\"btn btn-warning btn-lg btn-block no-border\" onclick=\"document.getElementsByName('IsApproved')[0].value = false; return true;\">\n                    Cancel\n                </button>\n                        </div>\n                    </div>\n                </form>\n                <div class=\"clearfix\">\n                    <p class=\"alert alert-info alert-footer\">You can revoke access to any application at any time from your Security page.</p>\n                </div>\n            </div>\n        </div>\n        <script src=\"/Scripts/base.min.js\"></script>\n        <script language=\"javascript\" type=\"text/javascript\">\n        document.getElementById('responseButtonsDiv').style.display = 'block';\n        document.getElementById('javascriptDisabled').style.display = 'none';\n\n        if (document.location !== window.top.location) {\n            window.top.location = document.location;\n        }\n    </script>\n    </body>\n</html>"
+						},
+						{
+							"name": "Authorize Status 302",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/authorize?scope={{scope}}&response_type=code&redirect_uri=https://oauth.pstmn.io/v1/callback&client_id={{client_id}}&code_challenge={{code_challenge}}&code_challenge_method={{code_method}}&state={{state}}&nonce={{nonce}}",
+									"host": [
+										"{{CFS Master URL}}"
+									],
+									"path": [
+										"oauth",
+										"{{Tenant Name}}",
+										"authorize"
+									],
+									"query": [
+										{
+											"key": "scope",
+											"value": "{{scope}}"
+										},
+										{
+											"key": "response_type",
+											"value": "code"
+										},
+										{
+											"key": "redirect_uri",
+											"value": "https://oauth.pstmn.io/v1/callback"
+										},
+										{
+											"key": "client_id",
+											"value": "{{client_id}}"
+										},
+										{
+											"key": "code_challenge",
+											"value": "{{code_challenge}}"
+										},
+										{
+											"key": "code_challenge_method",
+											"value": "{{code_method}}"
+										},
+										{
+											"key": "state",
+											"value": "{{state}}"
+										},
+										{
+											"key": "nonce",
+											"value": "{{nonce}}"
 										}
 									]
 								}
@@ -573,7 +780,8 @@
 									"pmutils(pm).testCallbacks.testRefreshTokenRefreshesTokens(responseData.refresh_token);\r",
 									""
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -583,16 +791,6 @@
 						"body": {
 							"mode": "urlencoded",
 							"urlencoded": [
-								{
-									"key": "redirect_uri",
-									"value": "https://oauth.pstmn.io/v1/callback",
-									"type": "text"
-								},
-								{
-									"key": "code",
-									"value": "{{authorization_code}}",
-									"type": "text"
-								},
 								{
 									"key": "grant_type",
 									"value": "authorization_code",
@@ -609,8 +807,13 @@
 									"type": "text"
 								},
 								{
-									"key": "state",
-									"value": "{{state}}",
+									"key": "redirect_uri",
+									"value": "https://oauth.pstmn.io/v1/callback",
+									"type": "text"
+								},
+								{
+									"key": "code",
+									"value": "{{authorization_code}}",
 									"type": "text"
 								}
 							]
@@ -731,6 +934,7 @@
 					]
 				}
 			],
+			"description": "- Run the \"GET Authorize\" request\n    - The response will contain an `authorization_code` that will be automatically captured and set as a collection variable to be used by the next request\n- Run the \"POST Request for tokens\" request\n    - The response will contain an `access_token`, `id_token`, `refresh_token` that will be automatically captured and set as collection variables to be used for any subsequent requests that require authentication\n\n## The Authorization Endpoint Request\n\n- Method: `GET`\n- Agent: Browser\n- Response Type: Redirect to pre-registered callback URL at client with query parameters\n    \n\n### Request Parameters\n\n| Parameter | Value | Mandatory | Description |\n| --- | --- | --- | --- |\n| response_type | `code` | yes | Defines the flow type: authorization code flow |\n| client_id | The Client ID | yes | The ID of the OAuth client. |\n| redirect_uri | The client callback URL | yes | The callback URL configured for the client. |\n| scope | Space separated string of scopes | yes | List the scopes the client is requesting access to. **OpenID Connect requests MUST contain the** **`openid`** **scope**. |\n| code_challenge | A high entropy random challenge | yes | A challenge generated by the client. |\n| code_challenge_method | \"plain\" (default) or \"S256\" | yes | Can be used if code_challenge is sent. Defaults to \"plain\". Needs to be sent if S256 is used as code_challenge method. |\n| state | A random value | no | Will be provided back to the client in the redirect URL. Useful to keep track of the session in the client or to prevent unsolicited flows. |\n| nonce | A random value | no | A string value used to mitigate replay attacks by associating the client session with the ID token. |\n\n### Response\n\nA redirect back to the “redirect_uri”. Response parameters are provided on the query string.\n\n| Parameter | Value | Mandatory | Description |\n| --- | --- | --- | --- |\n| code | An Authorization Code | yes | An authorization code nonce, to be used in the token request. |\n\n## The Token Endpoint Request\n\n### Request Parameters\n\n- Method: `POST`\n- Content-Type: `application/x-www-form-urlencoded`\n- Agent: `HTTP client`\n- Response Type: `json`\n    \n\n| Parameter | Value | Mandatory | Description |\n| --- | --- | --- | --- |\n| grant_type | `authorization_code` | yes | Tells the token endpoint to do the second part of the code flow. |\n| client_id | The Client ID | yes | The ID of the OAuth client. |\n| code_verifier | The verifier that matches the code_challenge | yes |  |\n| redirect_uri | The callback URL of the Client | yes | The same redirect URI as was sent in the Authorization request. |\n| code | The authorization code | yes | The code given in the response of the Authorization request. |\n\n### Response\n\n- Response Type: `application/json`\n    \n\n| Parameter | Value | Mandatory | Description |\n| --- | --- | --- | --- |\n| access_token | A newly issued access token | yes | The resulting access token for the code flow. |\n| token_type | `Bearer` or other token type | yes | Describes how the token can be used. Most commonly Bearer token usage. |\n| expires_in | Expiration in seconds | yes | The time to live of the access token in seconds. |\n| scope | Space separated string | yes | The issued scopes may differ from the requested scopes. |\n| refresh_token | A newly issued refresh token | yes | The resulting refresh token for the code flow. |\n| id_token | A newly issued ID token | yes | The resulting ID token for the code flow. |",
 			"event": [
 				{
 					"listen": "prerequest",
@@ -753,7 +957,7 @@
 			]
 		},
 		{
-			"name": "Implicit Flow",
+			"name": "Implicit flow",
 			"item": [
 				{
 					"name": "Authorize - id_token",
@@ -769,7 +973,8 @@
 									"});\r",
 									""
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -780,7 +985,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/authorize?scope={{scope}}&response_type=id_token&redirect_uri=https://oauth.pstmn.io/v1/callback&client_id={{client_id}}&state={{state}}&nonce={{nonce}}",
+							"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/authorize?response_type=id_token&client_id={{client_id}}&redirect_uri=https://oauth.pstmn.io/v1/callback&scope={{scope}}&state={{state}}&nonce={{nonce}}",
 							"host": [
 								"{{CFS Master URL}}"
 							],
@@ -791,20 +996,20 @@
 							],
 							"query": [
 								{
-									"key": "scope",
-									"value": "{{scope}}"
-								},
-								{
 									"key": "response_type",
 									"value": "id_token"
+								},
+								{
+									"key": "client_id",
+									"value": "{{client_id}}"
 								},
 								{
 									"key": "redirect_uri",
 									"value": "https://oauth.pstmn.io/v1/callback"
 								},
 								{
-									"key": "client_id",
-									"value": "{{client_id}}"
+									"key": "scope",
+									"value": "{{scope}}"
 								},
 								{
 									"key": "state",
@@ -928,7 +1133,8 @@
 									"});\r",
 									""
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -939,7 +1145,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/authorize?scope={{scope}}&response_type=id_token token&redirect_uri=https://oauth.pstmn.io/v1/callback&client_id={{client_id}}&state={{state}}&nonce={{nonce}}",
+							"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/authorize?response_type=id_token token&client_id={{client_id}}&redirect_uri=https://oauth.pstmn.io/v1/callback&scope={{scope}}&state={{state}}&nonce={{nonce}}",
 							"host": [
 								"{{CFS Master URL}}"
 							],
@@ -950,20 +1156,20 @@
 							],
 							"query": [
 								{
-									"key": "scope",
-									"value": "{{scope}}"
-								},
-								{
 									"key": "response_type",
 									"value": "id_token token"
+								},
+								{
+									"key": "client_id",
+									"value": "{{client_id}}"
 								},
 								{
 									"key": "redirect_uri",
 									"value": "https://oauth.pstmn.io/v1/callback"
 								},
 								{
-									"key": "client_id",
-									"value": "{{client_id}}"
+									"key": "scope",
+									"value": "{{scope}}"
 								},
 								{
 									"key": "state",
@@ -1071,10 +1277,10 @@
 					]
 				}
 			],
-			"description": "- Run any of the \"GET Authorize\" requests\n    - The response will contain an `access_token`, an `id_token`, or both that will be automatically captured and set as collection variables\n\n**N.B.:** The \"Automatically follow redirects\" setting must be **disabled** in Postman in order to run the requests in this folder!\n\n<img src=\"https://content.pstmn.io/e3542bce-db42-4b74-b2b5-6a4a0cabd789/aW1hZ2UucG5n\" width=\"846\" height=\"840\">"
+			"description": "- Run any of the \"GET Authorize\" requests\n    - The response will contain an `access_token`, an `id_token`, or both that will be automatically captured and set as collection variables\n\n**N.B.:** The \"Automatically follow redirects\" setting must be **disabled** in Postman in order to run the requests in this folder!\n\n<img src=\"https://content.pstmn.io/e3542bce-db42-4b74-b2b5-6a4a0cabd789/aW1hZ2UucG5n\" width=\"846\" height=\"840\">\n\n## The Authorize Endpoint\n\n- Method: `GET`\n- Agent: Browser\n- Response Type: Redirect to pre-registered callback at client with parameters in the fragment\n    \n\n### Request Parameters\n\n| Parameter | Value | Mandatory | Description |\n| --- | --- | --- | --- |\n| response_type | `id_token` or `id_token token` | yes | Defines the flow type: implicit flow |\n| client_id | The Client ID | yes | The ID of the OAuth client. |\n| redirect_uri | The client callback URL | yes | The callback URL configured for the client. |\n| scope | Space separated string of scopes | yes | List the scopes the client is requesting access to. |\n| state | a random value | no | Will be provided back to the client in the redirect URL. Useful to keep track of the session in the client or to prevent unsolicited flows. |\n| nonce | A random value | no | A string value used to mitigate replay attacks by associating the client session with the ID token. |\n\n### Response\n\nA redirect back to the “redirect_uri”. Response parameters are provided on the fragment part of the URL.\n\n| Parameter | Value | Mandatory | Description |\n| --- | --- | --- | --- |\n| access_token | A newly issued access token | yes\\* | The resulting access token for the code flow. \\*Mandatory if the request response_type is `id_token token`. |\n| token_type | `Bearer` or other token type | yes | Describes how the token can be used. Most commonly Bearer token usage. |\n| expires_in | Expiration in seconds | yes | The time to live of the access token in seconds. |\n| scope | Space separated string | yes | The issued scopes may differ from the requested scopes. |\n| id_token | A newly issued ID token | yes | The resulting ID token for the flow. |\n| state | The same value as given in the request | yes\\* | The same value as the client sent in the request. Use to match request to the redirect response. \\*Mandatory if the state was sent in the request. |"
 		},
 		{
-			"name": "Hybrid Flow",
+			"name": "Hybrid flow",
 			"item": [
 				{
 					"name": "Token - code id_token",
@@ -1094,7 +1300,8 @@
 											"});\r",
 											""
 										],
-										"type": "text/javascript"
+										"type": "text/javascript",
+										"packages": {}
 									}
 								}
 							],
@@ -1105,7 +1312,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/authorize?scope={{scope}}&response_type=code id_token&redirect_uri=https://oauth.pstmn.io/v1/callback&client_id={{client_id}}&state={{state}}&nonce={{nonce}}",
+									"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/authorize?response_type=code id_token&client_id={{client_id}}&redirect_uri=https://oauth.pstmn.io/v1/callback&scope={{scope}}&state={{state}}&nonce={{nonce}}",
 									"host": [
 										"{{CFS Master URL}}"
 									],
@@ -1116,20 +1323,20 @@
 									],
 									"query": [
 										{
-											"key": "scope",
-											"value": "{{scope}}"
-										},
-										{
 											"key": "response_type",
 											"value": "code id_token"
+										},
+										{
+											"key": "client_id",
+											"value": "{{client_id}}"
 										},
 										{
 											"key": "redirect_uri",
 											"value": "https://oauth.pstmn.io/v1/callback"
 										},
 										{
-											"key": "client_id",
-											"value": "{{client_id}}"
+											"key": "scope",
+											"value": "{{scope}}"
 										},
 										{
 											"key": "state",
@@ -1258,7 +1465,8 @@
 											"pmutils(pm).testCallbacks.testRefreshTokenRefreshesTokens(responseData.refresh_token);\r",
 											""
 										],
-										"type": "text/javascript"
+										"type": "text/javascript",
+										"packages": {}
 									}
 								}
 							],
@@ -1268,16 +1476,6 @@
 								"body": {
 									"mode": "urlencoded",
 									"urlencoded": [
-										{
-											"key": "redirect_uri",
-											"value": "https://oauth.pstmn.io/v1/callback",
-											"type": "text"
-										},
-										{
-											"key": "code",
-											"value": "{{authorization_code}}",
-											"type": "text"
-										},
 										{
 											"key": "grant_type",
 											"value": "authorization_code",
@@ -1289,18 +1487,18 @@
 											"type": "text"
 										},
 										{
-											"key": "assertion",
-											"value": "{{id_token}}",
-											"type": "text"
-										},
-										{
 											"key": "client_secret",
 											"value": "{{client_secret}}",
 											"type": "text"
 										},
 										{
-											"key": "state",
-											"value": "{{state}}",
+											"key": "redirect_uri",
+											"value": "https://oauth.pstmn.io/v1/callback",
+											"type": "text"
+										},
+										{
+											"key": "code",
+											"value": "{{authorization_code}}",
 											"type": "text"
 										}
 									]
@@ -1448,7 +1646,8 @@
 											"});\r",
 											""
 										],
-										"type": "text/javascript"
+										"type": "text/javascript",
+										"packages": {}
 									}
 								}
 							],
@@ -1459,7 +1658,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/authorize?scope={{scope}}&response_type=code id_token token&redirect_uri=https://oauth.pstmn.io/v1/callback&client_id={{client_id}}&state={{state}}&nonce={{nonce}}",
+									"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/authorize?response_type=code id_token token&client_id={{client_id}}&redirect_uri=https://oauth.pstmn.io/v1/callback&scope={{scope}}&state={{state}}&nonce={{nonce}}",
 									"host": [
 										"{{CFS Master URL}}"
 									],
@@ -1470,20 +1669,20 @@
 									],
 									"query": [
 										{
-											"key": "scope",
-											"value": "{{scope}}"
-										},
-										{
 											"key": "response_type",
 											"value": "code id_token token"
+										},
+										{
+											"key": "client_id",
+											"value": "{{client_id}}"
 										},
 										{
 											"key": "redirect_uri",
 											"value": "https://oauth.pstmn.io/v1/callback"
 										},
 										{
-											"key": "client_id",
-											"value": "{{client_id}}"
+											"key": "scope",
+											"value": "{{scope}}"
 										},
 										{
 											"key": "state",
@@ -1612,7 +1811,8 @@
 											"pmutils(pm).testCallbacks.testRefreshTokenRefreshesTokens(responseData.refresh_token);\r",
 											""
 										],
-										"type": "text/javascript"
+										"type": "text/javascript",
+										"packages": {}
 									}
 								}
 							],
@@ -1622,16 +1822,6 @@
 								"body": {
 									"mode": "urlencoded",
 									"urlencoded": [
-										{
-											"key": "redirect_uri",
-											"value": "https://oauth.pstmn.io/v1/callback",
-											"type": "text"
-										},
-										{
-											"key": "code",
-											"value": "{{authorization_code}}",
-											"type": "text"
-										},
 										{
 											"key": "grant_type",
 											"value": "authorization_code",
@@ -1643,18 +1833,18 @@
 											"type": "text"
 										},
 										{
-											"key": "assertion",
-											"value": "{{id_token}}",
-											"type": "text"
-										},
-										{
 											"key": "client_secret",
 											"value": "{{client_secret}}",
 											"type": "text"
 										},
 										{
-											"key": "state",
-											"value": "{{state}}",
+											"key": "redirect_uri",
+											"value": "https://oauth.pstmn.io/v1/callback",
+											"type": "text"
+										},
+										{
+											"key": "code",
+											"value": "{{authorization_code}}",
 											"type": "text"
 										}
 									]
@@ -1801,7 +1991,8 @@
 											"});\r",
 											""
 										],
-										"type": "text/javascript"
+										"type": "text/javascript",
+										"packages": {}
 									}
 								}
 							],
@@ -1812,7 +2003,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/authorize?scope={{scope}}&response_type=code token&redirect_uri=https://oauth.pstmn.io/v1/callback&client_id={{client_id}}&state={{state}}&nonce={{nonce}}",
+									"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/authorize?response_type=code token&client_id={{client_id}}&redirect_uri=https://oauth.pstmn.io/v1/callback&scope={{scope}}&state={{state}}&nonce={{nonce}}",
 									"host": [
 										"{{CFS Master URL}}"
 									],
@@ -1823,20 +2014,20 @@
 									],
 									"query": [
 										{
-											"key": "scope",
-											"value": "{{scope}}"
-										},
-										{
 											"key": "response_type",
 											"value": "code token"
+										},
+										{
+											"key": "client_id",
+											"value": "{{client_id}}"
 										},
 										{
 											"key": "redirect_uri",
 											"value": "https://oauth.pstmn.io/v1/callback"
 										},
 										{
-											"key": "client_id",
-											"value": "{{client_id}}"
+											"key": "scope",
+											"value": "{{scope}}"
 										},
 										{
 											"key": "state",
@@ -1965,7 +2156,8 @@
 											"pmutils(pm).testCallbacks.testRefreshTokenRefreshesTokens(responseData.refresh_token);\r",
 											""
 										],
-										"type": "text/javascript"
+										"type": "text/javascript",
+										"packages": {}
 									}
 								}
 							],
@@ -1975,16 +2167,6 @@
 								"body": {
 									"mode": "urlencoded",
 									"urlencoded": [
-										{
-											"key": "redirect_uri",
-											"value": "https://oauth.pstmn.io/v1/callback",
-											"type": "text"
-										},
-										{
-											"key": "code",
-											"value": "{{authorization_code}}",
-											"type": "text"
-										},
 										{
 											"key": "grant_type",
 											"value": "authorization_code",
@@ -1996,18 +2178,18 @@
 											"type": "text"
 										},
 										{
-											"key": "assertion",
-											"value": "{{id_token}}",
-											"type": "text"
-										},
-										{
 											"key": "client_secret",
 											"value": "{{client_secret}}",
 											"type": "text"
 										},
 										{
-											"key": "state",
-											"value": "{{state}}",
+											"key": "redirect_uri",
+											"value": "https://oauth.pstmn.io/v1/callback",
+											"type": "text"
+										},
+										{
+											"key": "code",
+											"value": "{{authorization_code}}",
 											"type": "text"
 										}
 									]
@@ -2136,7 +2318,7 @@
 					"description": "- Run the \"GET Authorize\" request\n    \n- Run the \"POST Request for tokens\" request"
 				}
 			],
-			"description": "- Run the \"GET Authorize\" request\n    \n    - The response will contain an `authorization_code` and an `access_token`, an `id_token`, or both that will be automatically captured and set as collection variables\n        \n- Run the \"POST Request for tokens\" request\n    - The response will contain an `access_token`, `id_token`, `refresh_token` that will be automatically captured and set as collection variables to be used for any subsequent requests that require authentication\n\n**N.B.:** The \"Automatically follow redirects\" setting must be **disabled** in Postman in order to run the requests in this folder!\n\n<img src=\"https://content.pstmn.io/e920769a-172e-49da-a73d-9b6a531ce945/aW1hZ2UucG5n\" width=\"846\" height=\"840\">"
+			"description": "- Run the \"GET Authorize\" request\n    - The response will contain an `authorization_code` and an `access_token`, an `id_token`, or both that will be automatically captured and set as collection variables\n- Run the \"POST Request for tokens\" request\n    - The response will contain an `access_token`, `id_token`, `refresh_token` that will be automatically captured and set as collection variables to be used for any subsequent requests that require authentication\n\n**N.B.:** The \"Automatically follow redirects\" setting must be **disabled** in Postman in order to run the requests in this folder!\n\n<img src=\"https://content.pstmn.io/e920769a-172e-49da-a73d-9b6a531ce945/aW1hZ2UucG5n\" width=\"846\" height=\"840\">\n\n## The Authorize Endpoint Request\n\n- Method: `GET`\n- Agent: Browser\n- Response Type: POST to pre-registered callback URL at client with parameters in the POST body\n    \n\n### Request Parameters\n\n| Parameter | Value | Mandatory | Description |\n| --- | --- | --- | --- |\n| response_type | `code token` or `code id_token` or `code id_token token` | yes | Defines the flow type: hybrid flow |\n| client_id | The Client ID | yes | The ID of the OAuth client. |\n| redirect_uri | The client callback URL | yes | The callback URL configured for the client. |\n| scope | Space separated string of scopes | yes | List the scopes the client is requesting access to. **OpenID Connect requests MUST contain the** **`openid`** **scope**. |\n| state | A random value | no | Will be provided back to the client in the redirect URL. Useful to keep track of the session in the client or to prevent unsolicited flows. |\n| nonce | A random value | no | A string value used to mitigate replay attacks by associating the client session with the ID token. |\n\n### Response\n\nA POST back to the `redirect_uri`. The parameters are provided in the POST body.\n\n| Parameter | Value | Mandatory | Description |\n| --- | --- | --- | --- |\n| access_token | A newly issued access token | no\\* | The resulting access token for the flow. \\*Mandatory if access token is requested in the `response_type`. |\n| token_type | `Bearer` or other token type | yes | Describes how the token can be used. Most commonly Bearer token usage. |\n| expires_in | Expiration in seconds | yes | The time to live of the token in seconds. |\n| scope | Space separated string | yes | The issued scopes may differ from the requested scopes. |\n| id_token | JSON Web Token | no\\* | The resulting ID token for the flow. \\*Mandatory if ID token is requested in the `response_type`. |\n| code | An Authorization Code | yes | An authorization code nonce, to be used in the token request. |\n| state | The same value as given in the request | yes\\* | The same value as the client sent in the request. Use to match request to the redirect response. \\*Mandatory if the state was sent in the request. |\n\n## The Token Endpoint Request\n\n### Request Parameters\n\n- Method: `POST`\n- Content-Type: `application/x-www-form-urlencoded`\n- Response Type: `json`\n    \n\n| Parameter | Value | Mandatory | Description |\n| --- | --- | --- | --- |\n| grant_type | `authorization_code` | yes | Tells the token endpoint to do the second part of the flow. |\n| client_id | The Client ID | yes | The ID of the requesting client. |\n| client_secret | The client secret | yes | The secret of the client. |\n| redirect_uri | The callback URL of the Client | yes | The same redirect URI as was sent in the Authorization request. |\n| code | The authorization code | yes | The code given in the response of the Authorization request. |\n\n### Response\n\n- Response Type: `application/json`\n    \n\n| Parameter | Value | Mandatory | Description |\n| --- | --- | --- | --- |\n| access_token | A newly issued access token | yes | The resulting access token for the flow. |\n| token_type | `Bearer` or other token type | yes | Describes how the token can be used. Most commonly Bearer token usage. |\n| expires_in | Expiration in seconds | yes | The time to live of the access token in seconds. |\n| scope | Space separated string | yes | The issued scopes may differ from the requested scopes. |\n| refresh_token | A newly issued refresh token | yes | The resulting refresh token for the flow. |\n| id_token | A newly issued ID token | yes | The resulting ID token for the flow. |"
 		},
 		{
 			"name": "Client credentials",
@@ -2159,7 +2341,8 @@
 									"pmutils(pm).testCallbacks.testAccessTokenGrantsAccessToResources(responseData.access_token);",
 									""
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -2187,16 +2370,6 @@
 								{
 									"key": "scope",
 									"value": "{{scope}}",
-									"type": "text"
-								},
-								{
-									"key": "state",
-									"value": "{{state}}",
-									"type": "text"
-								},
-								{
-									"key": "nonce",
-									"value": "{{nonce}}",
 									"type": "text"
 								}
 							]
@@ -2317,7 +2490,7 @@
 					]
 				}
 			],
-			"description": "- Run the \"POST Request for access token\" request\n    - The response will contain an `access_token`, that will be automatically captured and set as a collection variable to be used for any subsequent requests that require authentication\n\nNote that this `access_token`'s `sub` claim's value is the client_id (`{{client_id}}`) instead of the username (`{{username}}`) since the token is not associated with a specific user, but with the OAuth client itself."
+			"description": "- Run the \"POST Request for access token\" request\n    - The response will contain an `access_token`, that will be automatically captured and set as a collection variable to be used for any subsequent requests that require authentication\n\nNote that this `access_token`'s `sub` claim's value is the client_id (`{{client_id}}`) instead of the username (`{{username}}`) since the token is not associated with a specific user, but with the OAuth client itself.\n\n## The Token Endpoint\n\n### Request Parameters\n\n- Method: `POST`\n- Content-Type: `application/x-www-form-urlencoded`\n- Response Type: `json`\n    \n\n| Parameter | Value | Mandatory | Description |\n| --- | --- | --- | --- |\n| grant_type | `client_credentials` | yes | Tells the token endpoint to do perform the client credentials flow. |\n| client_id | The Client ID | yes | The ID of the OAuth client. |\n| client_secret | The client secret | yes | The secret of the OAuth client. |\n| scope | Space separated string of scopes | yes | List the scopes the client is requesting access to. **OpenID Connect requests MUST contain the** **`openid`** **scope**. |\n\n### Response\n\n- Response Type: `application/json`\n    \n\n| Parameter | Value | Mandatory | Description |\n| --- | --- | --- | --- |\n| access_token | A newly issued access token | yes | The resulting access token for the code flow. |\n| expires_in | Expiration in seconds | yes | The time to live of the access token in seconds. |\n| token_type | `Bearer` or other token type | yes | Describes how the token can be used. Most commonly Bearer token usage. |\n| scope | Space separated string | yes | The issued scopes may differ from the requested scopes. |"
 		},
 		{
 			"name": "Resource owner password credentials",
@@ -2379,16 +2552,6 @@
 								{
 									"key": "scope",
 									"value": "{{scope}}",
-									"type": "text"
-								},
-								{
-									"key": "state",
-									"value": "{{state}}",
-									"type": "text"
-								},
-								{
-									"key": "nonce",
-									"value": "{{nonce}}",
 									"type": "text"
 								}
 							]
@@ -2513,7 +2676,7 @@
 					]
 				}
 			],
-			"description": "- Run the \"POST Request for access token\" request\n    \n    - The response will contain an `access_token`, that will be automatically captured and set as a collection variable to be used for any subsequent requests that require authentication"
+			"description": "- Run the \"POST Request for access token\" request\n    - The response will contain an `access_token`, that will be automatically captured and set as a collection variable to be used for any subsequent requests that require authentication\n\n## The Token Endpoint\n\n### Request Parameters\n\n- Method: `POST`\n- Content-Type: `application/x-www-form-urlencoded`\n- Response Type: `json`\n    \n\n| Parameter | Value | Mandatory | Description |\n| --- | --- | --- | --- |\n| grant_type | `password` | yes | Tells the token endpoint to do perform the resource owner password credential flow. |\n| client_id | The Client ID | yes | The ID of the OAuth client. |\n| client_secret | The client secret | yes | The secret of the OAuth client. |\n| username | the username | yes | The username of the resource owner. |\n| password | the user password | yes | The password of the resource owner.l |\n| scope | Space separated string of scopes | yes | List the scopes the client is requesting access to. **OpenID Connect requests MUST contain the** **`openid`** **scope**. |\n\n### Response\n\n- Response Type: `application/json`\n    \n\n| Parameter | Value | Mandatory | Description |\n| --- | --- | --- | --- |\n| access_token | A newly issued access token | yes | The resulting access token for the flow. |  \n| expires_in | Expiration in seconds | yes | The time to live of the access token in seconds. |  \n| token_type | `Bearer` or other token type | yes | Describes how the token can be used. Most commonly Bearer token usage. |  \n| scope | Space separated string | yes | The issued scopes may differ from the requested scopes. |\n| refresh_token | A newly issued refresh token | yes | The resulting refresh token for the flow. |"
 		},
 		{
 			"name": "Validations",
@@ -2852,7 +3015,8 @@
 								}
 							]
 						}
-					]
+					],
+					"description": "Common validations for all the flows; includes cases when:\n\n- the passed client id is invalid\n    \n- the passed callback url is invalid\n    \n- the requested list of scopes contains only invalid scopes\n    \n- the access token used to access resources is expired"
 				},
 				{
 					"name": "Authorization code flow + Authorization code flow with PKCE + Hybrid Flow",
@@ -2865,74 +3029,9 @@
 									"item": [
 										{
 											"name": "Request for tokens",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"exec": [
-															"pmutils(pm).testCallbacks.testResponseStatus(400);\r",
-															"\r",
-															"const responseData = pm.response.json();\r",
-															"\r",
-															"pm.test('Response body has error \"invalid_grant\"', () => {\r",
-															"    pm.expect(responseData).to.have.property('error', 'invalid_grant');\r",
-															"});\r",
-															""
-														],
-														"type": "text/javascript",
-														"packages": {}
-													}
-												}
-											],
 											"request": {
 												"method": "POST",
-												"header": [],
-												"body": {
-													"mode": "urlencoded",
-													"urlencoded": [
-														{
-															"key": "redirect_uri",
-															"value": "https://oauth.pstmn.io/v1/callback",
-															"type": "text"
-														},
-														{
-															"key": "code",
-															"value": "invalidAuthorizationCode",
-															"type": "text"
-														},
-														{
-															"key": "grant_type",
-															"value": "authorization_code",
-															"type": "text"
-														},
-														{
-															"key": "client_id",
-															"value": "{{client_id}}",
-															"type": "text"
-														},
-														{
-															"key": "client_secret",
-															"value": "{{client_secret}}",
-															"type": "text"
-														},
-														{
-															"key": "state",
-															"value": "{{state}}",
-															"type": "text"
-														}
-													]
-												},
-												"url": {
-													"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token",
-													"host": [
-														"{{CFS Master URL}}"
-													],
-													"path": [
-														"oauth",
-														"{{Tenant Name}}",
-														"token"
-													]
-												}
+												"header": []
 											},
 											"response": []
 										}
@@ -2943,143 +3042,17 @@
 									"item": [
 										{
 											"name": "Authorize",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"exec": [
-															"pmutils(pm).testCallbacks.testResponseStatus200or302();\r",
-															"\r",
-															"pmutils(pm).postConfirmAuthorizeRequestIfNecessaryThenSetTokens('query', ({ authorization_code }) => {\r",
-															"    pmutils(pm).testCallbacks.testAuthorizationCode(authorization_code);\r",
-															"});\r",
-															""
-														],
-														"type": "text/javascript",
-														"packages": {}
-													}
-												}
-											],
-											"protocolProfileBehavior": {
-												"followRedirects": false
-											},
 											"request": {
 												"method": "GET",
-												"header": [],
-												"url": {
-													"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/authorize?response_type=code&client_id={{client_id}}&redirect_uri=https://oauth.pstmn.io/v1/callback&scope={{scope}}&state={{state}}&nonce={{nonce}}",
-													"host": [
-														"{{CFS Master URL}}"
-													],
-													"path": [
-														"oauth",
-														"{{Tenant Name}}",
-														"authorize"
-													],
-													"query": [
-														{
-															"key": "response_type",
-															"value": "code"
-														},
-														{
-															"key": "client_id",
-															"value": "{{client_id}}"
-														},
-														{
-															"key": "redirect_uri",
-															"value": "https://oauth.pstmn.io/v1/callback"
-														},
-														{
-															"key": "scope",
-															"value": "{{scope}}"
-														},
-														{
-															"key": "state",
-															"value": "{{state}}"
-														},
-														{
-															"key": "nonce",
-															"value": "{{nonce}}"
-														}
-													]
-												}
+												"header": []
 											},
 											"response": []
 										},
 										{
 											"name": "Request for tokens",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"exec": [
-															"pmutils(pm).testCallbacks.testResponseStatus(400);\r",
-															"\r",
-															"const responseData = pm.response.json();\r",
-															"\r",
-															"pm.test('Response body has error \"invalid_client\"', () => {\r",
-															"    pm.expect(responseData).to.have.property('error', 'invalid_client');\r",
-															"});\r",
-															"\r",
-															"pm.test('Response body has error_description', () => {\r",
-															"    pm.expect(responseData).to.have.property('error_description');\r",
-															"});\r",
-															""
-														],
-														"type": "text/javascript",
-														"packages": {}
-													}
-												}
-											],
 											"request": {
 												"method": "POST",
-												"header": [],
-												"body": {
-													"mode": "urlencoded",
-													"urlencoded": [
-														{
-															"key": "redirect_uri",
-															"value": "https://oauth.pstmn.io/v1/callback",
-															"type": "text"
-														},
-														{
-															"key": "code",
-															"value": "{{authorization_code}}",
-															"type": "text"
-														},
-														{
-															"key": "grant_type",
-															"value": "authorization_code",
-															"type": "text"
-														},
-														{
-															"key": "client_id",
-															"value": "invalidClientId",
-															"type": "text"
-														},
-														{
-															"key": "client_secret",
-															"value": "{{client_secret}}",
-															"type": "text"
-														},
-														{
-															"key": "state",
-															"value": "{{state}}",
-															"type": "text"
-														}
-													]
-												},
-												"url": {
-													"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token",
-													"host": [
-														"{{CFS Master URL}}"
-													],
-													"path": [
-														"oauth",
-														"{{Tenant Name}}",
-														"token"
-													]
-												}
+												"header": []
 											},
 											"response": []
 										}
@@ -3090,139 +3063,17 @@
 									"item": [
 										{
 											"name": "Authorize",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"exec": [
-															"pmutils(pm).testCallbacks.testResponseStatus200or302();\r",
-															"\r",
-															"pmutils(pm).postConfirmAuthorizeRequestIfNecessaryThenSetTokens('query', ({ authorization_code }) => {\r",
-															"    pmutils(pm).testCallbacks.testAuthorizationCode(authorization_code);\r",
-															"});\r",
-															""
-														],
-														"type": "text/javascript",
-														"packages": {}
-													}
-												}
-											],
-											"protocolProfileBehavior": {
-												"followRedirects": false
-											},
 											"request": {
 												"method": "GET",
-												"header": [],
-												"url": {
-													"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/authorize?response_type=code&client_id={{client_id}}&redirect_uri=https://oauth.pstmn.io/v1/callback&scope={{scope}}&state={{state}}&nonce={{nonce}}",
-													"host": [
-														"{{CFS Master URL}}"
-													],
-													"path": [
-														"oauth",
-														"{{Tenant Name}}",
-														"authorize"
-													],
-													"query": [
-														{
-															"key": "response_type",
-															"value": "code"
-														},
-														{
-															"key": "client_id",
-															"value": "{{client_id}}"
-														},
-														{
-															"key": "redirect_uri",
-															"value": "https://oauth.pstmn.io/v1/callback"
-														},
-														{
-															"key": "scope",
-															"value": "{{scope}}"
-														},
-														{
-															"key": "state",
-															"value": "{{state}}"
-														},
-														{
-															"key": "nonce",
-															"value": "{{nonce}}"
-														}
-													]
-												}
+												"header": []
 											},
 											"response": []
 										},
 										{
 											"name": "Request for tokens",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"exec": [
-															"pmutils(pm).testCallbacks.testResponseStatus(401);\r",
-															"\r",
-															"const responseData = pm.response.json();\r",
-															"\r",
-															"pm.test('Response body has error \"invalid_client\"', () => {\r",
-															"    pm.expect(responseData).to.have.property('error', 'invalid_client');\r",
-															"});\r",
-															""
-														],
-														"type": "text/javascript",
-														"packages": {}
-													}
-												}
-											],
 											"request": {
 												"method": "POST",
-												"header": [],
-												"body": {
-													"mode": "urlencoded",
-													"urlencoded": [
-														{
-															"key": "redirect_uri",
-															"value": "https://oauth.pstmn.io/v1/callback",
-															"type": "text"
-														},
-														{
-															"key": "code",
-															"value": "{{authorization_code}}",
-															"type": "text"
-														},
-														{
-															"key": "grant_type",
-															"value": "authorization_code",
-															"type": "text"
-														},
-														{
-															"key": "client_id",
-															"value": "{{client_id}}",
-															"type": "text"
-														},
-														{
-															"key": "client_secret",
-															"value": "invalidClientSecret",
-															"type": "text"
-														},
-														{
-															"key": "state",
-															"value": "{{state}}",
-															"type": "text"
-														}
-													]
-												},
-												"url": {
-													"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token",
-													"host": [
-														"{{CFS Master URL}}"
-													],
-													"path": [
-														"oauth",
-														"{{Tenant Name}}",
-														"token"
-													]
-												}
+												"header": []
 											},
 											"response": []
 										}
@@ -3233,147 +3084,17 @@
 									"item": [
 										{
 											"name": "Authorize",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"exec": [
-															"pmutils(pm).testCallbacks.testResponseStatus200or302();\r",
-															"\r",
-															"pmutils(pm).postConfirmAuthorizeRequestIfNecessaryThenSetTokens('query', ({ authorization_code }) => {\r",
-															"    pmutils(pm).testCallbacks.testAuthorizationCode(authorization_code);\r",
-															"});\r",
-															""
-														],
-														"type": "text/javascript",
-														"packages": {}
-													}
-												}
-											],
-											"protocolProfileBehavior": {
-												"followRedirects": false
-											},
 											"request": {
 												"method": "GET",
-												"header": [],
-												"url": {
-													"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/authorize?response_type=code&client_id={{client_id}}&redirect_uri=https://oauth.pstmn.io/v1/callback&scope=openid email invalidScope&state={{state}}&nonce={{nonce}}",
-													"host": [
-														"{{CFS Master URL}}"
-													],
-													"path": [
-														"oauth",
-														"{{Tenant Name}}",
-														"authorize"
-													],
-													"query": [
-														{
-															"key": "response_type",
-															"value": "code"
-														},
-														{
-															"key": "client_id",
-															"value": "{{client_id}}"
-														},
-														{
-															"key": "redirect_uri",
-															"value": "https://oauth.pstmn.io/v1/callback"
-														},
-														{
-															"key": "scope",
-															"value": "openid email invalidScope"
-														},
-														{
-															"key": "state",
-															"value": "{{state}}"
-														},
-														{
-															"key": "nonce",
-															"value": "{{nonce}}"
-														}
-													]
-												}
+												"header": []
 											},
 											"response": []
 										},
 										{
 											"name": "Request for tokens",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"exec": [
-															"pmutils(pm).testCallbacks.testResponseStatus200();\r",
-															"\r",
-															"const responseData = pm.response.json();\r",
-															"\r",
-															"pmutils(pm).testCallbacks.testAccessToken(responseData.access_token, {\r",
-															"    expectedScopes: ['openid', 'email']\r",
-															"});\r",
-															"pmutils(pm).testCallbacks.testIdToken(responseData.id_token);\r",
-															"\r",
-															"pm.collectionVariables.set(\"access_token\", responseData.access_token);\r",
-															"pm.collectionVariables.set(\"id_token\", responseData.id_token);\r",
-															"pm.collectionVariables.set(\"refresh_token\", responseData.refresh_token);\r",
-															"\r",
-															"pmutils(pm).testCallbacks.testAccessTokenGrantsAccessToResources(responseData.access_token);\r",
-															"pmutils(pm).testCallbacks.testRefreshTokenRefreshesTokens(responseData.refresh_token);\r",
-															""
-														],
-														"type": "text/javascript",
-														"packages": {}
-													}
-												}
-											],
 											"request": {
 												"method": "POST",
-												"header": [],
-												"body": {
-													"mode": "urlencoded",
-													"urlencoded": [
-														{
-															"key": "redirect_uri",
-															"value": "https://oauth.pstmn.io/v1/callback",
-															"type": "text"
-														},
-														{
-															"key": "code",
-															"value": "{{authorization_code}}",
-															"type": "text"
-														},
-														{
-															"key": "grant_type",
-															"value": "authorization_code",
-															"type": "text"
-														},
-														{
-															"key": "client_id",
-															"value": "{{client_id}}",
-															"type": "text"
-														},
-														{
-															"key": "client_secret",
-															"value": "{{client_secret}}",
-															"type": "text"
-														},
-														{
-															"key": "state",
-															"value": "{{state}}",
-															"type": "text"
-														}
-													]
-												},
-												"url": {
-													"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token",
-													"host": [
-														"{{CFS Master URL}}"
-													],
-													"path": [
-														"oauth",
-														"{{Tenant Name}}",
-														"token"
-													]
-												}
+												"header": []
 											},
 											"response": []
 										}
@@ -3384,162 +3105,17 @@
 									"item": [
 										{
 											"name": "Authorize",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"exec": [
-															"pmutils(pm).testCallbacks.testResponseStatus200or302();\r",
-															"\r",
-															"pmutils(pm).postConfirmAuthorizeRequestIfNecessaryThenSetTokens('query', ({ authorization_code }) => {\r",
-															"    pmutils(pm).testCallbacks.testAuthorizationCode(authorization_code);\r",
-															"});\r",
-															""
-														],
-														"type": "text/javascript",
-														"packages": {}
-													}
-												}
-											],
-											"protocolProfileBehavior": {
-												"followRedirects": false
-											},
 											"request": {
 												"method": "GET",
-												"header": [],
-												"url": {
-													"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/authorize?response_type=code&client_id={{client_id}}&redirect_uri=https://oauth.pstmn.io/v1/callback&scope={{scope}}&state={{state}}&nonce={{nonce}}",
-													"host": [
-														"{{CFS Master URL}}"
-													],
-													"path": [
-														"oauth",
-														"{{Tenant Name}}",
-														"authorize"
-													],
-													"query": [
-														{
-															"key": "response_type",
-															"value": "code"
-														},
-														{
-															"key": "client_id",
-															"value": "{{client_id}}"
-														},
-														{
-															"key": "redirect_uri",
-															"value": "https://oauth.pstmn.io/v1/callback"
-														},
-														{
-															"key": "scope",
-															"value": "{{scope}}"
-														},
-														{
-															"key": "state",
-															"value": "{{state}}"
-														},
-														{
-															"key": "nonce",
-															"value": "{{nonce}}"
-														}
-													]
-												}
+												"header": []
 											},
 											"response": []
 										},
 										{
 											"name": "Request for tokens",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"exec": [
-															"pmutils(pm).testCallbacks.testResponseStatus200();\r",
-															"\r",
-															"// pretend the server responded with an invalid access token\r",
-															"const access_token = \"invalidAccessToken\";\r",
-															"pm.test(\"Invalid access token decoding fails\", () => {\r",
-															"    const atob = require('atob');\r",
-															"\r",
-															"    pm.expect(() => JSON.parse(atob(access_token))).to.throw();\r",
-															"});\r",
-															"\r",
-															"pm.sendRequest(\r",
-															"    {\r",
-															"        url: pm.variables.get('CFS Master URL') + '/oauth/' + pm.variables.get('Tenant Name') + '/userinfo',\r",
-															"        method: 'GET',\r",
-															"        header: {\r",
-															"            Authorization: 'Bearer ' + access_token\r",
-															"        }\r",
-															"    },\r",
-															"    (err, response) => {\r",
-															"        pm.test(\"Invalid access token does not grant access to resources\", () => {\r",
-															"            pm.expect(err).to.be.null;\r",
-															"            if (err) {\r",
-															"                console.error(err);\r",
-															"                return;\r",
-															"            }\r",
-															"\r",
-															"            pm.expect(response.code).to.be.equal(401);\r",
-															"        });\r",
-															"    }\r",
-															");\r",
-															""
-														],
-														"type": "text/javascript",
-														"packages": {}
-													}
-												}
-											],
 											"request": {
 												"method": "POST",
-												"header": [],
-												"body": {
-													"mode": "urlencoded",
-													"urlencoded": [
-														{
-															"key": "redirect_uri",
-															"value": "https://oauth.pstmn.io/v1/callback",
-															"type": "text"
-														},
-														{
-															"key": "code",
-															"value": "{{authorization_code}}",
-															"type": "text"
-														},
-														{
-															"key": "grant_type",
-															"value": "authorization_code",
-															"type": "text"
-														},
-														{
-															"key": "client_id",
-															"value": "{{client_id}}",
-															"type": "text"
-														},
-														{
-															"key": "client_secret",
-															"value": "{{client_secret}}",
-															"type": "text"
-														},
-														{
-															"key": "state",
-															"value": "{{state}}",
-															"type": "text"
-														}
-													]
-												},
-												"url": {
-													"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token",
-													"host": [
-														"{{CFS Master URL}}"
-													],
-													"path": [
-														"oauth",
-														"{{Tenant Name}}",
-														"token"
-													]
-												}
+												"header": []
 											},
 											"response": []
 										}
@@ -3550,141 +3126,17 @@
 									"item": [
 										{
 											"name": "Authorize",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"exec": [
-															"pmutils(pm).testCallbacks.testResponseStatus200or302();\r",
-															"\r",
-															"pmutils(pm).postConfirmAuthorizeRequestIfNecessaryThenSetTokens('query', ({ authorization_code }) => {\r",
-															"    pmutils(pm).testCallbacks.testAuthorizationCode(authorization_code);\r",
-															"});\r",
-															""
-														],
-														"type": "text/javascript",
-														"packages": {}
-													}
-												}
-											],
-											"protocolProfileBehavior": {
-												"followRedirects": false
-											},
 											"request": {
 												"method": "GET",
-												"header": [],
-												"url": {
-													"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/authorize?response_type=code&client_id={{client_id}}&redirect_uri=https://oauth.pstmn.io/v1/callback&scope={{scope}}&state={{state}}&nonce={{nonce}}",
-													"host": [
-														"{{CFS Master URL}}"
-													],
-													"path": [
-														"oauth",
-														"{{Tenant Name}}",
-														"authorize"
-													],
-													"query": [
-														{
-															"key": "response_type",
-															"value": "code"
-														},
-														{
-															"key": "client_id",
-															"value": "{{client_id}}"
-														},
-														{
-															"key": "redirect_uri",
-															"value": "https://oauth.pstmn.io/v1/callback"
-														},
-														{
-															"key": "scope",
-															"value": "{{scope}}"
-														},
-														{
-															"key": "state",
-															"value": "{{state}}"
-														},
-														{
-															"key": "nonce",
-															"value": "{{nonce}}"
-														}
-													]
-												}
+												"header": []
 											},
 											"response": []
 										},
 										{
 											"name": "Request for tokens",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"exec": [
-															"pmutils(pm).testCallbacks.testResponseStatus200();\r",
-															"\r",
-															"// pretend the server responded with an invalid id token\r",
-															"const id_token = \"invalidIdToken\";\r",
-															"pm.test(\"Invalid id token decoding fails\", () => {\r",
-															"    const atob = require('atob');\r",
-															"\r",
-															"    pm.expect(() => JSON.parse(atob(id_token))).to.throw();\r",
-															"});\r",
-															""
-														],
-														"type": "text/javascript",
-														"packages": {}
-													}
-												}
-											],
 											"request": {
 												"method": "POST",
-												"header": [],
-												"body": {
-													"mode": "urlencoded",
-													"urlencoded": [
-														{
-															"key": "redirect_uri",
-															"value": "https://oauth.pstmn.io/v1/callback",
-															"type": "text"
-														},
-														{
-															"key": "code",
-															"value": "{{authorization_code}}",
-															"type": "text"
-														},
-														{
-															"key": "grant_type",
-															"value": "authorization_code",
-															"type": "text"
-														},
-														{
-															"key": "client_id",
-															"value": "{{client_id}}",
-															"type": "text"
-														},
-														{
-															"key": "client_secret",
-															"value": "{{client_secret}}",
-															"type": "text"
-														},
-														{
-															"key": "state",
-															"value": "{{state}}",
-															"type": "text"
-														}
-													]
-												},
-												"url": {
-													"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token",
-													"host": [
-														"{{CFS Master URL}}"
-													],
-													"path": [
-														"oauth",
-														"{{Tenant Name}}",
-														"token"
-													]
-												}
+												"header": []
 											},
 											"response": []
 										}
@@ -3695,64 +3147,9 @@
 									"item": [
 										{
 											"name": "Refresh token",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"exec": [
-															"pmutils(pm).testCallbacks.testResponseStatus(400);\r",
-															"\r",
-															"const responseData = pm.response.json();\r",
-															"\r",
-															"pm.test('Response body has error \"invalid_request\"', () => {\r",
-															"    pm.expect(responseData).to.have.property('error', 'invalid_request');\r",
-															"});\r",
-															""
-														],
-														"type": "text/javascript",
-														"packages": {}
-													}
-												}
-											],
 											"request": {
 												"method": "POST",
-												"header": [],
-												"body": {
-													"mode": "urlencoded",
-													"urlencoded": [
-														{
-															"key": "client_id",
-															"value": "{{client_id}}",
-															"type": "text"
-														},
-														{
-															"key": "grant_type",
-															"value": "refresh_token",
-															"type": "text"
-														},
-														{
-															"key": "client_secret",
-															"value": "{{client_secret}}",
-															"type": "text"
-														},
-														{
-															"key": "refresh_token",
-															"value": "invalidRefreshToken",
-															"type": "text"
-														}
-													]
-												},
-												"url": {
-													"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token",
-													"host": [
-														"{{CFS Master URL}}"
-													],
-													"path": [
-														"oauth",
-														"{{Tenant Name}}",
-														"token"
-													]
-												}
+												"header": []
 											},
 											"response": []
 										}
@@ -3760,7 +3157,8 @@
 								}
 							]
 						}
-					]
+					],
+					"description": "Validations for the token endpoint, common to most all of the flows that use the token endpoint; some are similar to the common validations, but the invalid parameter values are present in the token request instead of the authorization request."
 				},
 				{
 					"name": "Authorization code flow with PKCE",
@@ -4010,7 +3408,8 @@
 								}
 							]
 						}
-					]
+					],
+					"description": "Validations related only to the PCKE extension of the authorization code flow."
 				},
 				{
 					"name": "Implicit Flow + Hybrid Flow",
@@ -4096,14 +3495,15 @@
 											"response": []
 										}
 									],
-									"description": "These tests simulate the case where the user would deny consent, i.e. clicking the \"Cancel\" button on the consent screen\n\n<img src=\"https://content.pstmn.io/6258ac22-09a1-4f5b-8ecf-35a397b0c33c/aW1hZ2UucG5n\" alt=\"\" height=\"924\" width=\"1619\">"
+									"description": "These tests simulate the case where the user would deny consent, i.e. clicking the \"Cancel\" button on the consent screen\n\n<img src=\"https://content.pstmn.io/6258ac22-09a1-4f5b-8ecf-35a397b0c33c/aW1hZ2UucG5n\" width=\"1619\" height=\"924\">"
 								}
 							]
 						}
-					]
+					],
+					"description": "Validations related only to the implicit flow and hybrid flows."
 				}
 			],
-			"description": "All requests in this folder's subfolders fail for different reasons. The purpose is to demonstrate the expected error responses in those cases.\n\nThe folders are grouped by flow type.\n\nEach subfolder under a flow type represents a different case why a request would fail.\n\nSee the tests in the **Tests** tab of each request to see what the expected errors are for each case."
+			"description": "All requests in this folder's subfolders captures cases when your requests could possibly fail. The purpose is to demonstrate the expected error responses in those cases.\n\nThe folders are grouped by flow type.\n\nEach subfolder under a flow type represents a different case why a request would fail.\n\nSee the tests in the **Tests** tab of each request to see what the expected errors are for each case.\n\nFor subfolders that contain both the authorization request and the token request, the token request is the one that's expected to fail; the authorization request is used to set up the token request (i.e. obtain the authorization code)."
 		},
 		{
 			"name": "Get OIDC metadata",
@@ -4208,7 +3608,8 @@
 						".well-known",
 						"openid-configuration"
 					]
-				}
+				},
+				"description": "Returns the OpenID provider configuration information, such as supported claims, supported scopes, URLs to other endpoints such as the authorize endpoint, the token endpoint, etc.\n\n[OpenID Connect Discovery 1.0 § 4.2. OpenID Provider Configuration Response](https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderConfigurationResponse)"
 			},
 			"response": [
 				{
@@ -4338,7 +3739,8 @@
 						"{{Tenant Name}}",
 						"token"
 					]
-				}
+				},
+				"description": "Takes a `refresh_token` and returns a fresh new set of `id_token`, `access_token`, `refresh_token`."
 			},
 			"response": [
 				{
@@ -4502,7 +3904,8 @@
 						"{{Tenant Name}}",
 						"userinfo"
 					]
-				}
+				},
+				"description": "Returns the claims associated with the user's `access_token`; the returned depend on the value of that `scope` parameter used when issuing the token.\n\nClaims with no value are **not** returned.\n\nThe **Tests** expect all claim values to be returned for each scope, so the user would need to have all the associated informations completed in order for all the tests to pass.\n\n**N.B.:** If an access token is obtained using the **Client credentials** flow, the response is empty, since the token is not associated with any user."
 			},
 			"response": [
 				{
@@ -4610,7 +4013,8 @@
 						".well-known",
 						"keys"
 					]
-				}
+				},
+				"description": "Returns the [JWS](https://datatracker.ietf.org/doc/html/rfc7515) keys used to sign the tokens. These keys must be used to [validate the id_token](https://openid.net/specs/openid-connect-core-1_0.html#ImplicitIDTValidation), and/or [validate the access_token](https://openid.net/specs/openid-connect-core-1_0.html#ImplicitTokenValidation) when using the **Implicit flow** or **Hybrid flow**."
 			},
 			"response": [
 				{
@@ -4693,7 +4097,8 @@
 						"RevokeApplicationAccess",
 						"{{Application Id}}"
 					]
-				}
+				},
+				"description": "Revokes an application's acess to the user's information, the same way you would revoke it using the web portal.\n\n<img src=\"https://content.pstmn.io/4379fe7c-13b5-4b17-867e-e5a322a9d68f/aW1hZ2UucG5n\" width=\"1619\" height=\"924\">\n\n**N.B.:** In order to use this request, you need to log in the browser, and [synchronize the cookies with Postman](https://learning.postman.com/docs/sending-requests/capturing-request-data/syncing-cookies/)."
 			},
 			"response": [
 				{
@@ -5282,13 +4687,13 @@
 			"type": "string"
 		},
 		{
-			"key": "Application Id",
-			"value": "1f734c83-3ca4-433e-bfb0-27bc711f3b4e",
+			"key": "Tenant Name",
+			"value": "mytenant",
 			"type": "string"
 		},
 		{
-			"key": "Tenant Name",
-			"value": "mytenant",
+			"key": "Application Id",
+			"value": "1f734c83-3ca4-433e-bfb0-27bc711f3b4e",
 			"type": "string"
 		},
 		{
