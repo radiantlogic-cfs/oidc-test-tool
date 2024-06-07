@@ -4738,6 +4738,18 @@
 					"body": "true"
 				}
 			]
+		},
+		{
+			"name": "New Request",
+			"id": "8cfa315a-ad77-4c9c-aff7-32f77210bc16",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
 		}
 	],
 	"event": [
