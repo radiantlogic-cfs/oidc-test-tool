@@ -2465,7 +2465,7 @@
 								},
 								{
 									"key": "username",
-									"value": "{{resource_owner_password_credentials_username}}",
+									"value": "{{username}}",
 									"type": "text"
 								},
 								{
@@ -2669,7 +2669,7 @@
 										}
 									],
 									"id": "f1f04b39-b8d3-42ce-b15d-5bcda59d0208",
-									"description": "Demonstrates the case where the value for the `client_id` parameter is invalid (i.e. there is not client associated with the specified client_id).\n\nSee the **Tests** tab of the \"Authorize\" request for the expected errors."
+									"description": "Demonstrates the case where the value for the `client_id` parameter is invalid (i.e. there is no client associated with the specified client_id).\n\nSee the **Tests** tab of the \"Authorize\" request for the expected errors."
 								},
 								{
 									"name": "Invalid callback url",
@@ -4178,6 +4178,2345 @@
 					],
 					"id": "3590055f-6d33-4573-83fc-f3a6a037a871",
 					"description": "Validations related only to the implicit flow and hybrid flow."
+				},
+				{
+					"name": "Resource owner password credentials",
+					"item": [
+						{
+							"name": "Invalid client id",
+							"item": [
+								{
+									"name": "Request for access token",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "ef4d30f9-3dd6-4be0-b1be-31e995ca7fa9",
+												"exec": [
+													"pmutils(pm).testCallbacks.testResponseStatus(401);",
+													"",
+													"const responseData = pm.response.json();",
+													"",
+													"pm.test('Response body has error \"invalid_client\"', () => {",
+													"    pm.expect(responseData).to.have.property('error', 'invalid_client');",
+													"});",
+													"",
+													"pm.test('Response body has error_description', () => {",
+													"    pm.expect(responseData).to.have.property('error_description');",
+													"});",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"id": "3009b5a1-8ab8-436f-b423-e6c022c7c365",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": [
+												{
+													"key": "grant_type",
+													"value": "password",
+													"type": "text"
+												},
+												{
+													"key": "client_id",
+													"value": "invalidClientId",
+													"type": "text"
+												},
+												{
+													"key": "client_secret",
+													"value": "{{client_secret}}",
+													"type": "text"
+												},
+												{
+													"key": "username",
+													"value": "{{username}}",
+													"type": "text"
+												},
+												{
+													"key": "password",
+													"value": "{{password}}",
+													"type": "text"
+												},
+												{
+													"key": "scope",
+													"value": "{{scope}}",
+													"type": "text"
+												}
+											]
+										},
+										"url": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token"
+									},
+									"response": [
+										{
+											"id": "e21f1bba-c558-44de-bad4-fe593fcda16a",
+											"name": "Request for access token",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "urlencoded",
+													"urlencoded": [
+														{
+															"key": "grant_type",
+															"value": "password",
+															"type": "text"
+														},
+														{
+															"key": "client_id",
+															"value": "invalidClientId",
+															"type": "text"
+														},
+														{
+															"key": "client_secret",
+															"value": "{{client_secret}}",
+															"type": "text"
+														},
+														{
+															"key": "username",
+															"value": "{{username}}",
+															"type": "text"
+														},
+														{
+															"key": "password",
+															"value": "{{password}}",
+															"type": "text"
+														},
+														{
+															"key": "scope",
+															"value": "{{scope}}",
+															"type": "text"
+														}
+													]
+												},
+												"url": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token"
+											},
+											"status": "Unauthorized",
+											"code": 401,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Cache-Control",
+													"value": "no-cache, no-store, max-age=0, must-revalidate"
+												},
+												{
+													"key": "Pragma",
+													"value": "no-cache"
+												},
+												{
+													"key": "Content-Length",
+													"value": "94"
+												},
+												{
+													"key": "Content-Type",
+													"value": "application/json; charset=utf-8"
+												},
+												{
+													"key": "Server",
+													"value": "Microsoft-IIS/10.0"
+												},
+												{
+													"key": "Access-Control-Allow-Origin",
+													"value": "*"
+												},
+												{
+													"key": "Access-Control-Allow-Headers",
+													"value": "authorization"
+												},
+												{
+													"key": "WWW-Authenticate",
+													"value": "Basic realm=\"\""
+												},
+												{
+													"key": "WWW-Authenticate",
+													"value": "Negotiate"
+												},
+												{
+													"key": "WWW-Authenticate",
+													"value": "NTLM"
+												},
+												{
+													"key": "X-SourceFiles",
+													"value": "=?UTF-8?B?QzpcV29ya1xjZnNcc3JjXENGU1xSTEkuQ0ZTLldlYlxvYXV0aFxzdG9ybXdpbmRcdG9rZW4=?="
+												},
+												{
+													"key": "X-Powered-By",
+													"value": "ASP.NET"
+												},
+												{
+													"key": "Date",
+													"value": "Wed, 12 Jun 2024 12:32:03 GMT"
+												}
+											],
+											"cookie": [],
+											"responseTime": null,
+											"body": "{\n    \"error\": \"invalid_client\",\n    \"error_description\": \"The client id or client secret was incorrect.\"\n}"
+										}
+									]
+								}
+							],
+							"id": "43d7ec1b-c20a-47ae-b256-62babd40df37",
+							"description": "Demonstrates the case where the value for the `client_id` parameter is invalid (i.e. there is no client associated with the specified client_id).\n\nSee the **Tests** tab of the \"Token\" request for the expected errors."
+						},
+						{
+							"name": "Invalid client secret",
+							"item": [
+								{
+									"name": "Request for access token",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "ef4d30f9-3dd6-4be0-b1be-31e995ca7fa9",
+												"exec": [
+													"pmutils(pm).testCallbacks.testResponseStatus(401);",
+													"",
+													"const responseData = pm.response.json();",
+													"",
+													"pm.test('Response body has error \"invalid_client\"', () => {",
+													"    pm.expect(responseData).to.have.property('error', 'invalid_client');",
+													"});",
+													"",
+													"pm.test('Response body has error_description', () => {",
+													"    pm.expect(responseData).to.have.property('error_description');",
+													"});",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"id": "e71035a2-5af2-4e82-b5c6-a1c76f9a67a9",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": [
+												{
+													"key": "grant_type",
+													"value": "password",
+													"type": "text"
+												},
+												{
+													"key": "client_id",
+													"value": "{{client_id}}",
+													"type": "text"
+												},
+												{
+													"key": "client_secret",
+													"value": "invalidClientSecret",
+													"type": "text"
+												},
+												{
+													"key": "username",
+													"value": "{{username}}",
+													"type": "text"
+												},
+												{
+													"key": "password",
+													"value": "{{password}}",
+													"type": "text"
+												},
+												{
+													"key": "scope",
+													"value": "{{scope}}",
+													"type": "text"
+												}
+											]
+										},
+										"url": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token"
+									},
+									"response": [
+										{
+											"id": "b9381120-9ee2-4732-9f76-459312ee1581",
+											"name": "Request for access token",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "urlencoded",
+													"urlencoded": [
+														{
+															"key": "grant_type",
+															"value": "password",
+															"type": "text"
+														},
+														{
+															"key": "client_id",
+															"value": "{{client_id}}",
+															"type": "text"
+														},
+														{
+															"key": "client_secret",
+															"value": "invalidClientSecret",
+															"type": "text"
+														},
+														{
+															"key": "username",
+															"value": "{{username}}",
+															"type": "text"
+														},
+														{
+															"key": "password",
+															"value": "{{password}}",
+															"type": "text"
+														},
+														{
+															"key": "scope",
+															"value": "{{scope}}",
+															"type": "text"
+														}
+													]
+												},
+												"url": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token"
+											},
+											"status": "Unauthorized",
+											"code": 401,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Cache-Control",
+													"value": "no-cache, no-store, max-age=0, must-revalidate"
+												},
+												{
+													"key": "Pragma",
+													"value": "no-cache"
+												},
+												{
+													"key": "Content-Length",
+													"value": "94"
+												},
+												{
+													"key": "Content-Type",
+													"value": "application/json; charset=utf-8"
+												},
+												{
+													"key": "Server",
+													"value": "Microsoft-IIS/10.0"
+												},
+												{
+													"key": "Access-Control-Allow-Origin",
+													"value": "*"
+												},
+												{
+													"key": "Access-Control-Allow-Headers",
+													"value": "authorization"
+												},
+												{
+													"key": "WWW-Authenticate",
+													"value": "Basic realm=\"\""
+												},
+												{
+													"key": "WWW-Authenticate",
+													"value": "Negotiate"
+												},
+												{
+													"key": "WWW-Authenticate",
+													"value": "NTLM"
+												},
+												{
+													"key": "X-SourceFiles",
+													"value": "=?UTF-8?B?QzpcV29ya1xjZnNcc3JjXENGU1xSTEkuQ0ZTLldlYlxvYXV0aFxzdG9ybXdpbmRcdG9rZW4=?="
+												},
+												{
+													"key": "X-Powered-By",
+													"value": "ASP.NET"
+												},
+												{
+													"key": "Date",
+													"value": "Wed, 12 Jun 2024 12:31:56 GMT"
+												}
+											],
+											"cookie": [],
+											"responseTime": null,
+											"body": "{\n    \"error\": \"invalid_client\",\n    \"error_description\": \"The client id or client secret was incorrect.\"\n}"
+										}
+									]
+								}
+							],
+							"id": "c3f5f427-3d19-443e-b9b4-5d751080d160"
+						},
+						{
+							"name": "Invalid scope(s)",
+							"item": [
+								{
+									"name": "Request for access token",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "ef4d30f9-3dd6-4be0-b1be-31e995ca7fa9",
+												"exec": [
+													"pmutils(pm).testCallbacks.testResponseStatus(400);",
+													"",
+													"const responseData = pm.response.json();",
+													"",
+													"pm.test('Response body has error \"invalid_scope\"', () => {",
+													"    pm.expect(responseData).to.have.property('error', 'invalid_scope');",
+													"});",
+													"",
+													"pm.test('Response body has error_description', () => {",
+													"    pm.expect(responseData).to.have.property('error_description');",
+													"});",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"id": "f15dd16a-edd7-445b-a695-f2488667ec94",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": [
+												{
+													"key": "grant_type",
+													"value": "password",
+													"type": "text"
+												},
+												{
+													"key": "client_id",
+													"value": "{{client_id}}",
+													"type": "text"
+												},
+												{
+													"key": "client_secret",
+													"value": "{{client_secret}}",
+													"type": "text"
+												},
+												{
+													"key": "username",
+													"value": "{{username}}",
+													"type": "text"
+												},
+												{
+													"key": "password",
+													"value": "{{password}}",
+													"type": "text"
+												},
+												{
+													"key": "scope",
+													"value": "invalidScope",
+													"type": "text"
+												}
+											]
+										},
+										"url": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token"
+									},
+									"response": [
+										{
+											"id": "6dc029f8-a21b-4ecf-a1c5-3bda1fb21d6a",
+											"name": "Request for access token",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "urlencoded",
+													"urlencoded": [
+														{
+															"key": "grant_type",
+															"value": "password",
+															"type": "text"
+														},
+														{
+															"key": "client_id",
+															"value": "{{client_id}}",
+															"type": "text"
+														},
+														{
+															"key": "client_secret",
+															"value": "{{client_secret}}",
+															"type": "text"
+														},
+														{
+															"key": "username",
+															"value": "{{username}}",
+															"type": "text"
+														},
+														{
+															"key": "password",
+															"value": "{{password}}",
+															"type": "text"
+														},
+														{
+															"key": "scope",
+															"value": "invalidScope",
+															"type": "text"
+														}
+													]
+												},
+												"url": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token"
+											},
+											"status": "Bad Request",
+											"code": 400,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Cache-Control",
+													"value": "no-cache, no-store, max-age=0, must-revalidate"
+												},
+												{
+													"key": "Pragma",
+													"value": "no-cache"
+												},
+												{
+													"key": "Content-Length",
+													"value": "121"
+												},
+												{
+													"key": "Content-Type",
+													"value": "application/json; charset=utf-8"
+												},
+												{
+													"key": "Server",
+													"value": "Microsoft-IIS/10.0"
+												},
+												{
+													"key": "Access-Control-Allow-Origin",
+													"value": "*"
+												},
+												{
+													"key": "Access-Control-Allow-Headers",
+													"value": "authorization"
+												},
+												{
+													"key": "X-SourceFiles",
+													"value": "=?UTF-8?B?QzpcV29ya1xjZnNcc3JjXENGU1xSTEkuQ0ZTLldlYlxvYXV0aFxzdG9ybXdpbmRcdG9rZW4=?="
+												},
+												{
+													"key": "X-Powered-By",
+													"value": "ASP.NET"
+												},
+												{
+													"key": "Date",
+													"value": "Wed, 12 Jun 2024 12:30:23 GMT"
+												}
+											],
+											"cookie": [],
+											"responseTime": null,
+											"body": "{\n    \"error\": \"invalid_scope\",\n    \"error_description\": \"None of the requested scopes are present in the list of supported scopes.\"\n}"
+										}
+									]
+								}
+							],
+							"id": "958df10c-2052-45fb-b8f6-24e506e54bc6",
+							"description": "Demonstrates the case where the value for the `scope` parameter is invalid (i.e. the list of space separated scopes contains **ONLY invalid scopes**).\n\nSee the **Tests** tab of the \"Token\" request for the expected errors."
+						},
+						{
+							"name": "Invalid credentials",
+							"item": [
+								{
+									"name": "Invalid username",
+									"item": [
+										{
+											"name": "Request for access token",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "ef4d30f9-3dd6-4be0-b1be-31e995ca7fa9",
+														"exec": [
+															"pmutils(pm).testCallbacks.testResponseStatus(400);",
+															"",
+															"const responseData = pm.response.json();",
+															"",
+															"pm.test('Response body has error \"invalid_grant\"', () => {",
+															"    pm.expect(responseData).to.have.property('error', 'invalid_grant');",
+															"});",
+															"",
+															"pm.test('Response body has error_description with specific message', () => {",
+															"    pm.expect(responseData).to.have.property('error_description', 'Invalid username or password.');",
+															"});",
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"id": "7e5c3a37-2837-479b-88e0-6dbc717fd414",
+											"protocolProfileBehavior": {
+												"disableBodyPruning": true
+											},
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "urlencoded",
+													"urlencoded": [
+														{
+															"key": "grant_type",
+															"value": "password",
+															"type": "text"
+														},
+														{
+															"key": "client_id",
+															"value": "{{client_id}}",
+															"type": "text"
+														},
+														{
+															"key": "client_secret",
+															"value": "{{client_secret}}",
+															"type": "text"
+														},
+														{
+															"key": "username",
+															"value": "invalidUser",
+															"type": "text"
+														},
+														{
+															"key": "password",
+															"value": "{{password}}",
+															"type": "text"
+														},
+														{
+															"key": "scope",
+															"value": "{{scope}}",
+															"type": "text"
+														}
+													]
+												},
+												"url": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token"
+											},
+											"response": [
+												{
+													"id": "1c3ab65c-2194-4a51-ae00-75ec76cf9fae",
+													"name": "Request for access token",
+													"originalRequest": {
+														"method": "POST",
+														"header": [],
+														"body": {
+															"mode": "urlencoded",
+															"urlencoded": [
+																{
+																	"key": "grant_type",
+																	"value": "password",
+																	"type": "text"
+																},
+																{
+																	"key": "client_id",
+																	"value": "{{client_id}}",
+																	"type": "text"
+																},
+																{
+																	"key": "client_secret",
+																	"value": "{{client_secret}}",
+																	"type": "text"
+																},
+																{
+																	"key": "username",
+																	"value": "invalidUser",
+																	"type": "text"
+																},
+																{
+																	"key": "password",
+																	"value": "{{password}}",
+																	"type": "text"
+																},
+																{
+																	"key": "scope",
+																	"value": "{{scope}}",
+																	"type": "text"
+																}
+															]
+														},
+														"url": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token"
+													},
+													"status": "Bad Request",
+													"code": 400,
+													"_postman_previewlanguage": "json",
+													"header": [
+														{
+															"key": "Cache-Control",
+															"value": "no-cache, no-store, max-age=0, must-revalidate"
+														},
+														{
+															"key": "Pragma",
+															"value": "no-cache"
+														},
+														{
+															"key": "Content-Length",
+															"value": "77"
+														},
+														{
+															"key": "Content-Type",
+															"value": "application/json; charset=utf-8"
+														},
+														{
+															"key": "Server",
+															"value": "Microsoft-IIS/10.0"
+														},
+														{
+															"key": "Access-Control-Allow-Origin",
+															"value": "*"
+														},
+														{
+															"key": "Access-Control-Allow-Headers",
+															"value": "authorization"
+														},
+														{
+															"key": "X-SourceFiles",
+															"value": "=?UTF-8?B?QzpcV29ya1xjZnNcc3JjXENGU1xSTEkuQ0ZTLldlYlxvYXV0aFxzdG9ybXdpbmRcdG9rZW4=?="
+														},
+														{
+															"key": "X-Powered-By",
+															"value": "ASP.NET"
+														},
+														{
+															"key": "Date",
+															"value": "Wed, 12 Jun 2024 12:26:25 GMT"
+														}
+													],
+													"cookie": [],
+													"responseTime": null,
+													"body": "{\n    \"error\": \"invalid_grant\",\n    \"error_description\": \"Invalid username or password.\"\n}"
+												}
+											]
+										}
+									],
+									"id": "c371ea95-cd70-4bae-96c4-7715ad4aee70",
+									"description": "Demonstrates the case where the value for the `username` parameter is invalid (i.e. there is no user associated with that username).\n\nSee the **Tests** tab of the \"Token\" request for the expected errors."
+								},
+								{
+									"name": "Invalid password",
+									"item": [
+										{
+											"name": "Request for access token",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "ef4d30f9-3dd6-4be0-b1be-31e995ca7fa9",
+														"exec": [
+															"pmutils(pm).testCallbacks.testResponseStatus(400);",
+															"",
+															"const responseData = pm.response.json();",
+															"",
+															"pm.test('Response body has error \"invalid_grant\"', () => {",
+															"    pm.expect(responseData).to.have.property('error', 'invalid_grant');",
+															"});",
+															"",
+															"pm.test('Response body has error_description with specific message', () => {",
+															"    pm.expect(responseData).to.have.property('error_description', 'Invalid username or password.');",
+															"});",
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"id": "1170c9bc-c8d7-4cc3-a7ce-deba0124dd16",
+											"protocolProfileBehavior": {
+												"disableBodyPruning": true
+											},
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "urlencoded",
+													"urlencoded": [
+														{
+															"key": "grant_type",
+															"value": "password",
+															"type": "text"
+														},
+														{
+															"key": "client_id",
+															"value": "{{client_id}}",
+															"type": "text"
+														},
+														{
+															"key": "client_secret",
+															"value": "{{client_secret}}",
+															"type": "text"
+														},
+														{
+															"key": "username",
+															"value": "{{username}}",
+															"type": "text"
+														},
+														{
+															"key": "password",
+															"value": "invalidPassword",
+															"type": "text"
+														},
+														{
+															"key": "scope",
+															"value": "{{scope}}",
+															"type": "text"
+														}
+													]
+												},
+												"url": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token"
+											},
+											"response": [
+												{
+													"id": "e5e9f052-f671-4f50-878b-9c807e682db2",
+													"name": "Request for access token",
+													"originalRequest": {
+														"method": "POST",
+														"header": [],
+														"body": {
+															"mode": "urlencoded",
+															"urlencoded": [
+																{
+																	"key": "grant_type",
+																	"value": "password",
+																	"type": "text"
+																},
+																{
+																	"key": "client_id",
+																	"value": "{{client_id}}",
+																	"type": "text"
+																},
+																{
+																	"key": "client_secret",
+																	"value": "{{client_secret}}",
+																	"type": "text"
+																},
+																{
+																	"key": "username",
+																	"value": "{{username}}",
+																	"type": "text"
+																},
+																{
+																	"key": "password",
+																	"value": "invalidPassword",
+																	"type": "text"
+																},
+																{
+																	"key": "scope",
+																	"value": "{{scope}}",
+																	"type": "text"
+																}
+															]
+														},
+														"url": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token"
+													},
+													"status": "Bad Request",
+													"code": 400,
+													"_postman_previewlanguage": "json",
+													"header": [
+														{
+															"key": "Cache-Control",
+															"value": "no-cache, no-store, max-age=0, must-revalidate"
+														},
+														{
+															"key": "Pragma",
+															"value": "no-cache"
+														},
+														{
+															"key": "Content-Length",
+															"value": "77"
+														},
+														{
+															"key": "Content-Type",
+															"value": "application/json; charset=utf-8"
+														},
+														{
+															"key": "Server",
+															"value": "Microsoft-IIS/10.0"
+														},
+														{
+															"key": "Access-Control-Allow-Origin",
+															"value": "*"
+														},
+														{
+															"key": "Access-Control-Allow-Headers",
+															"value": "authorization"
+														},
+														{
+															"key": "X-SourceFiles",
+															"value": "=?UTF-8?B?QzpcV29ya1xjZnNcc3JjXENGU1xSTEkuQ0ZTLldlYlxvYXV0aFxzdG9ybXdpbmRcdG9rZW4=?="
+														},
+														{
+															"key": "X-Powered-By",
+															"value": "ASP.NET"
+														},
+														{
+															"key": "Date",
+															"value": "Wed, 12 Jun 2024 12:26:59 GMT"
+														}
+													],
+													"cookie": [],
+													"responseTime": null,
+													"body": "{\n    \"error\": \"invalid_grant\",\n    \"error_description\": \"Invalid username or password.\"\n}"
+												}
+											]
+										}
+									],
+									"id": "72397062-e3c9-4d21-bb06-893280345003",
+									"description": "Demonstrates the case where the value for the `password` parameter is invalid (i.e. it does not match the user's password).\n\nSee the **Tests** tab of the \"Token\" request for the expected errors."
+								}
+							],
+							"id": "2281f1f1-2e9b-46c4-bbb0-3429b842f732",
+							"description": "Demonstrates the cases where the user credentials are invalid."
+						},
+						{
+							"name": "Locked out user",
+							"item": [
+								{
+									"name": "Request for access token",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "ef4d30f9-3dd6-4be0-b1be-31e995ca7fa9",
+												"exec": [
+													"pmutils(pm).testCallbacks.testResponseStatus(400);",
+													"",
+													"const responseData = pm.response.json();",
+													"",
+													"pm.test('Response body has error \"invalid_request\"', () => {",
+													"    pm.expect(responseData).to.have.property('error', 'invalid_grant');",
+													"});",
+													"",
+													"pm.test('Response body has error_description with specific message', () => {",
+													"    pm.expect(responseData).to.have.property('error_description', 'User account is locked.');",
+													"});",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"id": "3024888c-0553-4dd7-8dc0-b8a4b8db2fac",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": [
+												{
+													"key": "grant_type",
+													"value": "password",
+													"type": "text"
+												},
+												{
+													"key": "client_id",
+													"value": "{{client_id}}",
+													"type": "text"
+												},
+												{
+													"key": "client_secret",
+													"value": "{{client_secret}}",
+													"type": "text"
+												},
+												{
+													"key": "username",
+													"value": "{{ropc_locked_out_username}}",
+													"type": "text"
+												},
+												{
+													"key": "password",
+													"value": "{{ropc_locked_out_password}}",
+													"type": "text"
+												},
+												{
+													"key": "scope",
+													"value": "{{scope}}",
+													"type": "text"
+												}
+											]
+										},
+										"url": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token"
+									},
+									"response": [
+										{
+											"id": "f81df4f7-0374-497d-9477-c57f80e7862f",
+											"name": "Request for access token",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "urlencoded",
+													"urlencoded": [
+														{
+															"key": "grant_type",
+															"value": "password",
+															"type": "text"
+														},
+														{
+															"key": "client_id",
+															"value": "{{client_id}}",
+															"type": "text"
+														},
+														{
+															"key": "client_secret",
+															"value": "{{client_secret}}",
+															"type": "text"
+														},
+														{
+															"key": "username",
+															"value": "{{ropc_locked_out_username}}",
+															"type": "text"
+														},
+														{
+															"key": "password",
+															"value": "{{ropc_locked_out_password}}",
+															"type": "text"
+														},
+														{
+															"key": "scope",
+															"value": "{{scope}}",
+															"type": "text"
+														}
+													]
+												},
+												"url": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token"
+											},
+											"status": "Bad Request",
+											"code": 400,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Cache-Control",
+													"value": "no-cache, no-store, max-age=0, must-revalidate"
+												},
+												{
+													"key": "Pragma",
+													"value": "no-cache"
+												},
+												{
+													"key": "Content-Length",
+													"value": "71"
+												},
+												{
+													"key": "Content-Type",
+													"value": "application/json; charset=utf-8"
+												},
+												{
+													"key": "Server",
+													"value": "Microsoft-IIS/10.0"
+												},
+												{
+													"key": "Access-Control-Allow-Origin",
+													"value": "*"
+												},
+												{
+													"key": "Access-Control-Allow-Headers",
+													"value": "authorization"
+												},
+												{
+													"key": "X-SourceFiles",
+													"value": "=?UTF-8?B?QzpcV29ya1xjZnNcc3JjXENGU1xSTEkuQ0ZTLldlYlxvYXV0aFxzdG9ybXdpbmRcdG9rZW4=?="
+												},
+												{
+													"key": "X-Powered-By",
+													"value": "ASP.NET"
+												},
+												{
+													"key": "Date",
+													"value": "Tue, 11 Jun 2024 11:18:32 GMT"
+												}
+											],
+											"cookie": [],
+											"responseTime": null,
+											"body": "{\n    \"error\": \"invalid_grant\",\n    \"error_description\": \"User account is locked.\"\n}"
+										}
+									]
+								}
+							],
+							"id": "367593f8-ee04-4e1f-b90c-924a6b92587c",
+							"description": "Demonstrates the case where the user is locked out.\n\nSee the **Tests** tab of the \"Token\" request for the expected errors."
+						},
+						{
+							"name": "CAC enabled user",
+							"item": [
+								{
+									"name": "Request for access token",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "ef4d30f9-3dd6-4be0-b1be-31e995ca7fa9",
+												"exec": [
+													"pmutils(pm).testCallbacks.testResponseStatus(400);",
+													"",
+													"const responseData = pm.response.json();",
+													"",
+													"pm.test('Response body has error \"invalid_request\"', () => {",
+													"    pm.expect(responseData).to.have.property('error', 'invalid_grant');",
+													"});",
+													"",
+													"pm.test('Response body has error_description with specific message', () => {",
+													"    pm.expect(responseData).to.have.property('error_description', 'User cannot be authenticated.');",
+													"});",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"id": "172a786c-2d8a-491b-a687-2d01aeac62e4",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": [
+												{
+													"key": "grant_type",
+													"value": "password",
+													"type": "text"
+												},
+												{
+													"key": "client_id",
+													"value": "{{client_id}}",
+													"type": "text"
+												},
+												{
+													"key": "client_secret",
+													"value": "{{client_secret}}",
+													"type": "text"
+												},
+												{
+													"key": "username",
+													"value": "{{ropc_cac_enabled_username}}",
+													"type": "text"
+												},
+												{
+													"key": "password",
+													"value": "{{ropc_cac_enabled_password}}",
+													"type": "text"
+												},
+												{
+													"key": "scope",
+													"value": "{{scope}}",
+													"type": "text"
+												}
+											]
+										},
+										"url": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token"
+									},
+									"response": [
+										{
+											"id": "0a15825e-aa3d-461c-9176-1ed9e672d67a",
+											"name": "Request for access token",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "urlencoded",
+													"urlencoded": [
+														{
+															"key": "grant_type",
+															"value": "password",
+															"type": "text"
+														},
+														{
+															"key": "client_id",
+															"value": "{{client_id}}",
+															"type": "text"
+														},
+														{
+															"key": "client_secret",
+															"value": "{{client_secret}}",
+															"type": "text"
+														},
+														{
+															"key": "username",
+															"value": "{{ropc_cac_enabled_username}}",
+															"type": "text"
+														},
+														{
+															"key": "password",
+															"value": "{{ropc_cac_enabled_password}}",
+															"type": "text"
+														},
+														{
+															"key": "scope",
+															"value": "{{scope}}",
+															"type": "text"
+														}
+													]
+												},
+												"url": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token"
+											},
+											"status": "Bad Request",
+											"code": 400,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Cache-Control",
+													"value": "no-cache, no-store, max-age=0, must-revalidate"
+												},
+												{
+													"key": "Pragma",
+													"value": "no-cache"
+												},
+												{
+													"key": "Content-Length",
+													"value": "77"
+												},
+												{
+													"key": "Content-Type",
+													"value": "application/json; charset=utf-8"
+												},
+												{
+													"key": "Server",
+													"value": "Microsoft-IIS/10.0"
+												},
+												{
+													"key": "Access-Control-Allow-Origin",
+													"value": "*"
+												},
+												{
+													"key": "Access-Control-Allow-Headers",
+													"value": "authorization"
+												},
+												{
+													"key": "X-SourceFiles",
+													"value": "=?UTF-8?B?QzpcV29ya1xjZnNcc3JjXENGU1xSTEkuQ0ZTLldlYlxvYXV0aFxzdG9ybXdpbmRcdG9rZW4=?="
+												},
+												{
+													"key": "X-Powered-By",
+													"value": "ASP.NET"
+												},
+												{
+													"key": "Date",
+													"value": "Thu, 13 Jun 2024 12:11:53 GMT"
+												}
+											],
+											"cookie": [],
+											"responseTime": null,
+											"body": "{\n    \"error\": \"invalid_grant\",\n    \"error_description\": \"User cannot be authenticated.\"\n}"
+										}
+									]
+								}
+							],
+							"id": "8c584e06-49ed-4585-8dd9-135069bb5967",
+							"description": "Demonstrates the case where the user uses a certificate for authentication, therefore the user does not have a valid password to authenticate.\n\nSee the **Tests** tab of the \"Token\" request for the expected errors."
+						},
+						{
+							"name": "MFA enabled user",
+							"item": [
+								{
+									"name": "Request for access token",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "ef4d30f9-3dd6-4be0-b1be-31e995ca7fa9",
+												"exec": [
+													"pmutils(pm).testCallbacks.testResponseStatus(400);",
+													"",
+													"const responseData = pm.response.json();",
+													"",
+													"pm.test('Response body has error \"invalid_request\"', () => {",
+													"    pm.expect(responseData).to.have.property('error', 'invalid_grant');",
+													"});",
+													"",
+													"pm.test('Response body has error_description with specific message', () => {",
+													"    pm.expect(responseData).to.have.property('error_description', 'Resource Owner Password Credentials (ROPC) flow is not supported with multi-factor authentication (MFA). Please use an alternative authentication method.');",
+													"});",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"id": "68e5ce19-1e5c-4010-bad9-74259ed206bc",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": [
+												{
+													"key": "grant_type",
+													"value": "password",
+													"type": "text"
+												},
+												{
+													"key": "client_id",
+													"value": "{{client_id}}",
+													"type": "text"
+												},
+												{
+													"key": "client_secret",
+													"value": "{{client_secret}}",
+													"type": "text"
+												},
+												{
+													"key": "username",
+													"value": "{{ropc_mfa_enabled_username}}",
+													"type": "text"
+												},
+												{
+													"key": "password",
+													"value": "{{ropc_mfa_enabled_password}}",
+													"type": "text"
+												},
+												{
+													"key": "scope",
+													"value": "{{scope}}",
+													"type": "text"
+												}
+											]
+										},
+										"url": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token"
+									},
+									"response": [
+										{
+											"id": "eefba8da-e30e-492f-8b09-652531bf7575",
+											"name": "Request for access token",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "urlencoded",
+													"urlencoded": [
+														{
+															"key": "grant_type",
+															"value": "password",
+															"type": "text"
+														},
+														{
+															"key": "client_id",
+															"value": "{{client_id}}",
+															"type": "text"
+														},
+														{
+															"key": "client_secret",
+															"value": "{{client_secret}}",
+															"type": "text"
+														},
+														{
+															"key": "username",
+															"value": "{{ropc_mfa_enabled_username}}",
+															"type": "text"
+														},
+														{
+															"key": "password",
+															"value": "{{ropc_mfa_enabled_password}}",
+															"type": "text"
+														},
+														{
+															"key": "scope",
+															"value": "{{scope}}",
+															"type": "text"
+														}
+													]
+												},
+												"url": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token"
+											},
+											"status": "Bad Request",
+											"code": 400,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Cache-Control",
+													"value": "no-cache, no-store, max-age=0, must-revalidate"
+												},
+												{
+													"key": "Pragma",
+													"value": "no-cache"
+												},
+												{
+													"key": "Content-Length",
+													"value": "201"
+												},
+												{
+													"key": "Content-Type",
+													"value": "application/json; charset=utf-8"
+												},
+												{
+													"key": "Server",
+													"value": "Microsoft-IIS/10.0"
+												},
+												{
+													"key": "Access-Control-Allow-Origin",
+													"value": "*"
+												},
+												{
+													"key": "Access-Control-Allow-Headers",
+													"value": "authorization"
+												},
+												{
+													"key": "X-SourceFiles",
+													"value": "=?UTF-8?B?QzpcV29ya1xjZnNcc3JjXENGU1xSTEkuQ0ZTLldlYlxvYXV0aFxzdG9ybXdpbmRcdG9rZW4=?="
+												},
+												{
+													"key": "X-Powered-By",
+													"value": "ASP.NET"
+												},
+												{
+													"key": "Date",
+													"value": "Tue, 11 Jun 2024 11:37:06 GMT"
+												}
+											],
+											"cookie": [],
+											"responseTime": null,
+											"body": "{\n    \"error\": \"invalid_grant\",\n    \"error_description\": \"Resource Owner Password Credentials (ROPC) flow is not supported with multi-factor authentication (MFA). Please use an alternative authentication method.\"\n}"
+										}
+									]
+								}
+							],
+							"id": "d7d0900f-d3bf-4f28-973a-7b42710703b0",
+							"description": "Demonstrates the case where the tenant has MFA enabled for its users.\n\nSee the **Tests** tab of the \"Token\" request for the expected errors."
+						},
+						{
+							"name": "Missing parameters",
+							"item": [
+								{
+									"name": "Missing client id",
+									"item": [
+										{
+											"name": "Request for access token",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "ef4d30f9-3dd6-4be0-b1be-31e995ca7fa9",
+														"exec": [
+															"pmutils(pm).testCallbacks.testResponseStatus(401);",
+															"",
+															"const responseData = pm.response.json();",
+															"",
+															"pm.test('Response body has error \"invalid_client\"', () => {",
+															"    pm.expect(responseData).to.have.property('error', 'invalid_client');",
+															"});",
+															"",
+															"pm.test('Response body has error_description', () => {",
+															"    pm.expect(responseData).to.have.property('error_description');",
+															"});",
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"id": "8172be04-38ee-4c72-b094-9f3b7326b8d8",
+											"protocolProfileBehavior": {
+												"disableBodyPruning": true
+											},
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "urlencoded",
+													"urlencoded": [
+														{
+															"key": "grant_type",
+															"value": "password",
+															"type": "text"
+														},
+														{
+															"key": "client_id",
+															"value": "{{client_id}}",
+															"type": "text",
+															"disabled": true
+														},
+														{
+															"key": "client_secret",
+															"value": "{{client_secret}}",
+															"type": "text"
+														},
+														{
+															"key": "username",
+															"value": "{{username}}",
+															"type": "text"
+														},
+														{
+															"key": "password",
+															"value": "{{password}}",
+															"type": "text"
+														},
+														{
+															"key": "scope",
+															"value": "{{scope}}",
+															"type": "text"
+														}
+													]
+												},
+												"url": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token"
+											},
+											"response": [
+												{
+													"id": "a6b5dd88-a1ea-4a65-87a9-12c1271fcd6d",
+													"name": "Request for access token",
+													"originalRequest": {
+														"method": "POST",
+														"header": [],
+														"body": {
+															"mode": "urlencoded",
+															"urlencoded": [
+																{
+																	"key": "grant_type",
+																	"value": "password",
+																	"type": "text"
+																},
+																{
+																	"key": "client_id",
+																	"value": "invalidClientId",
+																	"type": "text"
+																},
+																{
+																	"key": "client_secret",
+																	"value": "{{client_secret}}",
+																	"type": "text"
+																},
+																{
+																	"key": "username",
+																	"value": "{{username}}",
+																	"type": "text"
+																},
+																{
+																	"key": "password",
+																	"value": "{{password}}",
+																	"type": "text"
+																},
+																{
+																	"key": "scope",
+																	"value": "{{scope}}",
+																	"type": "text"
+																}
+															]
+														},
+														"url": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token"
+													},
+													"status": "Unauthorized",
+													"code": 401,
+													"_postman_previewlanguage": "json",
+													"header": [
+														{
+															"key": "Cache-Control",
+															"value": "no-cache, no-store, max-age=0, must-revalidate"
+														},
+														{
+															"key": "Pragma",
+															"value": "no-cache"
+														},
+														{
+															"key": "Content-Length",
+															"value": "94"
+														},
+														{
+															"key": "Content-Type",
+															"value": "application/json; charset=utf-8"
+														},
+														{
+															"key": "Server",
+															"value": "Microsoft-IIS/10.0"
+														},
+														{
+															"key": "Access-Control-Allow-Origin",
+															"value": "*"
+														},
+														{
+															"key": "Access-Control-Allow-Headers",
+															"value": "authorization"
+														},
+														{
+															"key": "WWW-Authenticate",
+															"value": "Basic realm=\"\""
+														},
+														{
+															"key": "WWW-Authenticate",
+															"value": "Negotiate"
+														},
+														{
+															"key": "WWW-Authenticate",
+															"value": "NTLM"
+														},
+														{
+															"key": "X-SourceFiles",
+															"value": "=?UTF-8?B?QzpcV29ya1xjZnNcc3JjXENGU1xSTEkuQ0ZTLldlYlxvYXV0aFxzdG9ybXdpbmRcdG9rZW4=?="
+														},
+														{
+															"key": "X-Powered-By",
+															"value": "ASP.NET"
+														},
+														{
+															"key": "Date",
+															"value": "Wed, 12 Jun 2024 12:32:03 GMT"
+														}
+													],
+													"cookie": [],
+													"responseTime": null,
+													"body": "{\n    \"error\": \"invalid_client\",\n    \"error_description\": \"The client id or client secret was incorrect.\"\n}"
+												}
+											]
+										}
+									],
+									"id": "72d7a009-23ce-42ee-99f4-9ac315dd0e43"
+								},
+								{
+									"name": "Missing client secret",
+									"item": [
+										{
+											"name": "Request for access token",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "ef4d30f9-3dd6-4be0-b1be-31e995ca7fa9",
+														"exec": [
+															"pmutils(pm).testCallbacks.testResponseStatus(401);",
+															"",
+															"const responseData = pm.response.json();",
+															"",
+															"pm.test('Response body has error \"invalid_client\"', () => {",
+															"    pm.expect(responseData).to.have.property('error', 'invalid_client');",
+															"});",
+															"",
+															"pm.test('Response body has error_description', () => {",
+															"    pm.expect(responseData).to.have.property('error_description');",
+															"});",
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"id": "6ac883dc-84ef-47a6-a591-e41764167378",
+											"protocolProfileBehavior": {
+												"disableBodyPruning": true
+											},
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "urlencoded",
+													"urlencoded": [
+														{
+															"key": "grant_type",
+															"value": "password",
+															"type": "text"
+														},
+														{
+															"key": "client_id",
+															"value": "{{client_id}}",
+															"type": "text"
+														},
+														{
+															"key": "client_secret",
+															"value": "{{client_secret}}",
+															"type": "text",
+															"disabled": true
+														},
+														{
+															"key": "username",
+															"value": "{{username}}",
+															"type": "text"
+														},
+														{
+															"key": "password",
+															"value": "{{password}}",
+															"type": "text"
+														},
+														{
+															"key": "scope",
+															"value": "{{scope}}",
+															"type": "text"
+														}
+													]
+												},
+												"url": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token"
+											},
+											"response": [
+												{
+													"id": "187b93ae-9c8b-4eaa-a171-504e643bb64f",
+													"name": "Request for access token",
+													"originalRequest": {
+														"method": "POST",
+														"header": [],
+														"body": {
+															"mode": "urlencoded",
+															"urlencoded": [
+																{
+																	"key": "grant_type",
+																	"value": "password",
+																	"type": "text"
+																},
+																{
+																	"key": "client_id",
+																	"value": "invalidClientId",
+																	"type": "text"
+																},
+																{
+																	"key": "client_secret",
+																	"value": "{{client_secret}}",
+																	"type": "text"
+																},
+																{
+																	"key": "username",
+																	"value": "{{username}}",
+																	"type": "text"
+																},
+																{
+																	"key": "password",
+																	"value": "{{password}}",
+																	"type": "text"
+																},
+																{
+																	"key": "scope",
+																	"value": "{{scope}}",
+																	"type": "text"
+																}
+															]
+														},
+														"url": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token"
+													},
+													"status": "Unauthorized",
+													"code": 401,
+													"_postman_previewlanguage": "json",
+													"header": [
+														{
+															"key": "Cache-Control",
+															"value": "no-cache, no-store, max-age=0, must-revalidate"
+														},
+														{
+															"key": "Pragma",
+															"value": "no-cache"
+														},
+														{
+															"key": "Content-Length",
+															"value": "94"
+														},
+														{
+															"key": "Content-Type",
+															"value": "application/json; charset=utf-8"
+														},
+														{
+															"key": "Server",
+															"value": "Microsoft-IIS/10.0"
+														},
+														{
+															"key": "Access-Control-Allow-Origin",
+															"value": "*"
+														},
+														{
+															"key": "Access-Control-Allow-Headers",
+															"value": "authorization"
+														},
+														{
+															"key": "WWW-Authenticate",
+															"value": "Basic realm=\"\""
+														},
+														{
+															"key": "WWW-Authenticate",
+															"value": "Negotiate"
+														},
+														{
+															"key": "WWW-Authenticate",
+															"value": "NTLM"
+														},
+														{
+															"key": "X-SourceFiles",
+															"value": "=?UTF-8?B?QzpcV29ya1xjZnNcc3JjXENGU1xSTEkuQ0ZTLldlYlxvYXV0aFxzdG9ybXdpbmRcdG9rZW4=?="
+														},
+														{
+															"key": "X-Powered-By",
+															"value": "ASP.NET"
+														},
+														{
+															"key": "Date",
+															"value": "Wed, 12 Jun 2024 12:32:03 GMT"
+														}
+													],
+													"cookie": [],
+													"responseTime": null,
+													"body": "{\n    \"error\": \"invalid_client\",\n    \"error_description\": \"The client id or client secret was incorrect.\"\n}"
+												}
+											]
+										}
+									],
+									"id": "466d1487-1cce-4fb8-86b8-2dc8be3b3622"
+								},
+								{
+									"name": "Missing scope",
+									"item": [
+										{
+											"name": "Request for access token",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "ef4d30f9-3dd6-4be0-b1be-31e995ca7fa9",
+														"exec": [
+															"pmutils(pm).testCallbacks.testResponseStatus(400);",
+															"",
+															"const responseData = pm.response.json();",
+															"",
+															"pm.test('Response body has error \"invalid_scope\"', () => {",
+															"    pm.expect(responseData).to.have.property('error', 'invalid_scope');",
+															"});",
+															"",
+															"pm.test('Response body has error_description', () => {",
+															"    pm.expect(responseData).to.have.property('error_description');",
+															"});",
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"id": "e163d949-9a0e-48c9-b5c8-66740419e71e",
+											"protocolProfileBehavior": {
+												"disableBodyPruning": true
+											},
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "urlencoded",
+													"urlencoded": [
+														{
+															"key": "grant_type",
+															"value": "password",
+															"type": "text"
+														},
+														{
+															"key": "client_id",
+															"value": "{{client_id}}",
+															"type": "text"
+														},
+														{
+															"key": "client_secret",
+															"value": "{{client_secret}}",
+															"type": "text"
+														},
+														{
+															"key": "username",
+															"value": "{{username}}",
+															"type": "text"
+														},
+														{
+															"key": "password",
+															"value": "{{password}}",
+															"type": "text"
+														},
+														{
+															"key": "scope",
+															"value": "{{scope}}",
+															"type": "text",
+															"disabled": true
+														}
+													]
+												},
+												"url": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token"
+											},
+											"response": [
+												{
+													"id": "58f3fb18-1902-451d-a1cd-9c44fd495c2c",
+													"name": "Request for access token",
+													"originalRequest": {
+														"method": "POST",
+														"header": [],
+														"body": {
+															"mode": "urlencoded",
+															"urlencoded": [
+																{
+																	"key": "grant_type",
+																	"value": "password",
+																	"type": "text"
+																},
+																{
+																	"key": "client_id",
+																	"value": "invalidClientId",
+																	"type": "text"
+																},
+																{
+																	"key": "client_secret",
+																	"value": "{{client_secret}}",
+																	"type": "text"
+																},
+																{
+																	"key": "username",
+																	"value": "{{username}}",
+																	"type": "text"
+																},
+																{
+																	"key": "password",
+																	"value": "{{password}}",
+																	"type": "text"
+																},
+																{
+																	"key": "scope",
+																	"value": "{{scope}}",
+																	"type": "text"
+																}
+															]
+														},
+														"url": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token"
+													},
+													"status": "Unauthorized",
+													"code": 401,
+													"_postman_previewlanguage": "json",
+													"header": [
+														{
+															"key": "Cache-Control",
+															"value": "no-cache, no-store, max-age=0, must-revalidate"
+														},
+														{
+															"key": "Pragma",
+															"value": "no-cache"
+														},
+														{
+															"key": "Content-Length",
+															"value": "94"
+														},
+														{
+															"key": "Content-Type",
+															"value": "application/json; charset=utf-8"
+														},
+														{
+															"key": "Server",
+															"value": "Microsoft-IIS/10.0"
+														},
+														{
+															"key": "Access-Control-Allow-Origin",
+															"value": "*"
+														},
+														{
+															"key": "Access-Control-Allow-Headers",
+															"value": "authorization"
+														},
+														{
+															"key": "WWW-Authenticate",
+															"value": "Basic realm=\"\""
+														},
+														{
+															"key": "WWW-Authenticate",
+															"value": "Negotiate"
+														},
+														{
+															"key": "WWW-Authenticate",
+															"value": "NTLM"
+														},
+														{
+															"key": "X-SourceFiles",
+															"value": "=?UTF-8?B?QzpcV29ya1xjZnNcc3JjXENGU1xSTEkuQ0ZTLldlYlxvYXV0aFxzdG9ybXdpbmRcdG9rZW4=?="
+														},
+														{
+															"key": "X-Powered-By",
+															"value": "ASP.NET"
+														},
+														{
+															"key": "Date",
+															"value": "Wed, 12 Jun 2024 12:32:03 GMT"
+														}
+													],
+													"cookie": [],
+													"responseTime": null,
+													"body": "{\n    \"error\": \"invalid_client\",\n    \"error_description\": \"The client id or client secret was incorrect.\"\n}"
+												}
+											]
+										}
+									],
+									"id": "2f8cc048-9ba9-4e26-b518-e98bec8b92ff"
+								},
+								{
+									"name": "Missing username",
+									"item": [
+										{
+											"name": "Request for access token",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "ef4d30f9-3dd6-4be0-b1be-31e995ca7fa9",
+														"exec": [
+															"pmutils(pm).testCallbacks.testResponseStatus(400);",
+															"",
+															"const responseData = pm.response.json();",
+															"",
+															"pm.test('Response body has error \"invalid_request\"', () => {",
+															"    pm.expect(responseData).to.have.property('error', 'invalid_request');",
+															"});",
+															"",
+															"pm.test('Response body has error_description', () => {",
+															"    pm.expect(responseData).to.have.property('error_description', 'Required parameters are missing.');",
+															"});",
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"id": "62da8803-2160-4d5d-9287-2369c7e17896",
+											"protocolProfileBehavior": {
+												"disableBodyPruning": true
+											},
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "urlencoded",
+													"urlencoded": [
+														{
+															"key": "grant_type",
+															"value": "password",
+															"type": "text"
+														},
+														{
+															"key": "client_id",
+															"value": "{{client_id}}",
+															"type": "text"
+														},
+														{
+															"key": "client_secret",
+															"value": "{{client_secret}}",
+															"type": "text"
+														},
+														{
+															"key": "username",
+															"value": "{{username}}",
+															"type": "text",
+															"disabled": true
+														},
+														{
+															"key": "password",
+															"value": "{{password}}",
+															"type": "text"
+														},
+														{
+															"key": "scope",
+															"value": "{{scope}}",
+															"type": "text"
+														}
+													]
+												},
+												"url": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token"
+											},
+											"response": [
+												{
+													"id": "b2ec6eaa-a6e3-49e7-8cba-8f6810b66d4d",
+													"name": "Request for access token",
+													"originalRequest": {
+														"method": "POST",
+														"header": [],
+														"body": {
+															"mode": "urlencoded",
+															"urlencoded": [
+																{
+																	"key": "grant_type",
+																	"value": "password",
+																	"type": "text"
+																},
+																{
+																	"key": "client_id",
+																	"value": "invalidClientId",
+																	"type": "text"
+																},
+																{
+																	"key": "client_secret",
+																	"value": "{{client_secret}}",
+																	"type": "text"
+																},
+																{
+																	"key": "username",
+																	"value": "{{username}}",
+																	"type": "text"
+																},
+																{
+																	"key": "password",
+																	"value": "{{password}}",
+																	"type": "text"
+																},
+																{
+																	"key": "scope",
+																	"value": "{{scope}}",
+																	"type": "text"
+																}
+															]
+														},
+														"url": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token"
+													},
+													"status": "Unauthorized",
+													"code": 401,
+													"_postman_previewlanguage": "json",
+													"header": [
+														{
+															"key": "Cache-Control",
+															"value": "no-cache, no-store, max-age=0, must-revalidate"
+														},
+														{
+															"key": "Pragma",
+															"value": "no-cache"
+														},
+														{
+															"key": "Content-Length",
+															"value": "94"
+														},
+														{
+															"key": "Content-Type",
+															"value": "application/json; charset=utf-8"
+														},
+														{
+															"key": "Server",
+															"value": "Microsoft-IIS/10.0"
+														},
+														{
+															"key": "Access-Control-Allow-Origin",
+															"value": "*"
+														},
+														{
+															"key": "Access-Control-Allow-Headers",
+															"value": "authorization"
+														},
+														{
+															"key": "WWW-Authenticate",
+															"value": "Basic realm=\"\""
+														},
+														{
+															"key": "WWW-Authenticate",
+															"value": "Negotiate"
+														},
+														{
+															"key": "WWW-Authenticate",
+															"value": "NTLM"
+														},
+														{
+															"key": "X-SourceFiles",
+															"value": "=?UTF-8?B?QzpcV29ya1xjZnNcc3JjXENGU1xSTEkuQ0ZTLldlYlxvYXV0aFxzdG9ybXdpbmRcdG9rZW4=?="
+														},
+														{
+															"key": "X-Powered-By",
+															"value": "ASP.NET"
+														},
+														{
+															"key": "Date",
+															"value": "Wed, 12 Jun 2024 12:32:03 GMT"
+														}
+													],
+													"cookie": [],
+													"responseTime": null,
+													"body": "{\n    \"error\": \"invalid_client\",\n    \"error_description\": \"The client id or client secret was incorrect.\"\n}"
+												}
+											]
+										}
+									],
+									"id": "1f6bbccd-724f-4dbd-b4d2-46b0c455280e"
+								},
+								{
+									"name": "Missing password",
+									"item": [
+										{
+											"name": "Request for access token",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "ef4d30f9-3dd6-4be0-b1be-31e995ca7fa9",
+														"exec": [
+															"pmutils(pm).testCallbacks.testResponseStatus(400);",
+															"",
+															"const responseData = pm.response.json();",
+															"",
+															"pm.test('Response body has error \"invalid_request\"', () => {",
+															"    pm.expect(responseData).to.have.property('error', 'invalid_request');",
+															"});",
+															"",
+															"pm.test('Response body has error_description', () => {",
+															"    pm.expect(responseData).to.have.property('error_description', 'Required parameters are missing.');",
+															"});",
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"id": "f41f977c-6e8f-4eff-af00-22305376c25d",
+											"protocolProfileBehavior": {
+												"disableBodyPruning": true
+											},
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "urlencoded",
+													"urlencoded": [
+														{
+															"key": "grant_type",
+															"value": "password",
+															"type": "text"
+														},
+														{
+															"key": "client_id",
+															"value": "{{client_id}}",
+															"type": "text"
+														},
+														{
+															"key": "client_secret",
+															"value": "{{client_secret}}",
+															"type": "text"
+														},
+														{
+															"key": "username",
+															"value": "{{username}}",
+															"type": "text"
+														},
+														{
+															"key": "password",
+															"value": "{{password}}",
+															"type": "text",
+															"disabled": true
+														},
+														{
+															"key": "scope",
+															"value": "{{scope}}",
+															"type": "text"
+														}
+													]
+												},
+												"url": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token"
+											},
+											"response": [
+												{
+													"id": "d7d4793d-2e71-4758-9585-3d6216c07594",
+													"name": "Request for access token",
+													"originalRequest": {
+														"method": "POST",
+														"header": [],
+														"body": {
+															"mode": "urlencoded",
+															"urlencoded": [
+																{
+																	"key": "grant_type",
+																	"value": "password",
+																	"type": "text"
+																},
+																{
+																	"key": "client_id",
+																	"value": "invalidClientId",
+																	"type": "text"
+																},
+																{
+																	"key": "client_secret",
+																	"value": "{{client_secret}}",
+																	"type": "text"
+																},
+																{
+																	"key": "username",
+																	"value": "{{username}}",
+																	"type": "text"
+																},
+																{
+																	"key": "password",
+																	"value": "{{password}}",
+																	"type": "text"
+																},
+																{
+																	"key": "scope",
+																	"value": "{{scope}}",
+																	"type": "text"
+																}
+															]
+														},
+														"url": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token"
+													},
+													"status": "Unauthorized",
+													"code": 401,
+													"_postman_previewlanguage": "json",
+													"header": [
+														{
+															"key": "Cache-Control",
+															"value": "no-cache, no-store, max-age=0, must-revalidate"
+														},
+														{
+															"key": "Pragma",
+															"value": "no-cache"
+														},
+														{
+															"key": "Content-Length",
+															"value": "94"
+														},
+														{
+															"key": "Content-Type",
+															"value": "application/json; charset=utf-8"
+														},
+														{
+															"key": "Server",
+															"value": "Microsoft-IIS/10.0"
+														},
+														{
+															"key": "Access-Control-Allow-Origin",
+															"value": "*"
+														},
+														{
+															"key": "Access-Control-Allow-Headers",
+															"value": "authorization"
+														},
+														{
+															"key": "WWW-Authenticate",
+															"value": "Basic realm=\"\""
+														},
+														{
+															"key": "WWW-Authenticate",
+															"value": "Negotiate"
+														},
+														{
+															"key": "WWW-Authenticate",
+															"value": "NTLM"
+														},
+														{
+															"key": "X-SourceFiles",
+															"value": "=?UTF-8?B?QzpcV29ya1xjZnNcc3JjXENGU1xSTEkuQ0ZTLldlYlxvYXV0aFxzdG9ybXdpbmRcdG9rZW4=?="
+														},
+														{
+															"key": "X-Powered-By",
+															"value": "ASP.NET"
+														},
+														{
+															"key": "Date",
+															"value": "Wed, 12 Jun 2024 12:32:03 GMT"
+														}
+													],
+													"cookie": [],
+													"responseTime": null,
+													"body": "{\n    \"error\": \"invalid_client\",\n    \"error_description\": \"The client id or client secret was incorrect.\"\n}"
+												}
+											]
+										}
+									],
+									"id": "e112216f-07d1-47a7-9668-a9e7d6272c4a"
+								}
+							],
+							"id": "a4cdb5e8-9094-4282-9e3e-e0029dfac7ad"
+						}
+					],
+					"id": "d3b5f504-f0f1-4dec-b07e-ab6ac0adfc9b",
+					"description": "Validations for the Resource owner password credentials flow (ROPC)."
 				}
 			],
 			"id": "cc963083-1e8f-4f40-91ca-440314a8f772",
@@ -5266,104 +7605,129 @@
 	],
 	"variable": [
 		{
+			"id": "fe1aba93-f25e-4c80-a96d-03114b8f92fe",
 			"key": "CFS Master URL",
-			"value": "https://cfs01.example.com/cfs",
-			"type": "string"
+			"value": "https://cfs01.example.com/cfs"
 		},
 		{
+			"id": "7f8a68e1-9cd0-440c-bd14-bb75fcf7f54a",
 			"key": "Tenant Name",
-			"value": "mytenant",
-			"type": "string"
+			"value": "mytenant"
 		},
 		{
+			"id": "9cfa9037-b6cd-4709-b548-c684fb4006cf",
 			"key": "Application Id",
-			"value": "1f734c83-3ca4-433e-bfb0-27bc711f3b4e",
-			"type": "string"
+			"value": "1f734c83-3ca4-433e-bfb0-27bc711f3b4e"
 		},
 		{
+			"id": "a3e3101c-6cec-4abd-bf2d-72c58229aa24",
 			"key": "username",
-			"value": "john.doe@example.com",
-			"type": "string"
+			"value": "john.doe@example.com"
 		},
 		{
-			"key": "resource_owner_password_credentials_username",
-			"value": "john.doe",
-			"type": "string"
-		},
-		{
+			"id": "74bf0cb0-350f-4990-926a-7a2d7ba4e80a",
 			"key": "password",
-			"value": "MyPassword123!",
-			"type": "string"
+			"value": "MyPassword123!"
 		},
 		{
+			"id": "cf08b86a-e8a0-461a-93c9-7d570116730c",
+			"key": "ropc_locked_out_username",
+			"value": "john.doe@example.com"
+		},
+		{
+			"id": "8136f77f-2ebf-4a98-a158-d55cc01d8acb",
+			"key": "ropc_locked_out_password",
+			"value": "MyPassword123!"
+		},
+		{
+			"id": "3399ca31-1011-4e80-b688-7bf8dcb66a16",
+			"key": "ropc_cac_enabled_username",
+			"value": "john.doe@example.com"
+		},
+		{
+			"id": "c754ea72-2b14-440d-8f1c-97bb98c6157e",
+			"key": "ropc_cac_enabled_password",
+			"value": "MyPassword123!"
+		},
+		{
+			"id": "da63cf80-cabc-4e28-8941-2da88174b722",
+			"key": "ropc_mfa_enabled_username",
+			"value": "john.doe@example.com"
+		},
+		{
+			"id": "8715ccbd-d9dc-4120-bc27-820d860e1d2a",
+			"key": "ropc_mfa_enabled_password",
+			"value": "MyPassword123!"
+		},
+		{
+			"id": "a949924a-ef49-4937-be68-bb65f2d2bd72",
 			"key": "client_id",
-			"value": "stLJwW9b3L5BPaiFFVx9cB",
-			"type": "string"
+			"value": "stLJwW9b3L5BPaiFFVx9cB"
 		},
 		{
+			"id": "4651e9ee-6603-40a0-97ae-edd4ff64c7c6",
 			"key": "client_secret",
-			"value": "jqvQwFVQgK92xRg4D1DryiiO7F3X5Hl6UeYZE4fZUQ95",
-			"type": "string"
+			"value": "jqvQwFVQgK92xRg4D1DryiiO7F3X5Hl6UeYZE4fZUQ95"
 		},
 		{
+			"id": "242c78d4-db77-49a9-84f7-76e2a2731a96",
 			"key": "scope",
-			"value": "openid email profile",
-			"type": "string"
+			"value": "openid email profile"
 		},
 		{
+			"id": "40c28932-ebbf-4585-a4bb-78c661c2131b",
 			"key": "state",
-			"value": "6879bf2ef296d720f3a54eb8faabee9c",
-			"type": "string"
+			"value": "6879bf2ef296d720f3a54eb8faabee9c"
 		},
 		{
+			"id": "6db4e9c6-bab7-4847-8eb7-0d87d1538365",
 			"key": "nonce",
-			"value": "c4fdef35f2e05abe2ceb88ae0f743ee4",
-			"type": "string"
+			"value": "c4fdef35f2e05abe2ceb88ae0f743ee4"
 		},
 		{
+			"id": "e93ac7a5-ce7a-4efb-90f2-07d5ff444c5f",
 			"key": "redirect_uri",
-			"value": "https://oauth.pstmn.io/v1/callback",
-			"type": "string"
+			"value": "https://oauth.pstmn.io/v1/callback"
 		},
 		{
+			"id": "1bb67b5f-86e6-4bfc-af35-9fe883f6eaf2",
 			"key": "code_challenge",
-			"value": "rrsv_GL5iipUGp6yR5w5ra77fdggOxJ6htH9E217PeI",
-			"type": "string"
+			"value": "rrsv_GL5iipUGp6yR5w5ra77fdggOxJ6htH9E217PeI"
 		},
 		{
+			"id": "a4384a0b-7c33-4282-a37b-080933d4c498",
 			"key": "code_verifier",
-			"value": "MR~lBQbZeIHsG3RnZuvgWmrAr8y1Ia~muw2zBrJdPlz5A7carMvqfm3MxiWCMN7KOjzfbZo0is3FxyWDf6e4Ad0sU6Of10.PvukuaqO2ez~YLU.lCrLYDC4.xDb420z2",
-			"type": "string"
+			"value": "MR~lBQbZeIHsG3RnZuvgWmrAr8y1Ia~muw2zBrJdPlz5A7carMvqfm3MxiWCMN7KOjzfbZo0is3FxyWDf6e4Ad0sU6Of10.PvukuaqO2ez~YLU.lCrLYDC4.xDb420z2"
 		},
 		{
+			"id": "ae515947-5589-4a43-950e-7d269dc6cc1a",
 			"key": "code_method",
-			"value": "S256",
-			"type": "string"
+			"value": "S256"
 		},
 		{
+			"id": "cc78d0cb-86df-48a6-a309-8cc8865c0beb",
 			"key": "validations_common_response_type",
-			"value": "code",
-			"type": "string"
+			"value": "code"
 		},
 		{
+			"id": "c3701200-7708-4f7c-b63f-9a02b19d5fed",
 			"key": "authorization_code",
-			"value": "",
-			"type": "string"
+			"value": ""
 		},
 		{
+			"id": "d59a44cf-5843-4c82-984f-fcffc55ff3b7",
 			"key": "id_token",
-			"value": "",
-			"type": "string"
+			"value": ""
 		},
 		{
+			"id": "e00b78f2-9a77-4ebe-8ed7-d04ee85298b3",
 			"key": "access_token",
-			"value": "",
-			"type": "string"
+			"value": ""
 		},
 		{
+			"id": "bc107adf-aced-472a-843a-6714a3289bc2",
 			"key": "refresh_token",
-			"value": "",
-			"type": "string"
+			"value": ""
 		}
 	]
 }
