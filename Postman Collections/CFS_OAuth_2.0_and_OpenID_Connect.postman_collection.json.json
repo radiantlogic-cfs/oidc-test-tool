@@ -434,7 +434,7 @@
 				}
 			],
 			"id": "f1a631f4-b3fe-4e9d-95de-a0d45fd71f2a",
-			"description": "- Run the \"GET Authorize\" request\n    - The response will contain an `authorization_code` that will be automatically captured and set as a collection variable to be used by the next request\n- Run the \"POST Request for tokens\" request\n    - The response will contain an `access_token`, `id_token`, `refresh_token` that will be automatically captured and set as collection variables to be used for any subsequent requests that require authentication\n\n## The Authorization Endpoint Request\n\n- Method: `GET`\n- Agent: Browser\n- Response Type: Redirect to pre-registered callback URL at client with query parameters\n    \n\n### Request Parameters\n\n| Parameter | Value | Mandatory | Description |\n| --- | --- | --- | --- |\n| response_type | `code` | yes | Defines the flow type: authorization code flow |\n| client_id | The Client ID | yes | The ID of the OAuth client. |\n| redirect_uri | The client callback URL | yes | The callback URL configured for the client. |\n| scope | Space separated string of scopes | yes | List the scopes the client is requesting access to. **OpenID Connect requests MUST contain the** **`openid`** **scope**. |\n| state | A random value | no | Will be provided back to the client in the redirect URL. Useful to keep track of the session in the client or to prevent unsolicited flows. |\n| nonce | A random value | no | A string value used to mitigate replay attacks by associating the client session with the ID token. |\n\n### Response\n\nA redirect back to the “redirect_uri”. Response parameters are provided on the query string.\n\n| Parameter | Value | Mandatory | Description |\n| --- | --- | --- | --- |\n| code | An Authorization Code | yes | An authorization code nonce, to be used in the token request. |\n\n## The Token Endpoint Request\n\n### Request Parameters\n\n- Method: `POST`\n- Content-Type: `application/x-www-form-urlencoded`\n- Agent: `HTTP client`\n- Response Type: `json`\n    \n\n| Parameter | Value | Mandatory | Description |\n| --- | --- | --- | --- |\n| grant_type | `authorization_code` | yes | Tells the token endpoint to do the second part of the code flow. |\n| client_id | The Client ID | yes | The ID of the OAuth client. |\n| client_secret | The client secret | yes | The secret of the OAuth client. |\n| redirect_uri | The callback URL of the Client | yes | The same redirect URI as was sent in the Authorization request. |\n| code | The authorization code | yes | The code given in the response of the Authorization request. |\n\n### Response\n\n- Response Type: `application/json`\n    \n\n| Parameter | Value | Mandatory | Description |\n| --- | --- | --- | --- |\n| access_token | A newly issued access token | yes | The resulting access token for the code flow. |\n| token_type | `Bearer` or other token type | yes | Describes how the token can be used. Most commonly Bearer token usage. |\n| expires_in | Expiration in seconds | yes | The time to live of the access token in seconds. |\n| scope | Space separated string | yes | The issued scopes may differ from the requested scopes. |\n| refresh_token | A newly issued refresh token | yes | The resulting refresh token for the code flow. |\n| id_token | A newly issued ID token | yes | The resulting ID token for the code flow. |",
+			"description": "- Run the \"GET Authorize\" request\n    \n    - The response will contain an `authorization_code` that will be automatically captured and set as a collection variable to be used by the next request\n        \n- Run the \"POST Request for tokens\" request\n    \n    - The response will contain an `access_token`, `id_token`, `refresh_token` that will be automatically captured and set as collection variables to be used for any subsequent requests that require authentication\n        \n\n## The Authorization Endpoint Request\n\n- Method: `GET`\n    \n- Agent: Browser\n    \n- Response Type: Redirect to pre-registered callback URL at client with query parameters\n    \n\n### Request Parameters\n\n| Parameter | Value | Mandatory | Description |\n| --- | --- | --- | --- |\n| response_type | `code` | yes | Defines the flow type: authorization code flow |\n| client_id | The Client ID | yes | The ID of the OAuth client. |\n| redirect_uri | The client callback URL | yes | The callback URL configured for the client. |\n| scope | Space separated string of scopes | yes | List the scopes the client is requesting access to. **OpenID Connect requests MUST contain the** **`openid`** **scope**. |\n| state | A random value | no | Will be provided back to the client in the redirect URL. Useful to keep track of the session in the client or to prevent unsolicited flows. |\n| nonce | A random value | no | A string value used to mitigate replay attacks by associating the client session with the ID token. |\n\n### Response\n\nA redirect back to the “redirect_uri”. Response parameters are provided on the query string.\n\n| Parameter | Value | Mandatory | Description |\n| --- | --- | --- | --- |\n| code | An Authorization Code | yes | An authorization code nonce, to be used in the token request. |\n\n## The Token Endpoint Request\n\n### Request Parameters\n\n- Method: `POST`\n    \n- Content-Type: `application/x-www-form-urlencoded`\n    \n- Agent: `HTTP client`\n    \n- Response Type: `json`\n    \n\n| Parameter | Value | Mandatory | Description |\n| --- | --- | --- | --- |\n| grant_type | `authorization_code` | yes | Tells the token endpoint to do the second part of the code flow. |\n| client_id | The Client ID | yes | The ID of the OAuth client. |\n| client_secret | The client secret | yes | The secret of the OAuth client. |\n| redirect_uri | The callback URL of the Client | yes | The same redirect URI as was sent in the Authorization request. |\n| code | The authorization code | yes | The code given in the response of the Authorization request. |\n\n### Response\n\n- Response Type: `application/json`\n    \n\n| Parameter | Value | Mandatory | Description |\n| --- | --- | --- | --- |\n| access_token | A newly issued access token | yes | The resulting access token for the code flow. |\n| token_type | `Bearer` or other token type | yes | Describes how the token can be used. Most commonly Bearer token usage. |\n| expires_in | Expiration in seconds | yes | The time to live of the access token in seconds. |\n| scope | Space separated string | yes | The issued scopes may differ from the requested scopes. |\n| refresh_token | A newly issued refresh token | yes | The resulting refresh token for the code flow. |\n| id_token | A newly issued ID token | yes | The resulting ID token for the code flow. |",
 			"event": [
 				{
 					"listen": "prerequest",
@@ -2256,7 +2256,7 @@
 			"description": "- Run the \"GET Authorize\" request\n    - The response will contain an `authorization_code` and an `access_token`, an `id_token`, or both that will be automatically captured and set as collection variables\n- Run the \"POST Request for tokens\" request\n    - The response will contain an `access_token`, `id_token`, `refresh_token` that will be automatically captured and set as collection variables to be used for any subsequent requests that require authentication\n\n**N.B.:** The \"Automatically follow redirects\" setting must be **disabled** in Postman in order to run the requests in this folder!\n\n<img src=\"https://content.pstmn.io/e920769a-172e-49da-a73d-9b6a531ce945/aW1hZ2UucG5n\" width=\"846\" height=\"840\">\n\n## The Authorize Endpoint Request\n\n- Method: `GET`\n- Agent: Browser\n- Response Type: POST to pre-registered callback URL at client with parameters in the POST body\n    \n\n### Request Parameters\n\n| Parameter | Value | Mandatory | Description |\n| --- | --- | --- | --- |\n| response_type | `code token` or `code id_token` or `code id_token token` | yes | Defines the flow type: hybrid flow |\n| client_id | The Client ID | yes | The ID of the OAuth client. |\n| redirect_uri | The client callback URL | yes | The callback URL configured for the client. |\n| scope | Space separated string of scopes | yes | List the scopes the client is requesting access to. **OpenID Connect requests MUST contain the** **`openid`** **scope**. |\n| state | A random value | no | Will be provided back to the client in the redirect URL. Useful to keep track of the session in the client or to prevent unsolicited flows. |\n| nonce | A random value | no | A string value used to mitigate replay attacks by associating the client session with the ID token. |\n\n### Response\n\nA POST back to the `redirect_uri`. The parameters are provided in the POST body.\n\n| Parameter | Value | Mandatory | Description |\n| --- | --- | --- | --- |\n| access_token | A newly issued access token | no\\* | The resulting access token for the flow. \\*Mandatory if access token is requested in the `response_type`. |\n| token_type | `Bearer` or other token type | yes | Describes how the token can be used. Most commonly Bearer token usage. |\n| expires_in | Expiration in seconds | yes | The time to live of the token in seconds. |\n| scope | Space separated string | yes | The issued scopes may differ from the requested scopes. |\n| id_token | JSON Web Token | no\\* | The resulting ID token for the flow. \\*Mandatory if ID token is requested in the `response_type`. |\n| code | An Authorization Code | yes | An authorization code nonce, to be used in the token request. |\n| state | The same value as given in the request | yes\\* | The same value as the client sent in the request. Use to match request to the redirect response. \\*Mandatory if the state was sent in the request. |\n\n## The Token Endpoint Request\n\n### Request Parameters\n\n- Method: `POST`\n- Content-Type: `application/x-www-form-urlencoded`\n- Response Type: `json`\n    \n\n| Parameter | Value | Mandatory | Description |\n| --- | --- | --- | --- |\n| grant_type | `authorization_code` | yes | Tells the token endpoint to do the second part of the flow. |\n| client_id | The Client ID | yes | The ID of the requesting client. |\n| client_secret | The client secret | yes | The secret of the client. |\n| redirect_uri | The callback URL of the Client | yes | The same redirect URI as was sent in the Authorization request. |\n| code | The authorization code | yes | The code given in the response of the Authorization request. |\n\n### Response\n\n- Response Type: `application/json`\n    \n\n| Parameter | Value | Mandatory | Description |\n| --- | --- | --- | --- |\n| access_token | A newly issued access token | yes | The resulting access token for the flow. |\n| token_type | `Bearer` or other token type | yes | Describes how the token can be used. Most commonly Bearer token usage. |\n| expires_in | Expiration in seconds | yes | The time to live of the access token in seconds. |\n| scope | Space separated string | yes | The issued scopes may differ from the requested scopes. |\n| refresh_token | A newly issued refresh token | yes | The resulting refresh token for the flow. |\n| id_token | A newly issued ID token | yes | The resulting ID token for the flow. |"
 		},
 		{
-			"name": "Client credentials",
+			"name": "Client credentials flow",
 			"item": [
 				{
 					"name": "Request for access token",
@@ -2412,7 +2412,7 @@
 			"description": "- Run the \"POST Request for access token\" request\n    - The response will contain an `access_token`, that will be automatically captured and set as a collection variable to be used for any subsequent requests that require authentication\n\nNote that this `access_token`'s `sub` claim's value is the client_id (`{{client_id}}`) instead of the username (`{{username}}`) since the token is not associated with a specific user, but with the OAuth client itself.\n\n## The Token Endpoint\n\n### Request Parameters\n\n- Method: `POST`\n- Content-Type: `application/x-www-form-urlencoded`\n- Response Type: `json`\n    \n\n| Parameter | Value | Mandatory | Description |\n| --- | --- | --- | --- |\n| grant_type | `client_credentials` | yes | Tells the token endpoint to do perform the client credentials flow. |\n| client_id | The Client ID | yes | The ID of the OAuth client. |\n| client_secret | The client secret | yes | The secret of the OAuth client. |\n| scope | Space separated string of scopes | yes | List the scopes the client is requesting access to. **OpenID Connect requests MUST contain the** **`openid`** **scope**. |\n\n### Response\n\n- Response Type: `application/json`\n    \n\n| Parameter | Value | Mandatory | Description |\n| --- | --- | --- | --- |\n| access_token | A newly issued access token | yes | The resulting access token for the code flow. |\n| expires_in | Expiration in seconds | yes | The time to live of the access token in seconds. |\n| token_type | `Bearer` or other token type | yes | Describes how the token can be used. Most commonly Bearer token usage. |\n| scope | Space separated string | yes | The issued scopes may differ from the requested scopes. |"
 		},
 		{
-			"name": "Resource owner password credentials",
+			"name": "Resource owner password credentials flow",
 			"item": [
 				{
 					"name": "Request for access token",
@@ -2579,7 +2579,156 @@
 				}
 			],
 			"id": "e319833c-2772-4f79-adaf-cc9b7a4e6721",
-			"description": "- Run the \"POST Request for access token\" request\n    - The response will contain an `access_token`, that will be automatically captured and set as a collection variable to be used for any subsequent requests that require authentication\n\n## The Token Endpoint\n\n### Request Parameters\n\n- Method: `POST`\n- Content-Type: `application/x-www-form-urlencoded`\n- Response Type: `json`\n    \n\n| Parameter | Value | Mandatory | Description |\n| --- | --- | --- | --- |\n| grant_type | `password` | yes | Tells the token endpoint to do perform the resource owner password credential flow. |\n| client_id | The Client ID | yes | The ID of the OAuth client. |\n| client_secret | The client secret | yes | The secret of the OAuth client. |\n| username | the username | yes | The username of the resource owner. |\n| password | the user password | yes | The password of the resource owner.l |\n| scope | Space separated string of scopes | yes | List the scopes the client is requesting access to. **OpenID Connect requests MUST contain the** **`openid`** **scope**. |\n\n### Response\n\n- Response Type: `application/json`\n    \n\n| Parameter | Value | Mandatory | Description |\n| --- | --- | --- | --- |\n| access_token | A newly issued access token | yes | The resulting access token for the flow. |  \n| expires_in | Expiration in seconds | yes | The time to live of the access token in seconds. |  \n| token_type | `Bearer` or other token type | yes | Describes how the token can be used. Most commonly Bearer token usage. |  \n| scope | Space separated string | yes | The issued scopes may differ from the requested scopes. |\n| refresh_token | A newly issued refresh token | yes | The resulting refresh token for the flow. |"
+			"description": "- Run the \"POST Request for access token\" request\n    - The response will contain an `access_token`, that will be automatically captured and set as a collection variable to be used for any subsequent requests that require authentication\n        \n\n## The Token Endpoint\n\n### Request Parameters\n\n- Method: `POST`\n    \n- Content-Type: `application/x-www-form-urlencoded`\n    \n- Response Type: `json`\n    \n\n| Parameter | Value | Mandatory | Description |\n| --- | --- | --- | --- |\n| grant_type | `password` | yes | Tells the token endpoint to do perform the resource owner password credential flow. |\n| client_id | The Client ID | yes | The ID of the OAuth client. |\n| client_secret | The client secret | yes | The secret of the OAuth client. |\n| username | the username | yes | The username of the resource owner. |\n| password | the user password | yes | The password of the resource owner.l |\n| scope | Space separated string of scopes | yes | List the scopes the client is requesting access to. **OpenID Connect requests MUST contain the** **`openid`** **scope**. |\n\n### Response\n\n- Response Type: `application/json`\n    \n\n| Parameter | Value | Mandatory | Description |\n| --- | --- | --- | --- |\n| access_token | A newly issued access token | yes | The resulting access token for the flow. |\n| expires_in | Expiration in seconds | yes | The time to live of the access token in seconds. |\n| token_type | `Bearer` or other token type | yes | Describes how the token can be used. Most commonly Bearer token usage. |\n| scope | Space separated string | yes | The issued scopes may differ from the requested scopes. |\n| refresh_token | A newly issued refresh token | yes | The resulting refresh token for the flow. |"
+		},
+		{
+			"name": "Refresh token flow",
+			"item": [
+				{
+					"name": "Refresh token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pmutils(pm).testCallbacks.testResponseStatus200();\r",
+									"\r",
+									"const responseData = pm.response.json();\r",
+									"\r",
+									"pmutils(pm).testCallbacks.testAccessToken(responseData.access_token);\r",
+									"\r",
+									"pm.collectionVariables.set(\"access_token\", responseData.access_token);\r",
+									"pm.collectionVariables.set(\"refresh_token\", responseData.refresh_token);\r",
+									"\r",
+									"pmutils(pm).testCallbacks.testAccessTokenGrantsAccessToResources(responseData.access_token);\r",
+									"pmutils(pm).testCallbacks.testRefreshTokenRefreshesTokens(responseData.refresh_token);\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"id": "60aec0f2-710b-4f13-946b-fa345cdd223d"
+							}
+						}
+					],
+					"id": "f8e2a35c-72b6-4267-9888-b2ed1d1c37d8",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "refresh_token",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "{{client_id}}",
+									"type": "text"
+								},
+								{
+									"key": "client_secret",
+									"value": "{{client_secret}}",
+									"type": "text"
+								},
+								{
+									"key": "refresh_token",
+									"value": "{{refresh_token}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token",
+						"description": "Takes a `refresh_token` and returns a fresh new set of `id_token`, `access_token`, `refresh_token`."
+					},
+					"response": [
+						{
+							"id": "e23f9e34-c0fc-4015-b3c3-ab8427a4b8df",
+							"name": "Refresh token",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "client_id",
+											"value": "{{client_id}}",
+											"type": "text"
+										},
+										{
+											"key": "grant_type",
+											"value": "refresh_token",
+											"type": "text"
+										},
+										{
+											"key": "client_secret",
+											"value": "{{client_secret}}",
+											"type": "text"
+										},
+										{
+											"key": "refresh_token",
+											"value": "{{refresh_token}}",
+											"type": "text"
+										}
+									]
+								},
+								"url": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1248"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Server",
+									"value": "Microsoft-IIS/10.0"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "authorization"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "ASP.NET"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 02 Apr 2024 12:11:45 GMT"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "{\n    \"access_token\": \"eyJhbGciOiJSUzI1NiIsImtpZCI6ImQzY2QzMjBlLTJiNjUtNDg3YS05ZGM3LTY3MTY3YWFmMzc2NCIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ2YXJpYW4ud3J5bm4iLCJzY29wZSI6Im9wZW5pZCBlbWFpbCBwcm9maWxlIGFkZHJlc3MgcGhvbmUgZ3JvdXBzIiwidG9rZW5fdHlwZSI6ImJlYXJlciIsImNsaWVudF9pZCI6InN0TEp3VzliM0w1QlBhaUZGVng5Y0IiLCJuYmYiOjE3MTIwNTk5MDUsImV4cCI6MTcxMjA2MDAyNSwiaWF0IjoxNzEyMDU5ODE1LCJpc3MiOiJodHRwczovL2Nmcy5leGFtcGxlLmNvbS9jZnMvb2F1dGgvc3Rvcm13aW5kIiwiYXVkIjoiaHR0cHM6Ly9jZnMuZXhhbXBsZS5jb20vY2ZzL29hdXRoL3N0b3Jtd2luZCJ9.eAC6ugqB5tnAsjl8KQRrbE_XJgjlIGZ6zBdEM9hcUymaR_xpfXRA7Ll8oLmATN2lxO5cofdaSuUb6rWPBTWGz1wxITG4CDnNLFsBKZ4qd8ru14jJ87PYEW4CYH-m1cyAiIvVl9SIQxIpUYKgCC6QazwTeguCWVRgr2LKIo1zV-k6UyKqo1D1EYpAflfYtuf6bMaX7H9aXpA8cKAN-AKuTG343luQ8GQKm_G_D7KjqmSbhRky-IueIxmFL1tULAkOHmE3pflflhfxFkJR1gKMpGLUTRSrASFdXqG-o5bKYOaRJYy7AdHXN_Wz_UME4q6sxLQxYDcx6rpBlCly08m5Pw\",\n    \"token_type\": \"bearer\",\n    \"expires_in\": 120,\n    \"refresh_token\": \"utYV!IAAAAP_8Bo0mGU4__dCxXMjU4YY6kUmCZp4_DdD9rczbfdP1sQAAAAEt5Q2zknJ1GD69OxZzmQXLiMIJnDbImCURXtYMgzZ5o2rNP-JgSSzA1_Lwua4YmqNQc9gyh9jwkWii3ucs8ajroB2GfjPueE9AsLBE6LcXlECF8B1cIy9f059uTq-Vv7w4muMpsFNMCxcBTEVzeOJkssuD39T933iPv_gYcL60Ogexz4NOazdyteCDUIcrc0VbfqZaYdx_8AS2b5hvwRMEN0yw5TNvwCbP2LJ60QxPTg\",\n    \"scope\": \"openid email profile address phone groups\"\n}"
+						}
+					]
+				}
+			],
+			"id": "a2012be6-d0e2-41b2-9240-23cf609052a5",
+			"description": "- Run the \"POST Request for access token\" request\n    - The response will contain an access_token, refresh_token that will be automatically captured and set as collection variables to be used for any subsequent requests that require authentication\n        \n\n## The Token Endpoint\n\n### Request Parameters\n\n- Method: `POST`\n    \n- Content-Type: `application/x-www-form-urlencoded`\n    \n- Response Type: `json`\n    \n\n| Parameter | Value | Mandatory | Description |\n| --- | --- | --- | --- |\n| grant_type | `refresh_token` | yes | Tells the token endpoint to perform the refresh token flow. |\n| client_id | The client ID | yes | The ID of the OAuth client. |\n| client_secret | The client secret | yes | The secret of the OAuth client. |\n| refresh_token | A refresh token | yes | A previously issued refresh token granted by one of the other flows. |\n\n### Response\n\n- Response Type: `application/json`\n    \n\n| Parameter | Value | Mandatory | Description |\n| --- | --- | --- | --- |\n| access_token | A newly issued access token | yes | The resulting access token for the flow. |\n| expires_in | Expiration in seconds | yes | The time to live of the access token in seconds. |\n| token_type | `Bearer` or other token type | yes | Describes how the token can be used. Most commonly Bearer token usage. |\n| scope | Space separated string | yes | The issued scopes may differ from the requested scopes. |\n| refresh_token | A newly issued refresh token | yes | The resulting refresh token for the flow. |"
 		},
 		{
 			"name": "Validations",
@@ -2834,6 +2983,252 @@
 									"description": "Demonstrates the case where the value for the `scope` parameter is invalid (i.e. the list of space separated scopes contains **ONLY invalid scopes**).\n\nSee the **Tests** tab of the \"Authorize\" request for the expected errors."
 								},
 								{
+									"name": "Missing client id",
+									"item": [
+										{
+											"name": "Authorize",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "7ed26307-2c2a-44b8-ae52-90e5ec71ff23",
+														"exec": [
+															"const responseData = pm.response.json();\r",
+															"\r",
+															"pmutils(pm).testCallbacks.testResponseStatus(400);\r",
+															"\r",
+															"pm.test('Response body has error \"invalid_request\"', () => {\r",
+															"    pm.expect(responseData).to.have.property('error', 'invalid_request');\r",
+															"});\r",
+															"\r",
+															"pm.test('Response body has error_description', () => {\r",
+															"    pm.expect(responseData).to.have.property('error_description');\r",
+															"});\r",
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"id": "e60bf982-68b9-40a0-ab31-b1bd0887d626",
+											"protocolProfileBehavior": {
+												"followRedirects": false,
+												"disableBodyPruning": true
+											},
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/authorize?response_type={{validations_common_response_type}}&redirect_uri=https://oauth.pstmn.io/v1/callback&scope={{scope}}&state={{state}}&nonce={{nonce}}",
+													"host": [
+														"{{CFS Master URL}}"
+													],
+													"path": [
+														"oauth",
+														"{{Tenant Name}}",
+														"authorize"
+													],
+													"query": [
+														{
+															"key": "response_type",
+															"value": "{{validations_common_response_type}}"
+														},
+														{
+															"key": "client_id",
+															"value": "{{client_id}}",
+															"disabled": true
+														},
+														{
+															"key": "redirect_uri",
+															"value": "https://oauth.pstmn.io/v1/callback"
+														},
+														{
+															"key": "scope",
+															"value": "{{scope}}"
+														},
+														{
+															"key": "state",
+															"value": "{{state}}"
+														},
+														{
+															"key": "nonce",
+															"value": "{{nonce}}"
+														}
+													]
+												}
+											},
+											"response": []
+										}
+									],
+									"id": "9c772aaa-e527-4a93-8d88-7472c8c5fd19",
+									"description": "Demonstrates the case where the `client_id` parameter is missing.\n\nSee the **Tests** tab of the \"Authorize\" request for the expected errors."
+								},
+								{
+									"name": "Missing callback url",
+									"item": [
+										{
+											"name": "Authorize",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "cb736388-ec0a-42db-a19c-4727aacb1141",
+														"exec": [
+															"const responseData = pm.response.json();\r",
+															"\r",
+															"pmutils(pm).testCallbacks.testResponseStatus(400);\r",
+															"\r",
+															"pm.test('Response body has error \"invalid_request\"', () => {\r",
+															"    pm.expect(responseData).to.have.property('error', 'invalid_request');\r",
+															"});\r",
+															"\r",
+															"pm.test('Response body has error_description', () => {\r",
+															"    pm.expect(responseData).to.have.property('error_description');\r",
+															"});\r",
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"id": "6f2fd5dc-9277-48ee-9322-62cf00fbd9c5",
+											"protocolProfileBehavior": {
+												"followRedirects": false,
+												"disableBodyPruning": true
+											},
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/authorize?response_type={{validations_common_response_type}}&client_id={{client_id}}&scope={{scope}}&state={{state}}&nonce={{nonce}}",
+													"host": [
+														"{{CFS Master URL}}"
+													],
+													"path": [
+														"oauth",
+														"{{Tenant Name}}",
+														"authorize"
+													],
+													"query": [
+														{
+															"key": "response_type",
+															"value": "{{validations_common_response_type}}"
+														},
+														{
+															"key": "client_id",
+															"value": "{{client_id}}"
+														},
+														{
+															"key": "redirect_uri",
+															"value": "https://oauth.pstmn.io/v1/callback",
+															"disabled": true
+														},
+														{
+															"key": "scope",
+															"value": "{{scope}}"
+														},
+														{
+															"key": "state",
+															"value": "{{state}}"
+														},
+														{
+															"key": "nonce",
+															"value": "{{nonce}}"
+														}
+													]
+												}
+											},
+											"response": []
+										}
+									],
+									"id": "a34370c9-8b1a-444a-98a5-9a7bcffef9bc",
+									"description": "Demonstrates the case where the `redirect_uri` parameter is missing.\n\nIf a callback URL is configured for the OAuth application and the client doesn't pass the `redirect_uri` parameter, the callback URL will be assumed to be the one configured by the application.\n\nTherefore, this example only works when the OAuth application **doesn't configure a callback URL**.\n\nSee the **Tests** tab of the \"Authorize\" request for the expected errors.\n\n<img src=\"https://content.pstmn.io/82f42e1e-f104-433d-ac06-fdde56adb5da/aW1hZ2UucG5n\" alt=\"OIDC%20application%20with%20no%20configured%20Callback%20URL\" width=\"1567\" height=\"924\">"
+								},
+								{
+									"name": "Missing scope",
+									"item": [
+										{
+											"name": "Authorize",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "59dc1277-f0bf-461a-8b11-9d35b3915697",
+														"exec": [
+															"const responseData = pm.response.json();\r",
+															"\r",
+															"pmutils(pm).testCallbacks.testResponseStatus(400);\r",
+															"\r",
+															"pm.test('Response body has error \"invalid_scope\"', () => {\r",
+															"    pm.expect(responseData).to.have.property('error', 'invalid_scope');\r",
+															"});\r",
+															"\r",
+															"pm.test('Response body has error_description', () => {\r",
+															"    pm.expect(responseData).to.have.property('error_description');\r",
+															"});\r",
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"id": "1b90ac4c-32bc-408e-a795-98954a21638b",
+											"protocolProfileBehavior": {
+												"followRedirects": false,
+												"disableBodyPruning": true
+											},
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/authorize?response_type={{validations_common_response_type}}&client_id={{client_id}}&redirect_uri=https://oauth.pstmn.io/v1/callback&state={{state}}&nonce={{nonce}}",
+													"host": [
+														"{{CFS Master URL}}"
+													],
+													"path": [
+														"oauth",
+														"{{Tenant Name}}",
+														"authorize"
+													],
+													"query": [
+														{
+															"key": "response_type",
+															"value": "{{validations_common_response_type}}"
+														},
+														{
+															"key": "client_id",
+															"value": "{{client_id}}"
+														},
+														{
+															"key": "redirect_uri",
+															"value": "https://oauth.pstmn.io/v1/callback"
+														},
+														{
+															"key": "scope",
+															"value": "invalidScope",
+															"disabled": true
+														},
+														{
+															"key": "state",
+															"value": "{{state}}"
+														},
+														{
+															"key": "nonce",
+															"value": "{{nonce}}"
+														}
+													]
+												}
+											},
+											"response": []
+										}
+									],
+									"id": "27004317-75f3-46c6-8a20-c5cd8557e551",
+									"description": "Demonstrates the case where the `scope` parameter missing.\n\nSee the **Tests** tab of the \"Authorize\" request for the expected errors."
+								},
+								{
 									"name": "Expired access token",
 									"item": [
 										{
@@ -2945,7 +3340,7 @@
 					"description": "Common validations for all the flows."
 				},
 				{
-					"name": "Authorization code flow + Authorization code flow with PKCE + Hybrid Flow",
+					"name": "Authorization code flow + Authorization code flow with PKCE + Hybrid flow",
 					"item": [
 						{
 							"name": "Token",
@@ -3097,8 +3492,9 @@
 												{
 													"listen": "test",
 													"script": {
+														"id": "7172df20-4ecb-4785-b7fb-239421de4e93",
 														"exec": [
-															"pmutils(pm).testCallbacks.testResponseStatus(400);\r",
+															"pmutils(pm).testCallbacks.testResponseStatus(401);\r",
 															"\r",
 															"const responseData = pm.response.json();\r",
 															"\r",
@@ -3112,8 +3508,7 @@
 															""
 														],
 														"type": "text/javascript",
-														"packages": {},
-														"id": "7172df20-4ecb-4785-b7fb-239421de4e93"
+														"packages": {}
 													}
 												}
 											],
@@ -3160,7 +3555,7 @@
 										}
 									],
 									"id": "8614d9dd-6231-423e-bcef-bf113090be67",
-									"description": "Demonstrates the case where the value for the `client_id` parameter is invalid (i.e. there is not client associated with the specified client_id).\n\nSee the **Tests** tab of the \"Token\" request for the expected errors."
+									"description": "Demonstrates the case where the value for the `client_id` parameter is invalid (i.e. there is no client associated with the specified client_id).\n\nSee the **Tests** tab of the \"Token\" request for the expected errors."
 								},
 								{
 									"name": "Invalid client secret",
@@ -3447,6 +3842,354 @@
 									"description": "Demonstrates the case where the value for the `scope` parameter contains BOTH valid and invalid scopes. The expected behavior is that the returned `access_token` only contains the valid scopes.\n\nSee the **Tests** tab of the \"Token\" request for the expected behavior."
 								},
 								{
+									"name": "Missing authorization code",
+									"item": [
+										{
+											"name": "Request for tokens",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "2bbd0664-39d0-459b-bc09-3f7bff83de84",
+														"exec": [
+															"pmutils(pm).testCallbacks.testResponseStatus(400);\r",
+															"\r",
+															"const responseData = pm.response.json();\r",
+															"\r",
+															"pm.test('Response body has error \"invalid_grant\"', () => {\r",
+															"    pm.expect(responseData).to.have.property('error', 'invalid_request');\r",
+															"});\r",
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"id": "111a607f-acff-41ae-a21d-214238192f9c",
+											"protocolProfileBehavior": {
+												"disableBodyPruning": true
+											},
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "urlencoded",
+													"urlencoded": [
+														{
+															"key": "grant_type",
+															"value": "authorization_code",
+															"type": "text"
+														},
+														{
+															"key": "client_id",
+															"value": "{{client_id}}",
+															"type": "text"
+														},
+														{
+															"key": "client_secret",
+															"value": "{{client_secret}}",
+															"type": "text"
+														},
+														{
+															"key": "code",
+															"value": "{{authorization_code}}",
+															"type": "text",
+															"disabled": true
+														}
+													]
+												},
+												"url": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token"
+											},
+											"response": []
+										}
+									],
+									"id": "d0df7ca6-bdf8-4a9a-a1df-7c98b81ee843",
+									"description": "Demonstrates the case where the `code` parameter missing.\n\nSee the **Tests** tab of the \"Token\" request for the expected errors."
+								},
+								{
+									"name": "Missing client id",
+									"item": [
+										{
+											"name": "Authorize",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pmutils(pm).testCallbacks.testResponseStatus200or302();\r",
+															"\r",
+															"pmutils(pm).postConfirmAuthorizeRequestIfNecessaryThenSetTokens('query', ({ authorization_code }) => {\r",
+															"    pmutils(pm).testCallbacks.testAuthorizationCode(authorization_code);\r",
+															"});\r",
+															""
+														],
+														"type": "text/javascript",
+														"packages": {},
+														"id": "25b50196-05bc-4a6c-b0db-d19063b393d5"
+													}
+												}
+											],
+											"id": "5c0866eb-4295-41a5-be40-916bf1e7aa72",
+											"protocolProfileBehavior": {
+												"followRedirects": false,
+												"disableBodyPruning": true
+											},
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/authorize?response_type=code&client_id={{client_id}}&redirect_uri=https://oauth.pstmn.io/v1/callback&scope={{scope}}&state={{state}}&nonce={{nonce}}",
+													"host": [
+														"{{CFS Master URL}}"
+													],
+													"path": [
+														"oauth",
+														"{{Tenant Name}}",
+														"authorize"
+													],
+													"query": [
+														{
+															"key": "response_type",
+															"value": "code"
+														},
+														{
+															"key": "client_id",
+															"value": "{{client_id}}"
+														},
+														{
+															"key": "redirect_uri",
+															"value": "https://oauth.pstmn.io/v1/callback"
+														},
+														{
+															"key": "scope",
+															"value": "{{scope}}"
+														},
+														{
+															"key": "state",
+															"value": "{{state}}"
+														},
+														{
+															"key": "nonce",
+															"value": "{{nonce}}"
+														}
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Request for tokens",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "7172df20-4ecb-4785-b7fb-239421de4e93",
+														"exec": [
+															"pmutils(pm).testCallbacks.testResponseStatus(401);\r",
+															"\r",
+															"const responseData = pm.response.json();\r",
+															"\r",
+															"pm.test('Response body has error \"invalid_client\"', () => {\r",
+															"    pm.expect(responseData).to.have.property('error', 'invalid_client');\r",
+															"});\r",
+															"\r",
+															"pm.test('Response body has error_description', () => {\r",
+															"    pm.expect(responseData).to.have.property('error_description');\r",
+															"});\r",
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"id": "d21ef01a-e019-478a-83c5-c81837ae5bc3",
+											"protocolProfileBehavior": {
+												"disableBodyPruning": true
+											},
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "urlencoded",
+													"urlencoded": [
+														{
+															"key": "grant_type",
+															"value": "authorization_code",
+															"type": "text"
+														},
+														{
+															"key": "client_id",
+															"value": "{{client_id}}",
+															"type": "text",
+															"disabled": true
+														},
+														{
+															"key": "client_secret",
+															"value": "{{client_secret}}",
+															"type": "text"
+														},
+														{
+															"key": "redirect_uri",
+															"value": "https://oauth.pstmn.io/v1/callback",
+															"type": "text"
+														},
+														{
+															"key": "code",
+															"value": "{{authorization_code}}",
+															"type": "text"
+														}
+													]
+												},
+												"url": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token"
+											},
+											"response": []
+										}
+									],
+									"id": "c826d4e6-e8a8-4940-a085-4273a20eecc9",
+									"description": "Demonstrates the case where `client_id` parameter is missing.\n\nSee the **Tests** tab of the \"Token\" request for the expected errors."
+								},
+								{
+									"name": "Missing client secret",
+									"item": [
+										{
+											"name": "Authorize",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pmutils(pm).testCallbacks.testResponseStatus200or302();\r",
+															"\r",
+															"pmutils(pm).postConfirmAuthorizeRequestIfNecessaryThenSetTokens('query', ({ authorization_code }) => {\r",
+															"    pmutils(pm).testCallbacks.testAuthorizationCode(authorization_code);\r",
+															"});\r",
+															""
+														],
+														"type": "text/javascript",
+														"packages": {},
+														"id": "32c1502c-9a56-4c79-aee1-98c213fd8e57"
+													}
+												}
+											],
+											"id": "0e586261-0cb6-498d-9542-76f5065ae35a",
+											"protocolProfileBehavior": {
+												"followRedirects": false,
+												"disableBodyPruning": true
+											},
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/authorize?response_type=code&client_id={{client_id}}&redirect_uri=https://oauth.pstmn.io/v1/callback&scope={{scope}}&state={{state}}&nonce={{nonce}}",
+													"host": [
+														"{{CFS Master URL}}"
+													],
+													"path": [
+														"oauth",
+														"{{Tenant Name}}",
+														"authorize"
+													],
+													"query": [
+														{
+															"key": "response_type",
+															"value": "code"
+														},
+														{
+															"key": "client_id",
+															"value": "{{client_id}}"
+														},
+														{
+															"key": "redirect_uri",
+															"value": "https://oauth.pstmn.io/v1/callback"
+														},
+														{
+															"key": "scope",
+															"value": "{{scope}}"
+														},
+														{
+															"key": "state",
+															"value": "{{state}}"
+														},
+														{
+															"key": "nonce",
+															"value": "{{nonce}}"
+														}
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Request for tokens",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "fa620680-f5da-4631-8c42-f384bc363cae",
+														"exec": [
+															"pmutils(pm).testCallbacks.testResponseStatus(401);\r",
+															"\r",
+															"const responseData = pm.response.json();\r",
+															"\r",
+															"pm.test('Response body has error \"invalid_client\"', () => {\r",
+															"    pm.expect(responseData).to.have.property('error', 'invalid_client');\r",
+															"});\r",
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"id": "635ccd91-862b-493f-bee4-3ad00a70a054",
+											"protocolProfileBehavior": {
+												"disableBodyPruning": true
+											},
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "urlencoded",
+													"urlencoded": [
+														{
+															"key": "grant_type",
+															"value": "authorization_code",
+															"type": "text"
+														},
+														{
+															"key": "client_id",
+															"value": "{{client_id}}",
+															"type": "text"
+														},
+														{
+															"key": "client_secret",
+															"value": "{{client_secret}}",
+															"type": "text",
+															"disabled": true
+														},
+														{
+															"key": "redirect_uri",
+															"value": "https://oauth.pstmn.io/v1/callback",
+															"type": "text"
+														},
+														{
+															"key": "code",
+															"value": "{{authorization_code}}",
+															"type": "text"
+														}
+													]
+												},
+												"url": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token"
+											},
+											"response": []
+										}
+									],
+									"id": "3bc79040-4d25-4ed8-9259-48abd9097b81",
+									"description": "Demonstrates the case where the `client_secret` parameter is missing.\n\nSee the **Tests** tab of the \"Token\" request for the expected errors."
+								},
+								{
 									"name": "Invalid response access token",
 									"item": [
 										{
@@ -3595,11 +4338,6 @@
 														{
 															"key": "code",
 															"value": "{{authorization_code}}",
-															"type": "text"
-														},
-														{
-															"key": "state",
-															"value": "{{state}}",
 															"type": "text"
 														}
 													]
@@ -3815,7 +4553,7 @@
 										}
 									],
 									"id": "7eaa783f-f31e-4697-bf7e-00783ae5be88",
-									"description": "Demonstrates the case where the response might contain an invalid `refresh_token`. The post-request script will try to use an invalid refresh token to call the Token endpoint.\n\nSee the **Tests** tab of the \"Token\" request for the expected errors."
+									"description": "Demonstrates the case where the response might contain an invalid `refresh_token`. The request will try to use an invalid refresh token to call the Token endpoint.\n\nSee the **Tests** tab of the \"Token\" request for the expected errors."
 								}
 							],
 							"id": "8e9fa47e-151c-4584-a9f1-fc83a1243a08",
@@ -4012,19 +4750,19 @@
 												{
 													"listen": "test",
 													"script": {
+														"id": "a083ccbe-d5f5-4ffb-8edb-76dde03df1a4",
 														"exec": [
 															"pmutils(pm).testCallbacks.testResponseStatus(400);\r",
 															"\r",
 															"const responseData = pm.response.json();\r",
 															"\r",
-															"pm.test('Response body has error \"invalid_request\"', () => {\r",
-															"    pm.expect(responseData).to.have.property('error', 'invalid_request');\r",
+															"pm.test('Response body has error \"invalid_grant\"', () => {\r",
+															"    pm.expect(responseData).to.have.property('error', 'invalid_grant');\r",
 															"});\r",
 															""
 														],
 														"type": "text/javascript",
-														"packages": {},
-														"id": "a083ccbe-d5f5-4ffb-8edb-76dde03df1a4"
+														"packages": {}
 													}
 												}
 											],
@@ -4072,6 +4810,153 @@
 									],
 									"id": "686c5313-5383-4f2b-b511-b30c7428209a",
 									"description": "Demonstrates the case where the value for the `code_verifier` parameter is invalid (i.e. the code verifier does not match the expected value for the `code_challenge` that was sent as part of the Authorization request).\n\nSee the **Tests** tab of the \"Token\" request for the expected errors."
+								},
+								{
+									"name": "Missing code verifier",
+									"item": [
+										{
+											"name": "Authorize",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pmutils(pm).testCallbacks.testResponseStatus200or302();\r",
+															"\r",
+															"pmutils(pm).postConfirmAuthorizeRequestIfNecessaryThenSetTokens('query', ({ authorization_code }) => {\r",
+															"    pmutils(pm).testCallbacks.testAuthorizationCode(authorization_code);\r",
+															"});\r",
+															""
+														],
+														"type": "text/javascript",
+														"packages": {},
+														"id": "83bff4f4-eeaa-449a-865a-a8174db0bebf"
+													}
+												}
+											],
+											"id": "44e7814d-31b1-4828-8e6b-48a212390791",
+											"protocolProfileBehavior": {
+												"followRedirects": false,
+												"disableBodyPruning": true
+											},
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/authorize?response_type=code&client_id={{client_id}}&code_challenge=rrsv_GL5iipUGp6yR5w5ra77fdggOxJ6htH9E217PeI&code_challenge_method=S256&redirect_uri=https://oauth.pstmn.io/v1/callback&scope={{scope}}&state={{state}}&nonce={{nonce}}",
+													"host": [
+														"{{CFS Master URL}}"
+													],
+													"path": [
+														"oauth",
+														"{{Tenant Name}}",
+														"authorize"
+													],
+													"query": [
+														{
+															"key": "response_type",
+															"value": "code"
+														},
+														{
+															"key": "client_id",
+															"value": "{{client_id}}"
+														},
+														{
+															"key": "code_challenge",
+															"value": "rrsv_GL5iipUGp6yR5w5ra77fdggOxJ6htH9E217PeI"
+														},
+														{
+															"key": "code_challenge_method",
+															"value": "S256"
+														},
+														{
+															"key": "redirect_uri",
+															"value": "https://oauth.pstmn.io/v1/callback"
+														},
+														{
+															"key": "scope",
+															"value": "{{scope}}"
+														},
+														{
+															"key": "state",
+															"value": "{{state}}"
+														},
+														{
+															"key": "nonce",
+															"value": "{{nonce}}"
+														}
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Request for tokens",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "a083ccbe-d5f5-4ffb-8edb-76dde03df1a4",
+														"exec": [
+															"pmutils(pm).testCallbacks.testResponseStatus(401);\r",
+															"\r",
+															"const responseData = pm.response.json();\r",
+															"\r",
+															"pm.test('Response body has error \"invalid_client\"', () => {\r",
+															"    pm.expect(responseData).to.have.property('error', 'invalid_client');\r",
+															"});\r",
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"id": "1e7c26f9-ec29-49bf-8f38-8546f2b21785",
+											"protocolProfileBehavior": {
+												"disableBodyPruning": true
+											},
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "urlencoded",
+													"urlencoded": [
+														{
+															"key": "grant_type",
+															"value": "authorization_code",
+															"type": "text"
+														},
+														{
+															"key": "client_id",
+															"value": "{{client_id}}",
+															"type": "text"
+														},
+														{
+															"key": "code_verifier",
+															"value": "MR~lBQbZeIHsG3RnZuvgWmrAr8y1Ia~muw2zBrJdPlz5A7carMvqfm3MxiWCMN7KOjzfbZo0is3FxyWDf6e4Ad0sU6Of10.PvukuaqO2ez~YLU.lCrLYDC4.xDb420z2",
+															"type": "text",
+															"disabled": true
+														},
+														{
+															"key": "redirect_uri",
+															"value": "https://oauth.pstmn.io/v1/callback",
+															"type": "text"
+														},
+														{
+															"key": "code",
+															"value": "{{authorization_code}}",
+															"type": "text"
+														}
+													]
+												},
+												"url": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token"
+											},
+											"response": []
+										}
+									],
+									"id": "f58269f0-224c-4a00-8159-b5c4740762e1",
+									"description": "Demonstrates the case where the `code_verifier` parameter is missing.\n\nSee the **Tests** tab of the \"Token\" request for the expected errors."
 								}
 							],
 							"id": "cd6ef473-afbc-4f57-9a99-000b5b751fe3",
@@ -4082,7 +4967,7 @@
 					"description": "Validations related only to the PCKE extension of the authorization code flow."
 				},
 				{
-					"name": "Implicit Flow + Hybrid Flow",
+					"name": "Implicit flow + Hybrid flow",
 					"item": [
 						{
 							"name": "Authorize",
@@ -4180,7 +5065,958 @@
 					"description": "Validations related only to the implicit flow and hybrid flow."
 				},
 				{
-					"name": "Resource owner password credentials",
+					"name": "Client credentials flow",
+					"item": [
+						{
+							"name": "Invalid client id",
+							"item": [
+								{
+									"name": "Request for access token",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "62a0e88d-5cbf-4cce-bb39-9015b484e063",
+												"exec": [
+													"pmutils(pm).testCallbacks.testResponseStatus(401);",
+													"",
+													"const responseData = pm.response.json();",
+													"",
+													"pm.test('Response body has error \"invalid_client\"', () => {",
+													"    pm.expect(responseData).to.have.property('error', 'invalid_client');",
+													"});",
+													"",
+													"pm.test('Response body has error_description', () => {",
+													"    pm.expect(responseData).to.have.property('error_description');",
+													"});",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"id": "6e1acb29-82fc-4c3a-bde1-b20e642f1014",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": [
+												{
+													"key": "grant_type",
+													"value": "client_credentials",
+													"type": "text"
+												},
+												{
+													"key": "client_id",
+													"value": "invalidClientId",
+													"type": "text"
+												},
+												{
+													"key": "client_secret",
+													"value": "{{client_secret}}",
+													"type": "text"
+												},
+												{
+													"key": "scope",
+													"value": "{{scope}}",
+													"type": "text"
+												}
+											]
+										},
+										"url": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token"
+									},
+									"response": [
+										{
+											"id": "0c1f1a2d-448d-4812-8cef-b49412c101c3",
+											"name": "Request for access token",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "urlencoded",
+													"urlencoded": [
+														{
+															"key": "grant_type",
+															"value": "client_credentials",
+															"type": "text"
+														},
+														{
+															"key": "client_id",
+															"value": "{{client_id}}",
+															"type": "text"
+														},
+														{
+															"key": "client_secret",
+															"value": "{{client_secret}}",
+															"type": "text"
+														},
+														{
+															"key": "scope",
+															"value": "{{scope}}",
+															"type": "text"
+														},
+														{
+															"key": "state",
+															"value": "{{state}}",
+															"type": "text"
+														},
+														{
+															"key": "nonce",
+															"value": "{{nonce}}",
+															"type": "text"
+														}
+													]
+												},
+												"url": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token"
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Cache-Control",
+													"value": "no-cache, no-store, max-age=0, must-revalidate"
+												},
+												{
+													"key": "Pragma",
+													"value": "no-cache"
+												},
+												{
+													"key": "Content-Length",
+													"value": "948"
+												},
+												{
+													"key": "Content-Type",
+													"value": "application/json; charset=utf-8"
+												},
+												{
+													"key": "Server",
+													"value": "Microsoft-IIS/10.0"
+												},
+												{
+													"key": "Access-Control-Allow-Origin",
+													"value": "*"
+												},
+												{
+													"key": "Access-Control-Allow-Headers",
+													"value": "authorization"
+												},
+												{
+													"key": "X-Powered-By",
+													"value": "ASP.NET"
+												},
+												{
+													"key": "Date",
+													"value": "Tue, 02 Apr 2024 12:10:40 GMT"
+												}
+											],
+											"cookie": [],
+											"responseTime": null,
+											"body": "{\n    \"access_token\": \"eyJhbGciOiJSUzI1NiIsImtpZCI6ImQzY2QzMjBlLTJiNjUtNDg3YS05ZGM3LTY3MTY3YWFmMzc2NCIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJzdExKd1c5YjNMNUJQYWlGRlZ4OWNCIiwic2NvcGUiOiJvcGVuaWQgZW1haWwgcHJvZmlsZSBhZGRyZXNzIHBob25lIGdyb3VwcyIsInRva2VuX3R5cGUiOiJiZWFyZXIiLCJjbGllbnRfaWQiOiJzdExKd1c5YjNMNUJQYWlGRlZ4OWNCIiwibmJmIjoxNzEyMDU5ODQwLCJleHAiOjE3MTIwNTk5NjAsImlhdCI6MTcxMjA1OTg0MCwiaXNzIjoiaHR0cHM6Ly9jZnMuZXhhbXBsZS5jb20vY2ZzL29hdXRoL3N0b3Jtd2luZCIsImF1ZCI6Imh0dHBzOi8vY2ZzLmV4YW1wbGUuY29tL2Nmcy9vYXV0aC9zdG9ybXdpbmQifQ.O-c6ARixHNdF9GeBZSYnNLLh1xuPSwmXDk0LD3d9T952eDVXjv280hAKVlOVlE7mvjmBwoFMTDcSsP6rZmydnECgqNJmMzvb7gI6fN4O3lNU_G5rn2NeNzfP4ztE7_OamGfX3TdZGDaoUuQoXwq-vihQnLSC4J4L1GUT94T6EDxenN_9ny-P4kh5IuMtMAoXuKzdkpr9zvIqV9UwhFuh9VBABObT-gN5b0Bap33b9AYI9XdmL--J--_RNNvBFOjQLgxNPTfszkYgw8GVdrnkAur_h7E1uBQYFTT5KE5dVy9-QnNWPCHFQm7BneyGUNih73zhaPssE2Z7VK1TcmiTkA\",\n    \"token_type\": \"bearer\",\n    \"expires_in\": 120,\n    \"scope\": \"openid email profile address phone groups\"\n}"
+										}
+									]
+								}
+							],
+							"id": "03d74d52-cb66-4489-bea1-af6d066138dd"
+						},
+						{
+							"name": "Invalid client secret",
+							"item": [
+								{
+									"name": "Request for access token",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "62a0e88d-5cbf-4cce-bb39-9015b484e063",
+												"exec": [
+													"pmutils(pm).testCallbacks.testResponseStatus(401);",
+													"",
+													"const responseData = pm.response.json();",
+													"",
+													"pm.test('Response body has error \"invalid_client\"', () => {",
+													"    pm.expect(responseData).to.have.property('error', 'invalid_client');",
+													"});",
+													"",
+													"pm.test('Response body has error_description', () => {",
+													"    pm.expect(responseData).to.have.property('error_description');",
+													"});",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"id": "1d76b01e-8285-414b-9607-4e0d246f32f6",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": [
+												{
+													"key": "grant_type",
+													"value": "client_credentials",
+													"type": "text"
+												},
+												{
+													"key": "client_id",
+													"value": "{{client_id}}",
+													"type": "text"
+												},
+												{
+													"key": "client_secret",
+													"value": "invalidClientSecret",
+													"type": "text"
+												},
+												{
+													"key": "scope",
+													"value": "{{scope}}",
+													"type": "text"
+												}
+											]
+										},
+										"url": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token"
+									},
+									"response": [
+										{
+											"id": "2a96a3cd-397b-4f01-8891-7669a0b1d392",
+											"name": "Request for access token",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "urlencoded",
+													"urlencoded": [
+														{
+															"key": "grant_type",
+															"value": "client_credentials",
+															"type": "text"
+														},
+														{
+															"key": "client_id",
+															"value": "{{client_id}}",
+															"type": "text"
+														},
+														{
+															"key": "client_secret",
+															"value": "{{client_secret}}",
+															"type": "text"
+														},
+														{
+															"key": "scope",
+															"value": "{{scope}}",
+															"type": "text"
+														},
+														{
+															"key": "state",
+															"value": "{{state}}",
+															"type": "text"
+														},
+														{
+															"key": "nonce",
+															"value": "{{nonce}}",
+															"type": "text"
+														}
+													]
+												},
+												"url": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token"
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Cache-Control",
+													"value": "no-cache, no-store, max-age=0, must-revalidate"
+												},
+												{
+													"key": "Pragma",
+													"value": "no-cache"
+												},
+												{
+													"key": "Content-Length",
+													"value": "948"
+												},
+												{
+													"key": "Content-Type",
+													"value": "application/json; charset=utf-8"
+												},
+												{
+													"key": "Server",
+													"value": "Microsoft-IIS/10.0"
+												},
+												{
+													"key": "Access-Control-Allow-Origin",
+													"value": "*"
+												},
+												{
+													"key": "Access-Control-Allow-Headers",
+													"value": "authorization"
+												},
+												{
+													"key": "X-Powered-By",
+													"value": "ASP.NET"
+												},
+												{
+													"key": "Date",
+													"value": "Tue, 02 Apr 2024 12:10:40 GMT"
+												}
+											],
+											"cookie": [],
+											"responseTime": null,
+											"body": "{\n    \"access_token\": \"eyJhbGciOiJSUzI1NiIsImtpZCI6ImQzY2QzMjBlLTJiNjUtNDg3YS05ZGM3LTY3MTY3YWFmMzc2NCIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJzdExKd1c5YjNMNUJQYWlGRlZ4OWNCIiwic2NvcGUiOiJvcGVuaWQgZW1haWwgcHJvZmlsZSBhZGRyZXNzIHBob25lIGdyb3VwcyIsInRva2VuX3R5cGUiOiJiZWFyZXIiLCJjbGllbnRfaWQiOiJzdExKd1c5YjNMNUJQYWlGRlZ4OWNCIiwibmJmIjoxNzEyMDU5ODQwLCJleHAiOjE3MTIwNTk5NjAsImlhdCI6MTcxMjA1OTg0MCwiaXNzIjoiaHR0cHM6Ly9jZnMuZXhhbXBsZS5jb20vY2ZzL29hdXRoL3N0b3Jtd2luZCIsImF1ZCI6Imh0dHBzOi8vY2ZzLmV4YW1wbGUuY29tL2Nmcy9vYXV0aC9zdG9ybXdpbmQifQ.O-c6ARixHNdF9GeBZSYnNLLh1xuPSwmXDk0LD3d9T952eDVXjv280hAKVlOVlE7mvjmBwoFMTDcSsP6rZmydnECgqNJmMzvb7gI6fN4O3lNU_G5rn2NeNzfP4ztE7_OamGfX3TdZGDaoUuQoXwq-vihQnLSC4J4L1GUT94T6EDxenN_9ny-P4kh5IuMtMAoXuKzdkpr9zvIqV9UwhFuh9VBABObT-gN5b0Bap33b9AYI9XdmL--J--_RNNvBFOjQLgxNPTfszkYgw8GVdrnkAur_h7E1uBQYFTT5KE5dVy9-QnNWPCHFQm7BneyGUNih73zhaPssE2Z7VK1TcmiTkA\",\n    \"token_type\": \"bearer\",\n    \"expires_in\": 120,\n    \"scope\": \"openid email profile address phone groups\"\n}"
+										}
+									]
+								}
+							],
+							"id": "e8de8900-34ee-4899-a05d-740a521fe92d"
+						},
+						{
+							"name": "Invalid scope(s)",
+							"item": [
+								{
+									"name": "Request for access token",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "62a0e88d-5cbf-4cce-bb39-9015b484e063",
+												"exec": [
+													"pmutils(pm).testCallbacks.testResponseStatus(400);",
+													"",
+													"const responseData = pm.response.json();",
+													"",
+													"pm.test('Response body has error \"invalid_scope\"', () => {",
+													"    pm.expect(responseData).to.have.property('error', 'invalid_scope');",
+													"});",
+													"",
+													"pm.test('Response body has error_description', () => {",
+													"    pm.expect(responseData).to.have.property('error_description');",
+													"});",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"id": "2d37637b-9a8d-41af-aaa5-fe6cf348d7a4",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": [
+												{
+													"key": "grant_type",
+													"value": "client_credentials",
+													"type": "text"
+												},
+												{
+													"key": "client_id",
+													"value": "{{client_id}}",
+													"type": "text"
+												},
+												{
+													"key": "client_secret",
+													"value": "{{client_secret}}",
+													"type": "text"
+												},
+												{
+													"key": "scope",
+													"value": "invalidScope",
+													"type": "text"
+												}
+											]
+										},
+										"url": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token"
+									},
+									"response": [
+										{
+											"id": "371da72f-8c83-40eb-bccf-4f206ed7811b",
+											"name": "Request for access token",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "urlencoded",
+													"urlencoded": [
+														{
+															"key": "grant_type",
+															"value": "client_credentials",
+															"type": "text"
+														},
+														{
+															"key": "client_id",
+															"value": "{{client_id}}",
+															"type": "text"
+														},
+														{
+															"key": "client_secret",
+															"value": "{{client_secret}}",
+															"type": "text"
+														},
+														{
+															"key": "scope",
+															"value": "{{scope}}",
+															"type": "text"
+														},
+														{
+															"key": "state",
+															"value": "{{state}}",
+															"type": "text"
+														},
+														{
+															"key": "nonce",
+															"value": "{{nonce}}",
+															"type": "text"
+														}
+													]
+												},
+												"url": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token"
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Cache-Control",
+													"value": "no-cache, no-store, max-age=0, must-revalidate"
+												},
+												{
+													"key": "Pragma",
+													"value": "no-cache"
+												},
+												{
+													"key": "Content-Length",
+													"value": "948"
+												},
+												{
+													"key": "Content-Type",
+													"value": "application/json; charset=utf-8"
+												},
+												{
+													"key": "Server",
+													"value": "Microsoft-IIS/10.0"
+												},
+												{
+													"key": "Access-Control-Allow-Origin",
+													"value": "*"
+												},
+												{
+													"key": "Access-Control-Allow-Headers",
+													"value": "authorization"
+												},
+												{
+													"key": "X-Powered-By",
+													"value": "ASP.NET"
+												},
+												{
+													"key": "Date",
+													"value": "Tue, 02 Apr 2024 12:10:40 GMT"
+												}
+											],
+											"cookie": [],
+											"responseTime": null,
+											"body": "{\n    \"access_token\": \"eyJhbGciOiJSUzI1NiIsImtpZCI6ImQzY2QzMjBlLTJiNjUtNDg3YS05ZGM3LTY3MTY3YWFmMzc2NCIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJzdExKd1c5YjNMNUJQYWlGRlZ4OWNCIiwic2NvcGUiOiJvcGVuaWQgZW1haWwgcHJvZmlsZSBhZGRyZXNzIHBob25lIGdyb3VwcyIsInRva2VuX3R5cGUiOiJiZWFyZXIiLCJjbGllbnRfaWQiOiJzdExKd1c5YjNMNUJQYWlGRlZ4OWNCIiwibmJmIjoxNzEyMDU5ODQwLCJleHAiOjE3MTIwNTk5NjAsImlhdCI6MTcxMjA1OTg0MCwiaXNzIjoiaHR0cHM6Ly9jZnMuZXhhbXBsZS5jb20vY2ZzL29hdXRoL3N0b3Jtd2luZCIsImF1ZCI6Imh0dHBzOi8vY2ZzLmV4YW1wbGUuY29tL2Nmcy9vYXV0aC9zdG9ybXdpbmQifQ.O-c6ARixHNdF9GeBZSYnNLLh1xuPSwmXDk0LD3d9T952eDVXjv280hAKVlOVlE7mvjmBwoFMTDcSsP6rZmydnECgqNJmMzvb7gI6fN4O3lNU_G5rn2NeNzfP4ztE7_OamGfX3TdZGDaoUuQoXwq-vihQnLSC4J4L1GUT94T6EDxenN_9ny-P4kh5IuMtMAoXuKzdkpr9zvIqV9UwhFuh9VBABObT-gN5b0Bap33b9AYI9XdmL--J--_RNNvBFOjQLgxNPTfszkYgw8GVdrnkAur_h7E1uBQYFTT5KE5dVy9-QnNWPCHFQm7BneyGUNih73zhaPssE2Z7VK1TcmiTkA\",\n    \"token_type\": \"bearer\",\n    \"expires_in\": 120,\n    \"scope\": \"openid email profile address phone groups\"\n}"
+										}
+									]
+								}
+							],
+							"id": "59bd6d66-7302-403a-8c10-f169ee22a4fa"
+						},
+						{
+							"name": "Missing client id",
+							"item": [
+								{
+									"name": "Request for access token",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "62a0e88d-5cbf-4cce-bb39-9015b484e063",
+												"exec": [
+													"pmutils(pm).testCallbacks.testResponseStatus(401);",
+													"",
+													"const responseData = pm.response.json();",
+													"",
+													"pm.test('Response body has error \"invalid_client\"', () => {",
+													"    pm.expect(responseData).to.have.property('error', 'invalid_client');",
+													"});",
+													"",
+													"pm.test('Response body has error_description', () => {",
+													"    pm.expect(responseData).to.have.property('error_description');",
+													"});",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"id": "6ca770f4-b902-4740-8ceb-60ceee1ca70e",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": [
+												{
+													"key": "grant_type",
+													"value": "client_credentials",
+													"type": "text"
+												},
+												{
+													"key": "client_id",
+													"value": "{{client_id}}",
+													"type": "text",
+													"disabled": true
+												},
+												{
+													"key": "client_secret",
+													"value": "{{client_secret}}",
+													"type": "text"
+												},
+												{
+													"key": "scope",
+													"value": "{{scope}}",
+													"type": "text"
+												}
+											]
+										},
+										"url": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token"
+									},
+									"response": [
+										{
+											"id": "9f23d8a8-ff8f-41a2-9203-50107aca4aa2",
+											"name": "Request for access token",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "urlencoded",
+													"urlencoded": [
+														{
+															"key": "grant_type",
+															"value": "client_credentials",
+															"type": "text"
+														},
+														{
+															"key": "client_id",
+															"value": "{{client_id}}",
+															"type": "text"
+														},
+														{
+															"key": "client_secret",
+															"value": "{{client_secret}}",
+															"type": "text"
+														},
+														{
+															"key": "scope",
+															"value": "{{scope}}",
+															"type": "text"
+														},
+														{
+															"key": "state",
+															"value": "{{state}}",
+															"type": "text"
+														},
+														{
+															"key": "nonce",
+															"value": "{{nonce}}",
+															"type": "text"
+														}
+													]
+												},
+												"url": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token"
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Cache-Control",
+													"value": "no-cache, no-store, max-age=0, must-revalidate"
+												},
+												{
+													"key": "Pragma",
+													"value": "no-cache"
+												},
+												{
+													"key": "Content-Length",
+													"value": "948"
+												},
+												{
+													"key": "Content-Type",
+													"value": "application/json; charset=utf-8"
+												},
+												{
+													"key": "Server",
+													"value": "Microsoft-IIS/10.0"
+												},
+												{
+													"key": "Access-Control-Allow-Origin",
+													"value": "*"
+												},
+												{
+													"key": "Access-Control-Allow-Headers",
+													"value": "authorization"
+												},
+												{
+													"key": "X-Powered-By",
+													"value": "ASP.NET"
+												},
+												{
+													"key": "Date",
+													"value": "Tue, 02 Apr 2024 12:10:40 GMT"
+												}
+											],
+											"cookie": [],
+											"responseTime": null,
+											"body": "{\n    \"access_token\": \"eyJhbGciOiJSUzI1NiIsImtpZCI6ImQzY2QzMjBlLTJiNjUtNDg3YS05ZGM3LTY3MTY3YWFmMzc2NCIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJzdExKd1c5YjNMNUJQYWlGRlZ4OWNCIiwic2NvcGUiOiJvcGVuaWQgZW1haWwgcHJvZmlsZSBhZGRyZXNzIHBob25lIGdyb3VwcyIsInRva2VuX3R5cGUiOiJiZWFyZXIiLCJjbGllbnRfaWQiOiJzdExKd1c5YjNMNUJQYWlGRlZ4OWNCIiwibmJmIjoxNzEyMDU5ODQwLCJleHAiOjE3MTIwNTk5NjAsImlhdCI6MTcxMjA1OTg0MCwiaXNzIjoiaHR0cHM6Ly9jZnMuZXhhbXBsZS5jb20vY2ZzL29hdXRoL3N0b3Jtd2luZCIsImF1ZCI6Imh0dHBzOi8vY2ZzLmV4YW1wbGUuY29tL2Nmcy9vYXV0aC9zdG9ybXdpbmQifQ.O-c6ARixHNdF9GeBZSYnNLLh1xuPSwmXDk0LD3d9T952eDVXjv280hAKVlOVlE7mvjmBwoFMTDcSsP6rZmydnECgqNJmMzvb7gI6fN4O3lNU_G5rn2NeNzfP4ztE7_OamGfX3TdZGDaoUuQoXwq-vihQnLSC4J4L1GUT94T6EDxenN_9ny-P4kh5IuMtMAoXuKzdkpr9zvIqV9UwhFuh9VBABObT-gN5b0Bap33b9AYI9XdmL--J--_RNNvBFOjQLgxNPTfszkYgw8GVdrnkAur_h7E1uBQYFTT5KE5dVy9-QnNWPCHFQm7BneyGUNih73zhaPssE2Z7VK1TcmiTkA\",\n    \"token_type\": \"bearer\",\n    \"expires_in\": 120,\n    \"scope\": \"openid email profile address phone groups\"\n}"
+										}
+									]
+								}
+							],
+							"id": "c7ddfa4b-f768-442e-9939-d881f8f21448"
+						},
+						{
+							"name": "Missing client secret",
+							"item": [
+								{
+									"name": "Request for access token",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "62a0e88d-5cbf-4cce-bb39-9015b484e063",
+												"exec": [
+													"pmutils(pm).testCallbacks.testResponseStatus(401);",
+													"",
+													"const responseData = pm.response.json();",
+													"",
+													"pm.test('Response body has error \"invalid_client\"', () => {",
+													"    pm.expect(responseData).to.have.property('error', 'invalid_client');",
+													"});",
+													"",
+													"pm.test('Response body has error_description', () => {",
+													"    pm.expect(responseData).to.have.property('error_description');",
+													"});",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"id": "a089a740-3b00-4ee9-90b6-9a20c8cb6dd2",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": [
+												{
+													"key": "grant_type",
+													"value": "client_credentials",
+													"type": "text"
+												},
+												{
+													"key": "client_id",
+													"value": "{{client_id}}",
+													"type": "text"
+												},
+												{
+													"key": "client_secret",
+													"value": "{{client_secret}}",
+													"type": "text",
+													"disabled": true
+												},
+												{
+													"key": "scope",
+													"value": "{{scope}}",
+													"type": "text"
+												}
+											]
+										},
+										"url": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token"
+									},
+									"response": [
+										{
+											"id": "6a28c235-9af1-4d88-a57b-4d225926df98",
+											"name": "Request for access token",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "urlencoded",
+													"urlencoded": [
+														{
+															"key": "grant_type",
+															"value": "client_credentials",
+															"type": "text"
+														},
+														{
+															"key": "client_id",
+															"value": "{{client_id}}",
+															"type": "text"
+														},
+														{
+															"key": "client_secret",
+															"value": "{{client_secret}}",
+															"type": "text"
+														},
+														{
+															"key": "scope",
+															"value": "{{scope}}",
+															"type": "text"
+														},
+														{
+															"key": "state",
+															"value": "{{state}}",
+															"type": "text"
+														},
+														{
+															"key": "nonce",
+															"value": "{{nonce}}",
+															"type": "text"
+														}
+													]
+												},
+												"url": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token"
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Cache-Control",
+													"value": "no-cache, no-store, max-age=0, must-revalidate"
+												},
+												{
+													"key": "Pragma",
+													"value": "no-cache"
+												},
+												{
+													"key": "Content-Length",
+													"value": "948"
+												},
+												{
+													"key": "Content-Type",
+													"value": "application/json; charset=utf-8"
+												},
+												{
+													"key": "Server",
+													"value": "Microsoft-IIS/10.0"
+												},
+												{
+													"key": "Access-Control-Allow-Origin",
+													"value": "*"
+												},
+												{
+													"key": "Access-Control-Allow-Headers",
+													"value": "authorization"
+												},
+												{
+													"key": "X-Powered-By",
+													"value": "ASP.NET"
+												},
+												{
+													"key": "Date",
+													"value": "Tue, 02 Apr 2024 12:10:40 GMT"
+												}
+											],
+											"cookie": [],
+											"responseTime": null,
+											"body": "{\n    \"access_token\": \"eyJhbGciOiJSUzI1NiIsImtpZCI6ImQzY2QzMjBlLTJiNjUtNDg3YS05ZGM3LTY3MTY3YWFmMzc2NCIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJzdExKd1c5YjNMNUJQYWlGRlZ4OWNCIiwic2NvcGUiOiJvcGVuaWQgZW1haWwgcHJvZmlsZSBhZGRyZXNzIHBob25lIGdyb3VwcyIsInRva2VuX3R5cGUiOiJiZWFyZXIiLCJjbGllbnRfaWQiOiJzdExKd1c5YjNMNUJQYWlGRlZ4OWNCIiwibmJmIjoxNzEyMDU5ODQwLCJleHAiOjE3MTIwNTk5NjAsImlhdCI6MTcxMjA1OTg0MCwiaXNzIjoiaHR0cHM6Ly9jZnMuZXhhbXBsZS5jb20vY2ZzL29hdXRoL3N0b3Jtd2luZCIsImF1ZCI6Imh0dHBzOi8vY2ZzLmV4YW1wbGUuY29tL2Nmcy9vYXV0aC9zdG9ybXdpbmQifQ.O-c6ARixHNdF9GeBZSYnNLLh1xuPSwmXDk0LD3d9T952eDVXjv280hAKVlOVlE7mvjmBwoFMTDcSsP6rZmydnECgqNJmMzvb7gI6fN4O3lNU_G5rn2NeNzfP4ztE7_OamGfX3TdZGDaoUuQoXwq-vihQnLSC4J4L1GUT94T6EDxenN_9ny-P4kh5IuMtMAoXuKzdkpr9zvIqV9UwhFuh9VBABObT-gN5b0Bap33b9AYI9XdmL--J--_RNNvBFOjQLgxNPTfszkYgw8GVdrnkAur_h7E1uBQYFTT5KE5dVy9-QnNWPCHFQm7BneyGUNih73zhaPssE2Z7VK1TcmiTkA\",\n    \"token_type\": \"bearer\",\n    \"expires_in\": 120,\n    \"scope\": \"openid email profile address phone groups\"\n}"
+										}
+									]
+								}
+							],
+							"id": "85950401-567f-4d08-9e20-b6ceb1913cfa"
+						},
+						{
+							"name": "Missing scope",
+							"item": [
+								{
+									"name": "Request for access token",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "62a0e88d-5cbf-4cce-bb39-9015b484e063",
+												"exec": [
+													"pmutils(pm).testCallbacks.testResponseStatus(400);",
+													"",
+													"const responseData = pm.response.json();",
+													"",
+													"pm.test('Response body has error \"invalid_scope\"', () => {",
+													"    pm.expect(responseData).to.have.property('error', 'invalid_scope');",
+													"});",
+													"",
+													"pm.test('Response body has error_description', () => {",
+													"    pm.expect(responseData).to.have.property('error_description');",
+													"});",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"id": "e14b8a6b-b361-44b1-85a0-bd8bc6c3f27e",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": [
+												{
+													"key": "grant_type",
+													"value": "client_credentials",
+													"type": "text"
+												},
+												{
+													"key": "client_id",
+													"value": "{{client_id}}",
+													"type": "text"
+												},
+												{
+													"key": "client_secret",
+													"value": "{{client_secret}}",
+													"type": "text"
+												},
+												{
+													"key": "scope",
+													"value": "invalidScope",
+													"type": "text"
+												}
+											]
+										},
+										"url": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token"
+									},
+									"response": [
+										{
+											"id": "5815a980-34fc-4467-885d-57376d90c84c",
+											"name": "Request for access token",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "urlencoded",
+													"urlencoded": [
+														{
+															"key": "grant_type",
+															"value": "client_credentials",
+															"type": "text"
+														},
+														{
+															"key": "client_id",
+															"value": "{{client_id}}",
+															"type": "text"
+														},
+														{
+															"key": "client_secret",
+															"value": "{{client_secret}}",
+															"type": "text"
+														},
+														{
+															"key": "scope",
+															"value": "{{scope}}",
+															"type": "text"
+														},
+														{
+															"key": "state",
+															"value": "{{state}}",
+															"type": "text"
+														},
+														{
+															"key": "nonce",
+															"value": "{{nonce}}",
+															"type": "text"
+														}
+													]
+												},
+												"url": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token"
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Cache-Control",
+													"value": "no-cache, no-store, max-age=0, must-revalidate"
+												},
+												{
+													"key": "Pragma",
+													"value": "no-cache"
+												},
+												{
+													"key": "Content-Length",
+													"value": "948"
+												},
+												{
+													"key": "Content-Type",
+													"value": "application/json; charset=utf-8"
+												},
+												{
+													"key": "Server",
+													"value": "Microsoft-IIS/10.0"
+												},
+												{
+													"key": "Access-Control-Allow-Origin",
+													"value": "*"
+												},
+												{
+													"key": "Access-Control-Allow-Headers",
+													"value": "authorization"
+												},
+												{
+													"key": "X-Powered-By",
+													"value": "ASP.NET"
+												},
+												{
+													"key": "Date",
+													"value": "Tue, 02 Apr 2024 12:10:40 GMT"
+												}
+											],
+											"cookie": [],
+											"responseTime": null,
+											"body": "{\n    \"access_token\": \"eyJhbGciOiJSUzI1NiIsImtpZCI6ImQzY2QzMjBlLTJiNjUtNDg3YS05ZGM3LTY3MTY3YWFmMzc2NCIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJzdExKd1c5YjNMNUJQYWlGRlZ4OWNCIiwic2NvcGUiOiJvcGVuaWQgZW1haWwgcHJvZmlsZSBhZGRyZXNzIHBob25lIGdyb3VwcyIsInRva2VuX3R5cGUiOiJiZWFyZXIiLCJjbGllbnRfaWQiOiJzdExKd1c5YjNMNUJQYWlGRlZ4OWNCIiwibmJmIjoxNzEyMDU5ODQwLCJleHAiOjE3MTIwNTk5NjAsImlhdCI6MTcxMjA1OTg0MCwiaXNzIjoiaHR0cHM6Ly9jZnMuZXhhbXBsZS5jb20vY2ZzL29hdXRoL3N0b3Jtd2luZCIsImF1ZCI6Imh0dHBzOi8vY2ZzLmV4YW1wbGUuY29tL2Nmcy9vYXV0aC9zdG9ybXdpbmQifQ.O-c6ARixHNdF9GeBZSYnNLLh1xuPSwmXDk0LD3d9T952eDVXjv280hAKVlOVlE7mvjmBwoFMTDcSsP6rZmydnECgqNJmMzvb7gI6fN4O3lNU_G5rn2NeNzfP4ztE7_OamGfX3TdZGDaoUuQoXwq-vihQnLSC4J4L1GUT94T6EDxenN_9ny-P4kh5IuMtMAoXuKzdkpr9zvIqV9UwhFuh9VBABObT-gN5b0Bap33b9AYI9XdmL--J--_RNNvBFOjQLgxNPTfszkYgw8GVdrnkAur_h7E1uBQYFTT5KE5dVy9-QnNWPCHFQm7BneyGUNih73zhaPssE2Z7VK1TcmiTkA\",\n    \"token_type\": \"bearer\",\n    \"expires_in\": 120,\n    \"scope\": \"openid email profile address phone groups\"\n}"
+										}
+									]
+								}
+							],
+							"id": "bbe6ea50-5d12-4bf4-9c04-efec59e12d92"
+						}
+					],
+					"id": "3390344f-845b-4025-a480-4bd9174761af",
+					"description": "Validations for the client credentials flow."
+				},
+				{
+					"name": "Resource owner password credentials flow",
 					"item": [
 						{
 							"name": "Invalid client id",
@@ -6517,6 +8353,909 @@
 					],
 					"id": "d3b5f504-f0f1-4dec-b07e-ab6ac0adfc9b",
 					"description": "Validations for the Resource owner password credentials flow (ROPC)."
+				},
+				{
+					"name": "Refresh token flow",
+					"item": [
+						{
+							"name": "Invalid client id",
+							"item": [
+								{
+									"name": "Refresh token",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "60aec0f2-710b-4f13-946b-fa345cdd223d",
+												"exec": [
+													"pmutils(pm).testCallbacks.testResponseStatus(401);\r",
+													"\r",
+													"const responseData = pm.response.json();\r",
+													"\r",
+													"pm.test('Response body has error \"invalid_client\"', () => {\r",
+													"    pm.expect(responseData).to.have.property('error', 'invalid_client');\r",
+													"});\r",
+													"\r",
+													"pm.test('Response body has error_description', () => {\r",
+													"    pm.expect(responseData).to.have.property('error_description');\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"id": "f4d30570-508a-4d29-9e3d-8f38d445128f",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": [
+												{
+													"key": "grant_type",
+													"value": "refresh_token",
+													"type": "text"
+												},
+												{
+													"key": "client_id",
+													"value": "invalidClientId",
+													"type": "text"
+												},
+												{
+													"key": "client_secret",
+													"value": "{{client_secret}}",
+													"type": "text"
+												},
+												{
+													"key": "refresh_token",
+													"value": "{{refresh_token}}",
+													"type": "text"
+												}
+											]
+										},
+										"url": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token",
+										"description": "Takes a `refresh_token` and returns a fresh new set of `id_token`, `access_token`, `refresh_token`."
+									},
+									"response": [
+										{
+											"id": "4ebc9756-29c0-4f0b-8a7b-59795140ec90",
+											"name": "Refresh token",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "urlencoded",
+													"urlencoded": [
+														{
+															"key": "client_id",
+															"value": "{{client_id}}",
+															"type": "text"
+														},
+														{
+															"key": "grant_type",
+															"value": "refresh_token",
+															"type": "text"
+														},
+														{
+															"key": "client_secret",
+															"value": "{{client_secret}}",
+															"type": "text"
+														},
+														{
+															"key": "refresh_token",
+															"value": "{{refresh_token}}",
+															"type": "text"
+														}
+													]
+												},
+												"url": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token"
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Cache-Control",
+													"value": "no-cache, no-store, max-age=0, must-revalidate"
+												},
+												{
+													"key": "Pragma",
+													"value": "no-cache"
+												},
+												{
+													"key": "Content-Length",
+													"value": "1248"
+												},
+												{
+													"key": "Content-Type",
+													"value": "application/json; charset=utf-8"
+												},
+												{
+													"key": "Server",
+													"value": "Microsoft-IIS/10.0"
+												},
+												{
+													"key": "Access-Control-Allow-Origin",
+													"value": "*"
+												},
+												{
+													"key": "Access-Control-Allow-Headers",
+													"value": "authorization"
+												},
+												{
+													"key": "X-Powered-By",
+													"value": "ASP.NET"
+												},
+												{
+													"key": "Date",
+													"value": "Tue, 02 Apr 2024 12:11:45 GMT"
+												}
+											],
+											"cookie": [],
+											"responseTime": null,
+											"body": "{\n    \"access_token\": \"eyJhbGciOiJSUzI1NiIsImtpZCI6ImQzY2QzMjBlLTJiNjUtNDg3YS05ZGM3LTY3MTY3YWFmMzc2NCIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ2YXJpYW4ud3J5bm4iLCJzY29wZSI6Im9wZW5pZCBlbWFpbCBwcm9maWxlIGFkZHJlc3MgcGhvbmUgZ3JvdXBzIiwidG9rZW5fdHlwZSI6ImJlYXJlciIsImNsaWVudF9pZCI6InN0TEp3VzliM0w1QlBhaUZGVng5Y0IiLCJuYmYiOjE3MTIwNTk5MDUsImV4cCI6MTcxMjA2MDAyNSwiaWF0IjoxNzEyMDU5ODE1LCJpc3MiOiJodHRwczovL2Nmcy5leGFtcGxlLmNvbS9jZnMvb2F1dGgvc3Rvcm13aW5kIiwiYXVkIjoiaHR0cHM6Ly9jZnMuZXhhbXBsZS5jb20vY2ZzL29hdXRoL3N0b3Jtd2luZCJ9.eAC6ugqB5tnAsjl8KQRrbE_XJgjlIGZ6zBdEM9hcUymaR_xpfXRA7Ll8oLmATN2lxO5cofdaSuUb6rWPBTWGz1wxITG4CDnNLFsBKZ4qd8ru14jJ87PYEW4CYH-m1cyAiIvVl9SIQxIpUYKgCC6QazwTeguCWVRgr2LKIo1zV-k6UyKqo1D1EYpAflfYtuf6bMaX7H9aXpA8cKAN-AKuTG343luQ8GQKm_G_D7KjqmSbhRky-IueIxmFL1tULAkOHmE3pflflhfxFkJR1gKMpGLUTRSrASFdXqG-o5bKYOaRJYy7AdHXN_Wz_UME4q6sxLQxYDcx6rpBlCly08m5Pw\",\n    \"token_type\": \"bearer\",\n    \"expires_in\": 120,\n    \"refresh_token\": \"utYV!IAAAAP_8Bo0mGU4__dCxXMjU4YY6kUmCZp4_DdD9rczbfdP1sQAAAAEt5Q2zknJ1GD69OxZzmQXLiMIJnDbImCURXtYMgzZ5o2rNP-JgSSzA1_Lwua4YmqNQc9gyh9jwkWii3ucs8ajroB2GfjPueE9AsLBE6LcXlECF8B1cIy9f059uTq-Vv7w4muMpsFNMCxcBTEVzeOJkssuD39T933iPv_gYcL60Ogexz4NOazdyteCDUIcrc0VbfqZaYdx_8AS2b5hvwRMEN0yw5TNvwCbP2LJ60QxPTg\",\n    \"scope\": \"openid email profile address phone groups\"\n}"
+										}
+									]
+								}
+							],
+							"id": "7ef5cc00-23a8-4c8e-baf1-5d4faf64c66c",
+							"description": "Demonstrates the case where the value for the `client_id` parameter is invalid (i.e. there is not client associated with the specified client_id).\n\nSee the **Tests** tab of the \"Token\" request for the expected errors."
+						},
+						{
+							"name": "Invalid client secret",
+							"item": [
+								{
+									"name": "Refresh token",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "60aec0f2-710b-4f13-946b-fa345cdd223d",
+												"exec": [
+													"pmutils(pm).testCallbacks.testResponseStatus(401);\r",
+													"\r",
+													"const responseData = pm.response.json();\r",
+													"\r",
+													"pm.test('Response body has error \"invalid_client\"', () => {\r",
+													"    pm.expect(responseData).to.have.property('error', 'invalid_client');\r",
+													"});\r",
+													"\r",
+													"pm.test('Response body has error_description', () => {\r",
+													"    pm.expect(responseData).to.have.property('error_description');\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"id": "646f7256-ce5e-472d-a43f-d7f99e7a2b69",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": [
+												{
+													"key": "grant_type",
+													"value": "refresh_token",
+													"type": "text"
+												},
+												{
+													"key": "client_id",
+													"value": "{{client_id}}",
+													"type": "text"
+												},
+												{
+													"key": "client_secret",
+													"value": "invalidClientSecret",
+													"type": "text"
+												},
+												{
+													"key": "refresh_token",
+													"value": "{{refresh_token}}",
+													"type": "text"
+												}
+											]
+										},
+										"url": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token",
+										"description": "Takes a `refresh_token` and returns a fresh new set of `id_token`, `access_token`, `refresh_token`."
+									},
+									"response": [
+										{
+											"id": "9f1fb7d0-329f-4de6-9292-959094f5394b",
+											"name": "Refresh token",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "urlencoded",
+													"urlencoded": [
+														{
+															"key": "client_id",
+															"value": "{{client_id}}",
+															"type": "text"
+														},
+														{
+															"key": "grant_type",
+															"value": "refresh_token",
+															"type": "text"
+														},
+														{
+															"key": "client_secret",
+															"value": "{{client_secret}}",
+															"type": "text"
+														},
+														{
+															"key": "refresh_token",
+															"value": "{{refresh_token}}",
+															"type": "text"
+														}
+													]
+												},
+												"url": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token"
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Cache-Control",
+													"value": "no-cache, no-store, max-age=0, must-revalidate"
+												},
+												{
+													"key": "Pragma",
+													"value": "no-cache"
+												},
+												{
+													"key": "Content-Length",
+													"value": "1248"
+												},
+												{
+													"key": "Content-Type",
+													"value": "application/json; charset=utf-8"
+												},
+												{
+													"key": "Server",
+													"value": "Microsoft-IIS/10.0"
+												},
+												{
+													"key": "Access-Control-Allow-Origin",
+													"value": "*"
+												},
+												{
+													"key": "Access-Control-Allow-Headers",
+													"value": "authorization"
+												},
+												{
+													"key": "X-Powered-By",
+													"value": "ASP.NET"
+												},
+												{
+													"key": "Date",
+													"value": "Tue, 02 Apr 2024 12:11:45 GMT"
+												}
+											],
+											"cookie": [],
+											"responseTime": null,
+											"body": "{\n    \"access_token\": \"eyJhbGciOiJSUzI1NiIsImtpZCI6ImQzY2QzMjBlLTJiNjUtNDg3YS05ZGM3LTY3MTY3YWFmMzc2NCIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ2YXJpYW4ud3J5bm4iLCJzY29wZSI6Im9wZW5pZCBlbWFpbCBwcm9maWxlIGFkZHJlc3MgcGhvbmUgZ3JvdXBzIiwidG9rZW5fdHlwZSI6ImJlYXJlciIsImNsaWVudF9pZCI6InN0TEp3VzliM0w1QlBhaUZGVng5Y0IiLCJuYmYiOjE3MTIwNTk5MDUsImV4cCI6MTcxMjA2MDAyNSwiaWF0IjoxNzEyMDU5ODE1LCJpc3MiOiJodHRwczovL2Nmcy5leGFtcGxlLmNvbS9jZnMvb2F1dGgvc3Rvcm13aW5kIiwiYXVkIjoiaHR0cHM6Ly9jZnMuZXhhbXBsZS5jb20vY2ZzL29hdXRoL3N0b3Jtd2luZCJ9.eAC6ugqB5tnAsjl8KQRrbE_XJgjlIGZ6zBdEM9hcUymaR_xpfXRA7Ll8oLmATN2lxO5cofdaSuUb6rWPBTWGz1wxITG4CDnNLFsBKZ4qd8ru14jJ87PYEW4CYH-m1cyAiIvVl9SIQxIpUYKgCC6QazwTeguCWVRgr2LKIo1zV-k6UyKqo1D1EYpAflfYtuf6bMaX7H9aXpA8cKAN-AKuTG343luQ8GQKm_G_D7KjqmSbhRky-IueIxmFL1tULAkOHmE3pflflhfxFkJR1gKMpGLUTRSrASFdXqG-o5bKYOaRJYy7AdHXN_Wz_UME4q6sxLQxYDcx6rpBlCly08m5Pw\",\n    \"token_type\": \"bearer\",\n    \"expires_in\": 120,\n    \"refresh_token\": \"utYV!IAAAAP_8Bo0mGU4__dCxXMjU4YY6kUmCZp4_DdD9rczbfdP1sQAAAAEt5Q2zknJ1GD69OxZzmQXLiMIJnDbImCURXtYMgzZ5o2rNP-JgSSzA1_Lwua4YmqNQc9gyh9jwkWii3ucs8ajroB2GfjPueE9AsLBE6LcXlECF8B1cIy9f059uTq-Vv7w4muMpsFNMCxcBTEVzeOJkssuD39T933iPv_gYcL60Ogexz4NOazdyteCDUIcrc0VbfqZaYdx_8AS2b5hvwRMEN0yw5TNvwCbP2LJ60QxPTg\",\n    \"scope\": \"openid email profile address phone groups\"\n}"
+										}
+									]
+								}
+							],
+							"id": "ab7aba57-78b6-4f3f-bad1-c2a140a7fc93",
+							"description": "Demonstrates the case where the value for the `client_secret` parameter is invalid (i.e. the client associated with the passed `client_id` does not have the same secret as the value passed for the `client_secret` parameter).\n\nSee the **Tests** tab of the \"Token\" request for the expected errors."
+						},
+						{
+							"name": "Invalid refresh token",
+							"item": [
+								{
+									"name": "Refresh token",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "60aec0f2-710b-4f13-946b-fa345cdd223d",
+												"exec": [
+													"pmutils(pm).testCallbacks.testResponseStatus(400);\r",
+													"\r",
+													"const responseData = pm.response.json();\r",
+													"\r",
+													"pm.test('Response body has error \"invalid_request\"', () => {\r",
+													"    pm.expect(responseData).to.have.property('error', 'invalid_request');\r",
+													"});\r",
+													"\r",
+													"pm.test('Response body has error_description', () => {\r",
+													"    pm.expect(responseData).to.have.property('error_description');\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"id": "ee59c54e-c665-4686-b184-b4b4b9d8767f",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": [
+												{
+													"key": "grant_type",
+													"value": "refresh_token",
+													"type": "text"
+												},
+												{
+													"key": "client_id",
+													"value": "{{client_id}}",
+													"type": "text"
+												},
+												{
+													"key": "client_secret",
+													"value": "{{client_secret}}",
+													"type": "text"
+												},
+												{
+													"key": "refresh_token",
+													"value": "invalidRefreshToken",
+													"type": "text"
+												}
+											]
+										},
+										"url": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token",
+										"description": "Takes a `refresh_token` and returns a fresh new set of `id_token`, `access_token`, `refresh_token`."
+									},
+									"response": [
+										{
+											"id": "adabe5ca-5e71-4d3c-b13c-3a16d98d926e",
+											"name": "Refresh token",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "urlencoded",
+													"urlencoded": [
+														{
+															"key": "client_id",
+															"value": "{{client_id}}",
+															"type": "text"
+														},
+														{
+															"key": "grant_type",
+															"value": "refresh_token",
+															"type": "text"
+														},
+														{
+															"key": "client_secret",
+															"value": "{{client_secret}}",
+															"type": "text"
+														},
+														{
+															"key": "refresh_token",
+															"value": "{{refresh_token}}",
+															"type": "text"
+														}
+													]
+												},
+												"url": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token"
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Cache-Control",
+													"value": "no-cache, no-store, max-age=0, must-revalidate"
+												},
+												{
+													"key": "Pragma",
+													"value": "no-cache"
+												},
+												{
+													"key": "Content-Length",
+													"value": "1248"
+												},
+												{
+													"key": "Content-Type",
+													"value": "application/json; charset=utf-8"
+												},
+												{
+													"key": "Server",
+													"value": "Microsoft-IIS/10.0"
+												},
+												{
+													"key": "Access-Control-Allow-Origin",
+													"value": "*"
+												},
+												{
+													"key": "Access-Control-Allow-Headers",
+													"value": "authorization"
+												},
+												{
+													"key": "X-Powered-By",
+													"value": "ASP.NET"
+												},
+												{
+													"key": "Date",
+													"value": "Tue, 02 Apr 2024 12:11:45 GMT"
+												}
+											],
+											"cookie": [],
+											"responseTime": null,
+											"body": "{\n    \"access_token\": \"eyJhbGciOiJSUzI1NiIsImtpZCI6ImQzY2QzMjBlLTJiNjUtNDg3YS05ZGM3LTY3MTY3YWFmMzc2NCIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ2YXJpYW4ud3J5bm4iLCJzY29wZSI6Im9wZW5pZCBlbWFpbCBwcm9maWxlIGFkZHJlc3MgcGhvbmUgZ3JvdXBzIiwidG9rZW5fdHlwZSI6ImJlYXJlciIsImNsaWVudF9pZCI6InN0TEp3VzliM0w1QlBhaUZGVng5Y0IiLCJuYmYiOjE3MTIwNTk5MDUsImV4cCI6MTcxMjA2MDAyNSwiaWF0IjoxNzEyMDU5ODE1LCJpc3MiOiJodHRwczovL2Nmcy5leGFtcGxlLmNvbS9jZnMvb2F1dGgvc3Rvcm13aW5kIiwiYXVkIjoiaHR0cHM6Ly9jZnMuZXhhbXBsZS5jb20vY2ZzL29hdXRoL3N0b3Jtd2luZCJ9.eAC6ugqB5tnAsjl8KQRrbE_XJgjlIGZ6zBdEM9hcUymaR_xpfXRA7Ll8oLmATN2lxO5cofdaSuUb6rWPBTWGz1wxITG4CDnNLFsBKZ4qd8ru14jJ87PYEW4CYH-m1cyAiIvVl9SIQxIpUYKgCC6QazwTeguCWVRgr2LKIo1zV-k6UyKqo1D1EYpAflfYtuf6bMaX7H9aXpA8cKAN-AKuTG343luQ8GQKm_G_D7KjqmSbhRky-IueIxmFL1tULAkOHmE3pflflhfxFkJR1gKMpGLUTRSrASFdXqG-o5bKYOaRJYy7AdHXN_Wz_UME4q6sxLQxYDcx6rpBlCly08m5Pw\",\n    \"token_type\": \"bearer\",\n    \"expires_in\": 120,\n    \"refresh_token\": \"utYV!IAAAAP_8Bo0mGU4__dCxXMjU4YY6kUmCZp4_DdD9rczbfdP1sQAAAAEt5Q2zknJ1GD69OxZzmQXLiMIJnDbImCURXtYMgzZ5o2rNP-JgSSzA1_Lwua4YmqNQc9gyh9jwkWii3ucs8ajroB2GfjPueE9AsLBE6LcXlECF8B1cIy9f059uTq-Vv7w4muMpsFNMCxcBTEVzeOJkssuD39T933iPv_gYcL60Ogexz4NOazdyteCDUIcrc0VbfqZaYdx_8AS2b5hvwRMEN0yw5TNvwCbP2LJ60QxPTg\",\n    \"scope\": \"openid email profile address phone groups\"\n}"
+										}
+									]
+								}
+							],
+							"id": "91c1f23f-143e-483f-b511-23cdf32ebcc0"
+						},
+						{
+							"name": "Missing client id",
+							"item": [
+								{
+									"name": "Refresh token",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "60aec0f2-710b-4f13-946b-fa345cdd223d",
+												"exec": [
+													"pmutils(pm).testCallbacks.testResponseStatus(401);\r",
+													"\r",
+													"const responseData = pm.response.json();\r",
+													"\r",
+													"pm.test('Response body has error \"invalid_client\"', () => {\r",
+													"    pm.expect(responseData).to.have.property('error', 'invalid_client');\r",
+													"});\r",
+													"\r",
+													"pm.test('Response body has error_description', () => {\r",
+													"    pm.expect(responseData).to.have.property('error_description');\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"id": "7966e70e-a2d7-4b57-8c42-606881e39e8b",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": [
+												{
+													"key": "grant_type",
+													"value": "refresh_token",
+													"type": "text"
+												},
+												{
+													"key": "client_id",
+													"value": "{{client_id}}",
+													"type": "text",
+													"disabled": true
+												},
+												{
+													"key": "client_secret",
+													"value": "{{client_secret}}",
+													"type": "text"
+												},
+												{
+													"key": "refresh_token",
+													"value": "{{refresh_token}}",
+													"type": "text"
+												}
+											]
+										},
+										"url": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token",
+										"description": "Takes a `refresh_token` and returns a fresh new set of `id_token`, `access_token`, `refresh_token`."
+									},
+									"response": [
+										{
+											"id": "255ed44c-20fb-4d5b-8cab-71cf42569eda",
+											"name": "Refresh token",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "urlencoded",
+													"urlencoded": [
+														{
+															"key": "client_id",
+															"value": "{{client_id}}",
+															"type": "text"
+														},
+														{
+															"key": "grant_type",
+															"value": "refresh_token",
+															"type": "text"
+														},
+														{
+															"key": "client_secret",
+															"value": "{{client_secret}}",
+															"type": "text"
+														},
+														{
+															"key": "refresh_token",
+															"value": "{{refresh_token}}",
+															"type": "text"
+														}
+													]
+												},
+												"url": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token"
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Cache-Control",
+													"value": "no-cache, no-store, max-age=0, must-revalidate"
+												},
+												{
+													"key": "Pragma",
+													"value": "no-cache"
+												},
+												{
+													"key": "Content-Length",
+													"value": "1248"
+												},
+												{
+													"key": "Content-Type",
+													"value": "application/json; charset=utf-8"
+												},
+												{
+													"key": "Server",
+													"value": "Microsoft-IIS/10.0"
+												},
+												{
+													"key": "Access-Control-Allow-Origin",
+													"value": "*"
+												},
+												{
+													"key": "Access-Control-Allow-Headers",
+													"value": "authorization"
+												},
+												{
+													"key": "X-Powered-By",
+													"value": "ASP.NET"
+												},
+												{
+													"key": "Date",
+													"value": "Tue, 02 Apr 2024 12:11:45 GMT"
+												}
+											],
+											"cookie": [],
+											"responseTime": null,
+											"body": "{\n    \"access_token\": \"eyJhbGciOiJSUzI1NiIsImtpZCI6ImQzY2QzMjBlLTJiNjUtNDg3YS05ZGM3LTY3MTY3YWFmMzc2NCIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ2YXJpYW4ud3J5bm4iLCJzY29wZSI6Im9wZW5pZCBlbWFpbCBwcm9maWxlIGFkZHJlc3MgcGhvbmUgZ3JvdXBzIiwidG9rZW5fdHlwZSI6ImJlYXJlciIsImNsaWVudF9pZCI6InN0TEp3VzliM0w1QlBhaUZGVng5Y0IiLCJuYmYiOjE3MTIwNTk5MDUsImV4cCI6MTcxMjA2MDAyNSwiaWF0IjoxNzEyMDU5ODE1LCJpc3MiOiJodHRwczovL2Nmcy5leGFtcGxlLmNvbS9jZnMvb2F1dGgvc3Rvcm13aW5kIiwiYXVkIjoiaHR0cHM6Ly9jZnMuZXhhbXBsZS5jb20vY2ZzL29hdXRoL3N0b3Jtd2luZCJ9.eAC6ugqB5tnAsjl8KQRrbE_XJgjlIGZ6zBdEM9hcUymaR_xpfXRA7Ll8oLmATN2lxO5cofdaSuUb6rWPBTWGz1wxITG4CDnNLFsBKZ4qd8ru14jJ87PYEW4CYH-m1cyAiIvVl9SIQxIpUYKgCC6QazwTeguCWVRgr2LKIo1zV-k6UyKqo1D1EYpAflfYtuf6bMaX7H9aXpA8cKAN-AKuTG343luQ8GQKm_G_D7KjqmSbhRky-IueIxmFL1tULAkOHmE3pflflhfxFkJR1gKMpGLUTRSrASFdXqG-o5bKYOaRJYy7AdHXN_Wz_UME4q6sxLQxYDcx6rpBlCly08m5Pw\",\n    \"token_type\": \"bearer\",\n    \"expires_in\": 120,\n    \"refresh_token\": \"utYV!IAAAAP_8Bo0mGU4__dCxXMjU4YY6kUmCZp4_DdD9rczbfdP1sQAAAAEt5Q2zknJ1GD69OxZzmQXLiMIJnDbImCURXtYMgzZ5o2rNP-JgSSzA1_Lwua4YmqNQc9gyh9jwkWii3ucs8ajroB2GfjPueE9AsLBE6LcXlECF8B1cIy9f059uTq-Vv7w4muMpsFNMCxcBTEVzeOJkssuD39T933iPv_gYcL60Ogexz4NOazdyteCDUIcrc0VbfqZaYdx_8AS2b5hvwRMEN0yw5TNvwCbP2LJ60QxPTg\",\n    \"scope\": \"openid email profile address phone groups\"\n}"
+										}
+									]
+								}
+							],
+							"id": "dac18f02-6759-402c-93ff-2ee425cbe63a",
+							"description": "Demonstrates the case where `client_id` parameter is missing.\n\nSee the **Tests** tab of the \"Token\" request for the expected errors."
+						},
+						{
+							"name": "Missing client secret",
+							"item": [
+								{
+									"name": "Refresh token",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "60aec0f2-710b-4f13-946b-fa345cdd223d",
+												"exec": [
+													"pmutils(pm).testCallbacks.testResponseStatus(401);\r",
+													"\r",
+													"const responseData = pm.response.json();\r",
+													"\r",
+													"pm.test('Response body has error \"invalid_client\"', () => {\r",
+													"    pm.expect(responseData).to.have.property('error', 'invalid_client');\r",
+													"});\r",
+													"\r",
+													"pm.test('Response body has error_description', () => {\r",
+													"    pm.expect(responseData).to.have.property('error_description');\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"id": "a7263272-59b1-433b-baf4-28ccb5327f82",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": [
+												{
+													"key": "grant_type",
+													"value": "refresh_token",
+													"type": "text"
+												},
+												{
+													"key": "client_id",
+													"value": "{{client_id}}",
+													"type": "text"
+												},
+												{
+													"key": "client_secret",
+													"value": "{{client_secret}}",
+													"type": "text",
+													"disabled": true
+												},
+												{
+													"key": "refresh_token",
+													"value": "{{refresh_token}}",
+													"type": "text"
+												}
+											]
+										},
+										"url": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token",
+										"description": "Takes a `refresh_token` and returns a fresh new set of `id_token`, `access_token`, `refresh_token`."
+									},
+									"response": [
+										{
+											"id": "19ba2f3f-629f-4614-9dde-b31c1dadc341",
+											"name": "Refresh token",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "urlencoded",
+													"urlencoded": [
+														{
+															"key": "client_id",
+															"value": "{{client_id}}",
+															"type": "text"
+														},
+														{
+															"key": "grant_type",
+															"value": "refresh_token",
+															"type": "text"
+														},
+														{
+															"key": "client_secret",
+															"value": "{{client_secret}}",
+															"type": "text"
+														},
+														{
+															"key": "refresh_token",
+															"value": "{{refresh_token}}",
+															"type": "text"
+														}
+													]
+												},
+												"url": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token"
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Cache-Control",
+													"value": "no-cache, no-store, max-age=0, must-revalidate"
+												},
+												{
+													"key": "Pragma",
+													"value": "no-cache"
+												},
+												{
+													"key": "Content-Length",
+													"value": "1248"
+												},
+												{
+													"key": "Content-Type",
+													"value": "application/json; charset=utf-8"
+												},
+												{
+													"key": "Server",
+													"value": "Microsoft-IIS/10.0"
+												},
+												{
+													"key": "Access-Control-Allow-Origin",
+													"value": "*"
+												},
+												{
+													"key": "Access-Control-Allow-Headers",
+													"value": "authorization"
+												},
+												{
+													"key": "X-Powered-By",
+													"value": "ASP.NET"
+												},
+												{
+													"key": "Date",
+													"value": "Tue, 02 Apr 2024 12:11:45 GMT"
+												}
+											],
+											"cookie": [],
+											"responseTime": null,
+											"body": "{\n    \"access_token\": \"eyJhbGciOiJSUzI1NiIsImtpZCI6ImQzY2QzMjBlLTJiNjUtNDg3YS05ZGM3LTY3MTY3YWFmMzc2NCIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ2YXJpYW4ud3J5bm4iLCJzY29wZSI6Im9wZW5pZCBlbWFpbCBwcm9maWxlIGFkZHJlc3MgcGhvbmUgZ3JvdXBzIiwidG9rZW5fdHlwZSI6ImJlYXJlciIsImNsaWVudF9pZCI6InN0TEp3VzliM0w1QlBhaUZGVng5Y0IiLCJuYmYiOjE3MTIwNTk5MDUsImV4cCI6MTcxMjA2MDAyNSwiaWF0IjoxNzEyMDU5ODE1LCJpc3MiOiJodHRwczovL2Nmcy5leGFtcGxlLmNvbS9jZnMvb2F1dGgvc3Rvcm13aW5kIiwiYXVkIjoiaHR0cHM6Ly9jZnMuZXhhbXBsZS5jb20vY2ZzL29hdXRoL3N0b3Jtd2luZCJ9.eAC6ugqB5tnAsjl8KQRrbE_XJgjlIGZ6zBdEM9hcUymaR_xpfXRA7Ll8oLmATN2lxO5cofdaSuUb6rWPBTWGz1wxITG4CDnNLFsBKZ4qd8ru14jJ87PYEW4CYH-m1cyAiIvVl9SIQxIpUYKgCC6QazwTeguCWVRgr2LKIo1zV-k6UyKqo1D1EYpAflfYtuf6bMaX7H9aXpA8cKAN-AKuTG343luQ8GQKm_G_D7KjqmSbhRky-IueIxmFL1tULAkOHmE3pflflhfxFkJR1gKMpGLUTRSrASFdXqG-o5bKYOaRJYy7AdHXN_Wz_UME4q6sxLQxYDcx6rpBlCly08m5Pw\",\n    \"token_type\": \"bearer\",\n    \"expires_in\": 120,\n    \"refresh_token\": \"utYV!IAAAAP_8Bo0mGU4__dCxXMjU4YY6kUmCZp4_DdD9rczbfdP1sQAAAAEt5Q2zknJ1GD69OxZzmQXLiMIJnDbImCURXtYMgzZ5o2rNP-JgSSzA1_Lwua4YmqNQc9gyh9jwkWii3ucs8ajroB2GfjPueE9AsLBE6LcXlECF8B1cIy9f059uTq-Vv7w4muMpsFNMCxcBTEVzeOJkssuD39T933iPv_gYcL60Ogexz4NOazdyteCDUIcrc0VbfqZaYdx_8AS2b5hvwRMEN0yw5TNvwCbP2LJ60QxPTg\",\n    \"scope\": \"openid email profile address phone groups\"\n}"
+										}
+									]
+								}
+							],
+							"id": "0880b2c1-79ac-4942-91cb-54175be9774d",
+							"description": "Demonstrates the case where the `client_secret` parameter is missing.\n\nSee the **Tests** tab of the \"Token\" request for the expected errors."
+						},
+						{
+							"name": "Missing refresh token",
+							"item": [
+								{
+									"name": "Refresh token",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "60aec0f2-710b-4f13-946b-fa345cdd223d",
+												"exec": [
+													"pmutils(pm).testCallbacks.testResponseStatus(400);\r",
+													"\r",
+													"const responseData = pm.response.json();\r",
+													"\r",
+													"pm.test('Response body has error \"invalid_request\"', () => {\r",
+													"    pm.expect(responseData).to.have.property('error', 'invalid_request');\r",
+													"});\r",
+													"\r",
+													"pm.test('Response body has error_description', () => {\r",
+													"    pm.expect(responseData).to.have.property('error_description');\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"id": "023547a5-9cbf-4046-9c98-1b70e8f4d7e9",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": [
+												{
+													"key": "grant_type",
+													"value": "refresh_token",
+													"type": "text"
+												},
+												{
+													"key": "client_id",
+													"value": "{{client_id}}",
+													"type": "text"
+												},
+												{
+													"key": "client_secret",
+													"value": "{{client_secret}}",
+													"type": "text"
+												},
+												{
+													"key": "refresh_token",
+													"value": "{{refresh_token}}",
+													"type": "text",
+													"disabled": true
+												}
+											]
+										},
+										"url": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token",
+										"description": "Takes a `refresh_token` and returns a fresh new set of `id_token`, `access_token`, `refresh_token`."
+									},
+									"response": [
+										{
+											"id": "d041fe15-9614-4772-878d-d29c2c8ccb3f",
+											"name": "Refresh token",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "urlencoded",
+													"urlencoded": [
+														{
+															"key": "client_id",
+															"value": "{{client_id}}",
+															"type": "text"
+														},
+														{
+															"key": "grant_type",
+															"value": "refresh_token",
+															"type": "text"
+														},
+														{
+															"key": "client_secret",
+															"value": "{{client_secret}}",
+															"type": "text"
+														},
+														{
+															"key": "refresh_token",
+															"value": "{{refresh_token}}",
+															"type": "text"
+														}
+													]
+												},
+												"url": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token"
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Cache-Control",
+													"value": "no-cache, no-store, max-age=0, must-revalidate"
+												},
+												{
+													"key": "Pragma",
+													"value": "no-cache"
+												},
+												{
+													"key": "Content-Length",
+													"value": "1248"
+												},
+												{
+													"key": "Content-Type",
+													"value": "application/json; charset=utf-8"
+												},
+												{
+													"key": "Server",
+													"value": "Microsoft-IIS/10.0"
+												},
+												{
+													"key": "Access-Control-Allow-Origin",
+													"value": "*"
+												},
+												{
+													"key": "Access-Control-Allow-Headers",
+													"value": "authorization"
+												},
+												{
+													"key": "X-Powered-By",
+													"value": "ASP.NET"
+												},
+												{
+													"key": "Date",
+													"value": "Tue, 02 Apr 2024 12:11:45 GMT"
+												}
+											],
+											"cookie": [],
+											"responseTime": null,
+											"body": "{\n    \"access_token\": \"eyJhbGciOiJSUzI1NiIsImtpZCI6ImQzY2QzMjBlLTJiNjUtNDg3YS05ZGM3LTY3MTY3YWFmMzc2NCIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ2YXJpYW4ud3J5bm4iLCJzY29wZSI6Im9wZW5pZCBlbWFpbCBwcm9maWxlIGFkZHJlc3MgcGhvbmUgZ3JvdXBzIiwidG9rZW5fdHlwZSI6ImJlYXJlciIsImNsaWVudF9pZCI6InN0TEp3VzliM0w1QlBhaUZGVng5Y0IiLCJuYmYiOjE3MTIwNTk5MDUsImV4cCI6MTcxMjA2MDAyNSwiaWF0IjoxNzEyMDU5ODE1LCJpc3MiOiJodHRwczovL2Nmcy5leGFtcGxlLmNvbS9jZnMvb2F1dGgvc3Rvcm13aW5kIiwiYXVkIjoiaHR0cHM6Ly9jZnMuZXhhbXBsZS5jb20vY2ZzL29hdXRoL3N0b3Jtd2luZCJ9.eAC6ugqB5tnAsjl8KQRrbE_XJgjlIGZ6zBdEM9hcUymaR_xpfXRA7Ll8oLmATN2lxO5cofdaSuUb6rWPBTWGz1wxITG4CDnNLFsBKZ4qd8ru14jJ87PYEW4CYH-m1cyAiIvVl9SIQxIpUYKgCC6QazwTeguCWVRgr2LKIo1zV-k6UyKqo1D1EYpAflfYtuf6bMaX7H9aXpA8cKAN-AKuTG343luQ8GQKm_G_D7KjqmSbhRky-IueIxmFL1tULAkOHmE3pflflhfxFkJR1gKMpGLUTRSrASFdXqG-o5bKYOaRJYy7AdHXN_Wz_UME4q6sxLQxYDcx6rpBlCly08m5Pw\",\n    \"token_type\": \"bearer\",\n    \"expires_in\": 120,\n    \"refresh_token\": \"utYV!IAAAAP_8Bo0mGU4__dCxXMjU4YY6kUmCZp4_DdD9rczbfdP1sQAAAAEt5Q2zknJ1GD69OxZzmQXLiMIJnDbImCURXtYMgzZ5o2rNP-JgSSzA1_Lwua4YmqNQc9gyh9jwkWii3ucs8ajroB2GfjPueE9AsLBE6LcXlECF8B1cIy9f059uTq-Vv7w4muMpsFNMCxcBTEVzeOJkssuD39T933iPv_gYcL60Ogexz4NOazdyteCDUIcrc0VbfqZaYdx_8AS2b5hvwRMEN0yw5TNvwCbP2LJ60QxPTg\",\n    \"scope\": \"openid email profile address phone groups\"\n}"
+										}
+									]
+								}
+							],
+							"id": "cbad0d43-3804-4164-bddb-6a8890247026",
+							"description": "Demonstrates the case where the `refresh_token` parameter is missing.\n\nSee the **Tests** tab of the \"Token\" request for the expected errors."
+						}
+					],
+					"id": "6c9f3176-955c-4eb7-8e00-982db37cfe33",
+					"description": "Validations for the refresh token flow."
 				}
 			],
 			"id": "cc963083-1e8f-4f40-91ca-440314a8f772",
@@ -6671,148 +9410,6 @@
 					"cookie": [],
 					"responseTime": null,
 					"body": "{\n    \"issuer\": \"https://cfs.example.com/cfs/oauth/stormwind\",\n    \"authorization_endpoint\": \"https://cfs.example.com/cfs/oauth/stormwind/authorize\",\n    \"token_endpoint\": \"https://cfs.example.com/cfs/oauth/stormwind/token\",\n    \"token_endpoint_auth_methods_supported\": [\n        \"client_secret_post\",\n        \"client_secret_basic\"\n    ],\n    \"userinfo_endpoint\": \"https://cfs.example.com/cfs/oauth/stormwind/userinfo\",\n    \"response_types_supported\": [\n        \"code\",\n        \"token\",\n        \"id_token\",\n        \"id_token token\",\n        \"code id_token\",\n        \"code token\",\n        \"code id_token token\"\n    ],\n    \"response_modes_supported\": [\n        \"query\",\n        \"fragment\",\n        \"form_post\"\n    ],\n    \"subject_types_supported\": [\n        \"public\"\n    ],\n    \"id_token_signing_alg_values_supported\": [\n        \"RS256\"\n    ],\n    \"jwks_uri\": \"https://cfs.example.com/cfs/oauth/stormwind/.well-known/keys\",\n    \"scopes_supported\": [\n        \"openid\",\n        \"profile\",\n        \"email\",\n        \"address\",\n        \"phone\",\n        \"groups\"\n    ],\n    \"claims_supported\": [\n        \"sub\",\n        \"name\",\n        \"given_name\",\n        \"family_name\",\n        \"middle_name\",\n        \"nickname\",\n        \"preferred_username\",\n        \"profile\",\n        \"picture\",\n        \"website\",\n        \"gender\",\n        \"birthdate\",\n        \"zoneinfo\",\n        \"locale\",\n        \"updated_at\",\n        \"address\",\n        \"email\",\n        \"email_verified\",\n        \"phone_number\",\n        \"phone_number_verified\",\n        \"groups\"\n    ],\n    \"end_session_endpoint\": \"https://cfs.example.com/cfs/oauth/stormwind/endsession\",\n    \"check_session_iframe\": \"https://cfs.example.com/cfs/oauth/stormwind/checksession\"\n}"
-				}
-			]
-		},
-		{
-			"name": "Refresh token",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pmutils(pm).testCallbacks.testResponseStatus200();\r",
-							"\r",
-							"const responseData = pm.response.json();\r",
-							"\r",
-							"pmutils(pm).testCallbacks.testAccessToken(responseData.access_token);\r",
-							"\r",
-							"pm.collectionVariables.set(\"access_token\", responseData.access_token);\r",
-							"pm.collectionVariables.set(\"refresh_token\", responseData.refresh_token);\r",
-							"\r",
-							"pmutils(pm).testCallbacks.testAccessTokenGrantsAccessToResources(responseData.access_token);\r",
-							"pmutils(pm).testCallbacks.testRefreshTokenRefreshesTokens(responseData.refresh_token);\r",
-							""
-						],
-						"type": "text/javascript",
-						"packages": {},
-						"id": "60aec0f2-710b-4f13-946b-fa345cdd223d"
-					}
-				}
-			],
-			"id": "f8e2a35c-72b6-4267-9888-b2ed1d1c37d8",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "urlencoded",
-					"urlencoded": [
-						{
-							"key": "client_id",
-							"value": "{{client_id}}",
-							"type": "text"
-						},
-						{
-							"key": "grant_type",
-							"value": "refresh_token",
-							"type": "text"
-						},
-						{
-							"key": "client_secret",
-							"value": "{{client_secret}}",
-							"type": "text"
-						},
-						{
-							"key": "refresh_token",
-							"value": "{{refresh_token}}",
-							"type": "text"
-						}
-					]
-				},
-				"url": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token",
-				"description": "Takes a `refresh_token` and returns a fresh new set of `id_token`, `access_token`, `refresh_token`."
-			},
-			"response": [
-				{
-					"id": "e23f9e34-c0fc-4015-b3c3-ab8427a4b8df",
-					"name": "Refresh token",
-					"originalRequest": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "client_id",
-									"value": "{{client_id}}",
-									"type": "text"
-								},
-								{
-									"key": "grant_type",
-									"value": "refresh_token",
-									"type": "text"
-								},
-								{
-									"key": "client_secret",
-									"value": "{{client_secret}}",
-									"type": "text"
-								},
-								{
-									"key": "refresh_token",
-									"value": "{{refresh_token}}",
-									"type": "text"
-								}
-							]
-						},
-						"url": "{{CFS Master URL}}/oauth/{{Tenant Name}}/token"
-					},
-					"status": "OK",
-					"code": 200,
-					"_postman_previewlanguage": "json",
-					"header": [
-						{
-							"key": "Cache-Control",
-							"value": "no-cache, no-store, max-age=0, must-revalidate"
-						},
-						{
-							"key": "Pragma",
-							"value": "no-cache"
-						},
-						{
-							"key": "Content-Length",
-							"value": "1248"
-						},
-						{
-							"key": "Content-Type",
-							"value": "application/json; charset=utf-8"
-						},
-						{
-							"key": "Server",
-							"value": "Microsoft-IIS/10.0"
-						},
-						{
-							"key": "Access-Control-Allow-Origin",
-							"value": "*"
-						},
-						{
-							"key": "Access-Control-Allow-Headers",
-							"value": "authorization"
-						},
-						{
-							"key": "X-Powered-By",
-							"value": "ASP.NET"
-						},
-						{
-							"key": "Date",
-							"value": "Tue, 02 Apr 2024 12:11:45 GMT"
-						}
-					],
-					"cookie": [],
-					"responseTime": null,
-					"body": "{\n    \"access_token\": \"eyJhbGciOiJSUzI1NiIsImtpZCI6ImQzY2QzMjBlLTJiNjUtNDg3YS05ZGM3LTY3MTY3YWFmMzc2NCIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ2YXJpYW4ud3J5bm4iLCJzY29wZSI6Im9wZW5pZCBlbWFpbCBwcm9maWxlIGFkZHJlc3MgcGhvbmUgZ3JvdXBzIiwidG9rZW5fdHlwZSI6ImJlYXJlciIsImNsaWVudF9pZCI6InN0TEp3VzliM0w1QlBhaUZGVng5Y0IiLCJuYmYiOjE3MTIwNTk5MDUsImV4cCI6MTcxMjA2MDAyNSwiaWF0IjoxNzEyMDU5ODE1LCJpc3MiOiJodHRwczovL2Nmcy5leGFtcGxlLmNvbS9jZnMvb2F1dGgvc3Rvcm13aW5kIiwiYXVkIjoiaHR0cHM6Ly9jZnMuZXhhbXBsZS5jb20vY2ZzL29hdXRoL3N0b3Jtd2luZCJ9.eAC6ugqB5tnAsjl8KQRrbE_XJgjlIGZ6zBdEM9hcUymaR_xpfXRA7Ll8oLmATN2lxO5cofdaSuUb6rWPBTWGz1wxITG4CDnNLFsBKZ4qd8ru14jJ87PYEW4CYH-m1cyAiIvVl9SIQxIpUYKgCC6QazwTeguCWVRgr2LKIo1zV-k6UyKqo1D1EYpAflfYtuf6bMaX7H9aXpA8cKAN-AKuTG343luQ8GQKm_G_D7KjqmSbhRky-IueIxmFL1tULAkOHmE3pflflhfxFkJR1gKMpGLUTRSrASFdXqG-o5bKYOaRJYy7AdHXN_Wz_UME4q6sxLQxYDcx6rpBlCly08m5Pw\",\n    \"token_type\": \"bearer\",\n    \"expires_in\": 120,\n    \"refresh_token\": \"utYV!IAAAAP_8Bo0mGU4__dCxXMjU4YY6kUmCZp4_DdD9rczbfdP1sQAAAAEt5Q2zknJ1GD69OxZzmQXLiMIJnDbImCURXtYMgzZ5o2rNP-JgSSzA1_Lwua4YmqNQc9gyh9jwkWii3ucs8ajroB2GfjPueE9AsLBE6LcXlECF8B1cIy9f059uTq-Vv7w4muMpsFNMCxcBTEVzeOJkssuD39T933iPv_gYcL60Ogexz4NOazdyteCDUIcrc0VbfqZaYdx_8AS2b5hvwRMEN0yw5TNvwCbP2LJ60QxPTg\",\n    \"scope\": \"openid email profile address phone groups\"\n}"
 				}
 			]
 		},
@@ -7083,6 +9680,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
+				"id": "fe7855db-d0cd-4140-8501-10e72acad2fd",
 				"type": "text/javascript",
 				"exec": [
 					"pmutils =",
@@ -7473,6 +10071,7 @@
 					"",
 					"                const locationHeaderValue = pm.response.headers.get('Location');",
 					"                if (!locationHeaderValue) {",
+					"                    const cheerio = require('cheerio');",
 					"                    const $ = cheerio.load(pm.response.text());",
 					"                    const $form = $(\"form\");",
 					"",
@@ -7588,18 +10187,17 @@
 					"        };",
 					"    }",
 					""
-				],
-				"id": "e457b0c7-307b-4cee-a5aa-3db5b9ebb492"
+				]
 			}
 		},
 		{
 			"listen": "test",
 			"script": {
+				"id": "3fe48fcf-7790-46cb-a704-0bc7283766a5",
 				"type": "text/javascript",
 				"exec": [
 					""
-				],
-				"id": "1c6e7605-80f0-42b3-b0a0-e41fdaead946"
+				]
 			}
 		}
 	],
