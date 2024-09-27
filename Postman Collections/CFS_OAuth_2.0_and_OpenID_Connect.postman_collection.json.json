@@ -38,7 +38,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/authorize?response_type=code&client_id={{client_id}}&redirect_uri=https://oauth.pstmn.io/v1/callback&scope={{scope}}&state={{state}}&nonce={{nonce}}",
+							"raw": "{{CFS Master URL}}/oauth/{{Tenant Name}}/authorize?response_type=code&client_id={{client_id}}&redirect_uri=https://oauth.pstmn.io/v1/callback&scope={{scope}}&nonce={{nonce}}",
 							"host": [
 								"{{CFS Master URL}}"
 							],
@@ -66,7 +66,8 @@
 								},
 								{
 									"key": "state",
-									"value": "{{state}}"
+									"value": "{{state}}",
+									"disabled": true
 								},
 								{
 									"key": "nonce",
@@ -275,156 +276,32 @@
 					]
 				},
 				{
-					"name": "2FA Select Code",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pmutils(pm).testCallbacks.testResponseStatus200or302();\r",
-									"\r",
-									"pmutils(pm).SetVerificationTokenFromResponse(pm.response);"
-								],
-								"type": "text/javascript",
-								"packages": {},
-								"id": "b738dfe8-7b08-4243-a9e7-87cc54f3d696"
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript",
-								"packages": {},
-								"id": "b5d10276-c3ac-4ace-b2ec-906692b44317"
-							}
-						}
-					],
-					"id": "b5264d7c-a64e-4c19-9a6d-7369d26f99f0",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": ""
-							}
-						],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "Tenant",
-									"value": "{{Tenant Name}}",
-									"type": "text"
-								},
-								{
-									"key": "IsApproved",
-									"value": "true",
-									"type": "text"
-								},
-								{
-									"key": "client_id",
-									"value": "{{client_id}}",
-									"type": "text"
-								},
-								{
-									"key": "redirect_uri",
-									"value": "{{redirect_uri}}",
-									"type": "text"
-								},
-								{
-									"key": "state",
-									"value": "{{state}}",
-									"type": "text"
-								},
-								{
-									"key": "scope",
-									"value": "{{scope}}",
-									"type": "text"
-								},
-								{
-									"key": "nonce",
-									"value": "{{nonce}}",
-									"type": "text"
-								},
-								{
-									"key": "code_challenge",
-									"value": "{{code_challenge}}",
-									"type": "text"
-								},
-								{
-									"key": "code_challenge_method",
-									"value": "{{code_method}}",
-									"type": "text"
-								},
-								{
-									"key": "Username",
-									"value": "{{username}}",
-									"type": "text"
-								},
-								{
-									"key": "Password",
-									"value": "{{password}}",
-									"type": "text"
-								},
-								{
-									"key": "__RequestVerificationToken",
-									"value": "{{request_verification_token}}",
-									"type": "text"
-								},
-								{
-									"key": "TwoStepHasCode",
-									"value": "true",
-									"type": "text"
-								},
-								{
-									"key": "response_type",
-									"value": "{{validations_common_response_type}}",
-									"type": "text"
-								},
-								{
-									"key": "response_mode",
-									"value": "",
-									"type": "text"
-								}
-							]
-						},
-						"url": "{{CFS Master URL}}/Home/OAuthTwoStep"
-					},
-					"response": []
-				},
-				{
 					"name": "2FA Submit Code",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
+								"id": "6b94ce18-8977-4208-b816-909081177721",
 								"exec": [
 									"pmutils(pm).testCallbacks.testResponseStatus200or302();\r",
 									"\r",
-									"pmutils(pm).ExtractAndSetTokens(pm.response, 'query', ({ authorization_code }) => {\r",
+									"pmutils(pm).TryExtractAndSetTokens(pm.response, 'query', ({ authorization_code }) => {\r",
 									"    pmutils(pm).testCallbacks.testAuthorizationCode(authorization_code);\r",
 									"});"
 								],
 								"type": "text/javascript",
-								"packages": {},
-								"id": "6b94ce18-8977-4208-b816-909081177721"
+								"packages": {}
 							}
 						},
 						{
 							"listen": "prerequest",
 							"script": {
+								"id": "300cad9c-bfc4-4472-8805-0d90fb2f802a",
 								"exec": [
 									""
 								],
 								"type": "text/javascript",
-								"packages": {},
-								"id": "300cad9c-bfc4-4472-8805-0d90fb2f802a"
+								"packages": {}
 							}
 						}
 					],
@@ -499,11 +376,6 @@
 									"type": "text"
 								},
 								{
-									"key": "__RequestVerificationToken",
-									"value": "{{request_verification_token}}",
-									"type": "text"
-								},
-								{
 									"key": "TwoStepCode",
 									"value": "{{2fa_code}}",
 									"type": "text"
@@ -515,7 +387,7 @@
 								},
 								{
 									"key": "response_type",
-									"value": "{{validations_common_response_type}}",
+									"value": "code",
 									"type": "text"
 								},
 								{
@@ -590,6 +462,11 @@
 								{
 									"key": "code",
 									"value": "{{authorization_code}}",
+									"type": "text"
+								},
+								{
+									"key": "code_verifier",
+									"value": "{{code_verifier}}",
 									"type": "text"
 								}
 							]
@@ -1004,156 +881,32 @@
 					]
 				},
 				{
-					"name": "2FA Select Code",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pmutils(pm).testCallbacks.testResponseStatus200or302();\r",
-									"\r",
-									"pmutils(pm).SetVerificationTokenFromResponse(pm.response);"
-								],
-								"type": "text/javascript",
-								"packages": {},
-								"id": "b738dfe8-7b08-4243-a9e7-87cc54f3d696"
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript",
-								"packages": {},
-								"id": "b5d10276-c3ac-4ace-b2ec-906692b44317"
-							}
-						}
-					],
-					"id": "8fcd044d-35c4-49f5-8b7a-134df7a1f1cf",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": ""
-							}
-						],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "Tenant",
-									"value": "{{Tenant Name}}",
-									"type": "text"
-								},
-								{
-									"key": "IsApproved",
-									"value": "true",
-									"type": "text"
-								},
-								{
-									"key": "client_id",
-									"value": "{{client_id}}",
-									"type": "text"
-								},
-								{
-									"key": "redirect_uri",
-									"value": "{{redirect_uri}}",
-									"type": "text"
-								},
-								{
-									"key": "state",
-									"value": "{{state}}",
-									"type": "text"
-								},
-								{
-									"key": "scope",
-									"value": "{{scope}}",
-									"type": "text"
-								},
-								{
-									"key": "nonce",
-									"value": "{{nonce}}",
-									"type": "text"
-								},
-								{
-									"key": "code_challenge",
-									"value": "{{code_challenge}}",
-									"type": "text"
-								},
-								{
-									"key": "code_challenge_method",
-									"value": "{{code_method}}",
-									"type": "text"
-								},
-								{
-									"key": "Username",
-									"value": "{{username}}",
-									"type": "text"
-								},
-								{
-									"key": "Password",
-									"value": "{{password}}",
-									"type": "text"
-								},
-								{
-									"key": "__RequestVerificationToken",
-									"value": "{{request_verification_token}}",
-									"type": "text"
-								},
-								{
-									"key": "TwoStepHasCode",
-									"value": "true",
-									"type": "text"
-								},
-								{
-									"key": "response_type",
-									"value": "{{validations_common_response_type}}",
-									"type": "text"
-								},
-								{
-									"key": "response_mode",
-									"value": "",
-									"type": "text"
-								}
-							]
-						},
-						"url": "{{CFS Master URL}}/Home/OAuthTwoStep"
-					},
-					"response": []
-				},
-				{
 					"name": "2FA Submit Code",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
+								"id": "6b94ce18-8977-4208-b816-909081177721",
 								"exec": [
 									"pmutils(pm).testCallbacks.testResponseStatus200or302();\r",
 									"\r",
-									"pmutils(pm).ExtractAndSetTokens(pm.response, 'query', ({ authorization_code }) => {\r",
+									"pmutils(pm).TryExtractAndSetTokens(pm.response, 'query', ({ authorization_code }) => {\r",
 									"    pmutils(pm).testCallbacks.testAuthorizationCode(authorization_code);\r",
 									"});"
 								],
 								"type": "text/javascript",
-								"packages": {},
-								"id": "6b94ce18-8977-4208-b816-909081177721"
+								"packages": {}
 							}
 						},
 						{
 							"listen": "prerequest",
 							"script": {
+								"id": "300cad9c-bfc4-4472-8805-0d90fb2f802a",
 								"exec": [
 									""
 								],
 								"type": "text/javascript",
-								"packages": {},
-								"id": "300cad9c-bfc4-4472-8805-0d90fb2f802a"
+								"packages": {}
 							}
 						}
 					],
@@ -1244,7 +997,7 @@
 								},
 								{
 									"key": "response_type",
-									"value": "{{validations_common_response_type}}",
+									"value": "code",
 									"type": "text"
 								},
 								{
@@ -1604,130 +1357,6 @@
 					]
 				},
 				{
-					"name": "2FA Select Code",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pmutils(pm).testCallbacks.testResponseStatus200or302();\r",
-									"\r",
-									"pmutils(pm).SetVerificationTokenFromResponse(pm.response);"
-								],
-								"type": "text/javascript",
-								"packages": {},
-								"id": "b738dfe8-7b08-4243-a9e7-87cc54f3d696"
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript",
-								"packages": {},
-								"id": "b5d10276-c3ac-4ace-b2ec-906692b44317"
-							}
-						}
-					],
-					"id": "3576a6af-a4c7-4578-aa01-42c2579da6f6",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": ""
-							}
-						],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "Tenant",
-									"value": "{{Tenant Name}}",
-									"type": "text"
-								},
-								{
-									"key": "IsApproved",
-									"value": "true",
-									"type": "text"
-								},
-								{
-									"key": "client_id",
-									"value": "{{client_id}}",
-									"type": "text"
-								},
-								{
-									"key": "redirect_uri",
-									"value": "{{redirect_uri}}",
-									"type": "text"
-								},
-								{
-									"key": "state",
-									"value": "{{state}}",
-									"type": "text"
-								},
-								{
-									"key": "scope",
-									"value": "{{scope}}",
-									"type": "text"
-								},
-								{
-									"key": "nonce",
-									"value": "{{nonce}}",
-									"type": "text"
-								},
-								{
-									"key": "code_challenge",
-									"value": "{{code_challenge}}",
-									"type": "text"
-								},
-								{
-									"key": "code_challenge_method",
-									"value": "{{code_method}}",
-									"type": "text"
-								},
-								{
-									"key": "Username",
-									"value": "{{username}}",
-									"type": "text"
-								},
-								{
-									"key": "Password",
-									"value": "{{password}}",
-									"type": "text"
-								},
-								{
-									"key": "__RequestVerificationToken",
-									"value": "{{request_verification_token}}",
-									"type": "text"
-								},
-								{
-									"key": "TwoStepHasCode",
-									"value": "true",
-									"type": "text"
-								},
-								{
-									"key": "response_type",
-									"value": "{{validations_common_response_type}}",
-									"type": "text"
-								},
-								{
-									"key": "response_mode",
-									"value": "",
-									"type": "text"
-								}
-							]
-						},
-						"url": "{{CFS Master URL}}/Home/OAuthTwoStep"
-					},
-					"response": []
-				},
-				{
 					"name": "2FA Submit Code",
 					"event": [
 						{
@@ -1737,7 +1366,7 @@
 								"exec": [
 									"pmutils(pm).testCallbacks.testResponseStatus200or302();\r",
 									"\r",
-									"pmutils(pm).ExtractAndSetTokens(pm.response, 'hash', ({ id_token }) => {\r",
+									"pmutils(pm).TryExtractAndSetTokens(pm.response, 'hash', ({ id_token }) => {\r",
 									"    pmutils(pm).testCallbacks.testIdToken(id_token);\r",
 									"});\r",
 									""
@@ -1845,7 +1474,7 @@
 								},
 								{
 									"key": "response_type",
-									"value": "{{validations_common_response_type}}",
+									"value": "id_token",
 									"type": "text"
 								},
 								{
@@ -2021,130 +1650,6 @@
 					]
 				},
 				{
-					"name": "2FA Select Code",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pmutils(pm).testCallbacks.testResponseStatus200or302();\r",
-									"\r",
-									"pmutils(pm).SetVerificationTokenFromResponse(pm.response);"
-								],
-								"type": "text/javascript",
-								"packages": {},
-								"id": "b738dfe8-7b08-4243-a9e7-87cc54f3d696"
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript",
-								"packages": {},
-								"id": "b5d10276-c3ac-4ace-b2ec-906692b44317"
-							}
-						}
-					],
-					"id": "e369de03-10f6-4e87-9aef-c80a7124b9d4",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": ""
-							}
-						],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "Tenant",
-									"value": "{{Tenant Name}}",
-									"type": "text"
-								},
-								{
-									"key": "IsApproved",
-									"value": "true",
-									"type": "text"
-								},
-								{
-									"key": "client_id",
-									"value": "{{client_id}}",
-									"type": "text"
-								},
-								{
-									"key": "redirect_uri",
-									"value": "{{redirect_uri}}",
-									"type": "text"
-								},
-								{
-									"key": "state",
-									"value": "{{state}}",
-									"type": "text"
-								},
-								{
-									"key": "scope",
-									"value": "{{scope}}",
-									"type": "text"
-								},
-								{
-									"key": "nonce",
-									"value": "{{nonce}}",
-									"type": "text"
-								},
-								{
-									"key": "code_challenge",
-									"value": "{{code_challenge}}",
-									"type": "text"
-								},
-								{
-									"key": "code_challenge_method",
-									"value": "{{code_method}}",
-									"type": "text"
-								},
-								{
-									"key": "Username",
-									"value": "{{username}}",
-									"type": "text"
-								},
-								{
-									"key": "Password",
-									"value": "{{password}}",
-									"type": "text"
-								},
-								{
-									"key": "__RequestVerificationToken",
-									"value": "{{request_verification_token}}",
-									"type": "text"
-								},
-								{
-									"key": "TwoStepHasCode",
-									"value": "true",
-									"type": "text"
-								},
-								{
-									"key": "response_type",
-									"value": "{{validations_common_response_type}}",
-									"type": "text"
-								},
-								{
-									"key": "response_mode",
-									"value": "",
-									"type": "text"
-								}
-							]
-						},
-						"url": "{{CFS Master URL}}/Home/OAuthTwoStep"
-					},
-					"response": []
-				},
-				{
 					"name": "2FA Submit Code",
 					"event": [
 						{
@@ -2154,7 +1659,7 @@
 								"exec": [
 									"pmutils(pm).testCallbacks.testResponseStatus200or302();\r",
 									"\r",
-									"pmutils(pm).ExtractAndSetTokens(pm.response, 'hash', ({ access_token, id_token }) => {\r",
+									"pmutils(pm).TryExtractAndSetTokens(pm.response, 'hash', ({ access_token, id_token }) => {\r",
 									"    pmutils(pm).testCallbacks.testAccessToken(access_token);\r",
 									"    pmutils(pm).testCallbacks.testIdToken(id_token);\r",
 									"\r",
@@ -2265,7 +1770,7 @@
 								},
 								{
 									"key": "response_type",
-									"value": "{{validations_common_response_type}}",
+									"value": "id_token token",
 									"type": "text"
 								},
 								{
@@ -2449,130 +1954,6 @@
 							]
 						},
 						{
-							"name": "2FA Select Code",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pmutils(pm).testCallbacks.testResponseStatus200or302();\r",
-											"\r",
-											"pmutils(pm).SetVerificationTokenFromResponse(pm.response);"
-										],
-										"type": "text/javascript",
-										"packages": {},
-										"id": "b738dfe8-7b08-4243-a9e7-87cc54f3d696"
-									}
-								},
-								{
-									"listen": "prerequest",
-									"script": {
-										"exec": [
-											""
-										],
-										"type": "text/javascript",
-										"packages": {},
-										"id": "b5d10276-c3ac-4ace-b2ec-906692b44317"
-									}
-								}
-							],
-							"id": "ca6a2a42-762c-4672-8c74-444e6a22acc8",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": ""
-									}
-								],
-								"body": {
-									"mode": "formdata",
-									"formdata": [
-										{
-											"key": "Tenant",
-											"value": "{{Tenant Name}}",
-											"type": "text"
-										},
-										{
-											"key": "IsApproved",
-											"value": "true",
-											"type": "text"
-										},
-										{
-											"key": "client_id",
-											"value": "{{client_id}}",
-											"type": "text"
-										},
-										{
-											"key": "redirect_uri",
-											"value": "{{redirect_uri}}",
-											"type": "text"
-										},
-										{
-											"key": "state",
-											"value": "{{state}}",
-											"type": "text"
-										},
-										{
-											"key": "scope",
-											"value": "{{scope}}",
-											"type": "text"
-										},
-										{
-											"key": "nonce",
-											"value": "{{nonce}}",
-											"type": "text"
-										},
-										{
-											"key": "code_challenge",
-											"value": "{{code_challenge}}",
-											"type": "text"
-										},
-										{
-											"key": "code_challenge_method",
-											"value": "{{code_method}}",
-											"type": "text"
-										},
-										{
-											"key": "Username",
-											"value": "{{username}}",
-											"type": "text"
-										},
-										{
-											"key": "Password",
-											"value": "{{password}}",
-											"type": "text"
-										},
-										{
-											"key": "__RequestVerificationToken",
-											"value": "{{request_verification_token}}",
-											"type": "text"
-										},
-										{
-											"key": "TwoStepHasCode",
-											"value": "true",
-											"type": "text"
-										},
-										{
-											"key": "response_type",
-											"value": "{{validations_common_response_type}}",
-											"type": "text"
-										},
-										{
-											"key": "response_mode",
-											"value": "",
-											"type": "text"
-										}
-									]
-								},
-								"url": "{{CFS Master URL}}/Home/OAuthTwoStep"
-							},
-							"response": []
-						},
-						{
 							"name": "2FA Submit Code",
 							"event": [
 								{
@@ -2582,7 +1963,7 @@
 										"exec": [
 											"pmutils(pm).testCallbacks.testResponseStatus200or302();\r",
 											"\r",
-											"pmutils(pm).ExtractAndSetTokens(pm.response, 'form', ({ authorization_code, id_token }) => {\r",
+											"pmutils(pm).TryExtractAndSetTokens(pm.response, 'form', ({ authorization_code, id_token }) => {\r",
 											"    pmutils(pm).testCallbacks.testAuthorizationCode(authorization_code);\r",
 											"    pmutils(pm).testCallbacks.testIdToken(id_token);\r",
 											"});\r",
@@ -2691,7 +2072,7 @@
 										},
 										{
 											"key": "response_type",
-											"value": "{{validations_common_response_type}}",
+											"value": "code id_token",
 											"type": "text"
 										},
 										{
@@ -3037,130 +2418,6 @@
 							]
 						},
 						{
-							"name": "2FA Select Code",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pmutils(pm).testCallbacks.testResponseStatus200or302();\r",
-											"\r",
-											"pmutils(pm).SetVerificationTokenFromResponse(pm.response);"
-										],
-										"type": "text/javascript",
-										"packages": {},
-										"id": "b738dfe8-7b08-4243-a9e7-87cc54f3d696"
-									}
-								},
-								{
-									"listen": "prerequest",
-									"script": {
-										"exec": [
-											""
-										],
-										"type": "text/javascript",
-										"packages": {},
-										"id": "b5d10276-c3ac-4ace-b2ec-906692b44317"
-									}
-								}
-							],
-							"id": "6d9bcec7-ba2e-4ff1-86ba-1d96f24389b6",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": ""
-									}
-								],
-								"body": {
-									"mode": "formdata",
-									"formdata": [
-										{
-											"key": "Tenant",
-											"value": "{{Tenant Name}}",
-											"type": "text"
-										},
-										{
-											"key": "IsApproved",
-											"value": "true",
-											"type": "text"
-										},
-										{
-											"key": "client_id",
-											"value": "{{client_id}}",
-											"type": "text"
-										},
-										{
-											"key": "redirect_uri",
-											"value": "{{redirect_uri}}",
-											"type": "text"
-										},
-										{
-											"key": "state",
-											"value": "{{state}}",
-											"type": "text"
-										},
-										{
-											"key": "scope",
-											"value": "{{scope}}",
-											"type": "text"
-										},
-										{
-											"key": "nonce",
-											"value": "{{nonce}}",
-											"type": "text"
-										},
-										{
-											"key": "code_challenge",
-											"value": "{{code_challenge}}",
-											"type": "text"
-										},
-										{
-											"key": "code_challenge_method",
-											"value": "{{code_method}}",
-											"type": "text"
-										},
-										{
-											"key": "Username",
-											"value": "{{username}}",
-											"type": "text"
-										},
-										{
-											"key": "Password",
-											"value": "{{password}}",
-											"type": "text"
-										},
-										{
-											"key": "__RequestVerificationToken",
-											"value": "{{request_verification_token}}",
-											"type": "text"
-										},
-										{
-											"key": "TwoStepHasCode",
-											"value": "true",
-											"type": "text"
-										},
-										{
-											"key": "response_type",
-											"value": "{{validations_common_response_type}}",
-											"type": "text"
-										},
-										{
-											"key": "response_mode",
-											"value": "",
-											"type": "text"
-										}
-									]
-								},
-								"url": "{{CFS Master URL}}/Home/OAuthTwoStep"
-							},
-							"response": []
-						},
-						{
 							"name": "2FA Submit Code",
 							"event": [
 								{
@@ -3170,7 +2427,7 @@
 										"exec": [
 											"pmutils(pm).testCallbacks.testResponseStatus200or302();\r",
 											"\r",
-											"pmutils(pm).ExtractAndSetTokens(pm.response, 'form', ({ authorization_code, access_token, id_token }) => {\r",
+											"pmutils(pm).TryExtractAndSetTokens(pm.response, 'form', ({ authorization_code, access_token, id_token }) => {\r",
 											"    pmutils(pm).testCallbacks.testAuthorizationCode(authorization_code);\r",
 											"    pmutils(pm).testCallbacks.testAccessToken(access_token);\r",
 											"    pmutils(pm).testCallbacks.testIdToken(id_token);\r",
@@ -3281,7 +2538,7 @@
 										},
 										{
 											"key": "response_type",
-											"value": "{{validations_common_response_type}}",
+											"value": "code id_token token",
 											"type": "text"
 										},
 										{
@@ -3626,130 +2883,6 @@
 							]
 						},
 						{
-							"name": "2FA Select Code",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pmutils(pm).testCallbacks.testResponseStatus200or302();\r",
-											"\r",
-											"pmutils(pm).SetVerificationTokenFromResponse(pm.response);"
-										],
-										"type": "text/javascript",
-										"packages": {},
-										"id": "b738dfe8-7b08-4243-a9e7-87cc54f3d696"
-									}
-								},
-								{
-									"listen": "prerequest",
-									"script": {
-										"exec": [
-											""
-										],
-										"type": "text/javascript",
-										"packages": {},
-										"id": "b5d10276-c3ac-4ace-b2ec-906692b44317"
-									}
-								}
-							],
-							"id": "2b935fed-1be1-4eb4-813e-01426e389d50",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": ""
-									}
-								],
-								"body": {
-									"mode": "formdata",
-									"formdata": [
-										{
-											"key": "Tenant",
-											"value": "{{Tenant Name}}",
-											"type": "text"
-										},
-										{
-											"key": "IsApproved",
-											"value": "true",
-											"type": "text"
-										},
-										{
-											"key": "client_id",
-											"value": "{{client_id}}",
-											"type": "text"
-										},
-										{
-											"key": "redirect_uri",
-											"value": "{{redirect_uri}}",
-											"type": "text"
-										},
-										{
-											"key": "state",
-											"value": "{{state}}",
-											"type": "text"
-										},
-										{
-											"key": "scope",
-											"value": "{{scope}}",
-											"type": "text"
-										},
-										{
-											"key": "nonce",
-											"value": "{{nonce}}",
-											"type": "text"
-										},
-										{
-											"key": "code_challenge",
-											"value": "{{code_challenge}}",
-											"type": "text"
-										},
-										{
-											"key": "code_challenge_method",
-											"value": "{{code_method}}",
-											"type": "text"
-										},
-										{
-											"key": "Username",
-											"value": "{{username}}",
-											"type": "text"
-										},
-										{
-											"key": "Password",
-											"value": "{{password}}",
-											"type": "text"
-										},
-										{
-											"key": "__RequestVerificationToken",
-											"value": "{{request_verification_token}}",
-											"type": "text"
-										},
-										{
-											"key": "TwoStepHasCode",
-											"value": "true",
-											"type": "text"
-										},
-										{
-											"key": "response_type",
-											"value": "{{validations_common_response_type}}",
-											"type": "text"
-										},
-										{
-											"key": "response_mode",
-											"value": "",
-											"type": "text"
-										}
-									]
-								},
-								"url": "{{CFS Master URL}}/Home/OAuthTwoStep"
-							},
-							"response": []
-						},
-						{
 							"name": "2FA Submit Code",
 							"event": [
 								{
@@ -3759,7 +2892,7 @@
 										"exec": [
 											"pmutils(pm).testCallbacks.testResponseStatus200or302();\r",
 											"\r",
-											"pmutils(pm).ExtractAndSetTokens(pm.response, 'form', ({ authorization_code, access_token }) => {\r",
+											"pmutils(pm).TryExtractAndSetTokens(pm.response, 'form', ({ authorization_code, access_token }) => {\r",
 											"    pmutils(pm).testCallbacks.testAuthorizationCode(authorization_code);\r",
 											"    pmutils(pm).testCallbacks.testAccessToken(access_token);\r",
 											"    pmutils(pm).testCallbacks.testAccessTokenGrantsAccessToResources(access_token);\r",
@@ -3869,7 +3002,7 @@
 										},
 										{
 											"key": "response_type",
-											"value": "{{validations_common_response_type}}",
+											"value": "code token",
 											"type": "text"
 										},
 										{
@@ -11055,6 +10188,848 @@
 					],
 					"id": "6c9f3176-955c-4eb7-8e00-982db37cfe33",
 					"description": "Validations for the refresh token flow."
+				},
+				{
+					"name": "2FA flow",
+					"item": [
+						{
+							"name": "Invalid client id",
+							"item": [
+								{
+									"name": "2FA Submit Code",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "6b94ce18-8977-4208-b816-909081177721",
+												"exec": [
+													"const responseData = pm.response.json();\r",
+													"\r",
+													"pmutils(pm).testCallbacks.testResponseStatus(400);\r",
+													"\r",
+													"pm.test('Response body has error \"invalid_client\"', () => {\r",
+													"    pm.expect(responseData).to.have.property('error', 'invalid_client');\r",
+													"});\r",
+													"\r",
+													"pm.test('Response body has error_description', () => {\r",
+													"    pm.expect(responseData).to.have.property('error_description');\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "300cad9c-bfc4-4472-8805-0d90fb2f802a",
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"id": "5970332c-ff8a-42e6-bfae-fc0d5ff852c2",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": ""
+											}
+										],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "Tenant",
+													"value": "{{Tenant Name}}",
+													"type": "text"
+												},
+												{
+													"key": "IsApproved",
+													"value": "true",
+													"type": "text"
+												},
+												{
+													"key": "client_id",
+													"value": "invalidClientId",
+													"type": "text"
+												},
+												{
+													"key": "redirect_uri",
+													"value": "{{redirect_uri}}",
+													"type": "text"
+												},
+												{
+													"key": "state",
+													"value": "{{state}}",
+													"type": "text"
+												},
+												{
+													"key": "scope",
+													"value": "{{scope}}",
+													"type": "text"
+												},
+												{
+													"key": "nonce",
+													"value": "{{nonce}}",
+													"type": "text"
+												},
+												{
+													"key": "code_challenge",
+													"value": "{{code_challenge}}",
+													"type": "text"
+												},
+												{
+													"key": "code_challenge_method",
+													"value": "{{code_method}}",
+													"type": "text"
+												},
+												{
+													"key": "Username",
+													"value": "{{username}}",
+													"type": "text"
+												},
+												{
+													"key": "Password",
+													"value": "{{password}}",
+													"type": "text"
+												},
+												{
+													"key": "TwoStepCode",
+													"value": "{{2fa_code}}",
+													"type": "text"
+												},
+												{
+													"key": "RememberMachine",
+													"value": "false",
+													"type": "text"
+												},
+												{
+													"key": "response_type",
+													"value": "code",
+													"type": "text"
+												},
+												{
+													"key": "response_mode",
+													"value": "",
+													"type": "text"
+												}
+											]
+										},
+										"url": "{{CFS Master URL}}/Home/OAuthTwoStep"
+									},
+									"response": []
+								}
+							],
+							"id": "f90a9ebd-9bab-4e7e-ab49-f0441bbed515"
+						},
+						{
+							"name": "Invalid 2FA code",
+							"item": [
+								{
+									"name": "2FA Submit Code",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "6b94ce18-8977-4208-b816-909081177721",
+												"exec": [
+													"const responseData = pm.response.json();\r",
+													"\r",
+													"pmutils(pm).testCallbacks.testResponseStatus(400);\r",
+													"\r",
+													"pm.test('Response body has error \"invalid_grant\"', () => {\r",
+													"    pm.expect(responseData).to.have.property('error', 'invalid_grant');\r",
+													"});\r",
+													"\r",
+													"pm.test('Response body has error_description', () => {\r",
+													"    pm.expect(responseData).to.have.property('error_description');\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "300cad9c-bfc4-4472-8805-0d90fb2f802a",
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"id": "c1fb354d-4a9b-442a-9181-fe9023f20cac",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": ""
+											}
+										],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "Tenant",
+													"value": "{{Tenant Name}}",
+													"type": "text"
+												},
+												{
+													"key": "IsApproved",
+													"value": "true",
+													"type": "text"
+												},
+												{
+													"key": "client_id",
+													"value": "{{client_id}}",
+													"type": "text"
+												},
+												{
+													"key": "redirect_uri",
+													"value": "{{redirect_uri}}",
+													"type": "text"
+												},
+												{
+													"key": "state",
+													"value": "{{state}}",
+													"type": "text"
+												},
+												{
+													"key": "scope",
+													"value": "{{scope}}",
+													"type": "text"
+												},
+												{
+													"key": "nonce",
+													"value": "{{nonce}}",
+													"type": "text"
+												},
+												{
+													"key": "code_challenge",
+													"value": "{{code_challenge}}",
+													"type": "text"
+												},
+												{
+													"key": "code_challenge_method",
+													"value": "{{code_method}}",
+													"type": "text"
+												},
+												{
+													"key": "Username",
+													"value": "{{username}}",
+													"type": "text"
+												},
+												{
+													"key": "Password",
+													"value": "{{password}}",
+													"type": "text"
+												},
+												{
+													"key": "TwoStepCode",
+													"value": "invalid2FACode",
+													"type": "text"
+												},
+												{
+													"key": "RememberMachine",
+													"value": "false",
+													"type": "text"
+												},
+												{
+													"key": "response_type",
+													"value": "code",
+													"type": "text"
+												},
+												{
+													"key": "response_mode",
+													"value": "",
+													"type": "text"
+												}
+											]
+										},
+										"url": "{{CFS Master URL}}/Home/OAuthTwoStep"
+									},
+									"response": []
+								}
+							],
+							"id": "0340dd3f-f666-4bcc-b4ac-3a517972463e"
+						},
+						{
+							"name": "Invalid callback url",
+							"item": [
+								{
+									"name": "2FA Submit Code",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "6b94ce18-8977-4208-b816-909081177721",
+												"exec": [
+													"const responseData = pm.response.json();\r",
+													"\r",
+													"pmutils(pm).testCallbacks.testResponseStatus(400);\r",
+													"\r",
+													"pm.test('Response body has error \"invalid_request\"', () => {\r",
+													"    pm.expect(responseData).to.have.property('error', 'invalid_request');\r",
+													"});\r",
+													"\r",
+													"pm.test('Response body has error_description', () => {\r",
+													"    pm.expect(responseData).to.have.property('error_description');\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "300cad9c-bfc4-4472-8805-0d90fb2f802a",
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"id": "063510a3-d28a-4968-aed2-f701de19e3e6",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": ""
+											}
+										],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "Tenant",
+													"value": "{{Tenant Name}}",
+													"type": "text"
+												},
+												{
+													"key": "IsApproved",
+													"value": "true",
+													"type": "text"
+												},
+												{
+													"key": "client_id",
+													"value": "{{client_id}}",
+													"type": "text"
+												},
+												{
+													"key": "redirect_uri",
+													"value": "https://invalid.callback.url.example.com/callback",
+													"type": "text"
+												},
+												{
+													"key": "state",
+													"value": "{{state}}",
+													"type": "text"
+												},
+												{
+													"key": "scope",
+													"value": "{{scope}}",
+													"type": "text"
+												},
+												{
+													"key": "nonce",
+													"value": "{{nonce}}",
+													"type": "text"
+												},
+												{
+													"key": "code_challenge",
+													"value": "{{code_challenge}}",
+													"type": "text"
+												},
+												{
+													"key": "code_challenge_method",
+													"value": "{{code_method}}",
+													"type": "text"
+												},
+												{
+													"key": "Username",
+													"value": "{{username}}",
+													"type": "text"
+												},
+												{
+													"key": "Password",
+													"value": "{{password}}",
+													"type": "text"
+												},
+												{
+													"key": "TwoStepCode",
+													"value": "{{2fa_code}}",
+													"type": "text"
+												},
+												{
+													"key": "RememberMachine",
+													"value": "false",
+													"type": "text"
+												},
+												{
+													"key": "response_type",
+													"value": "code",
+													"type": "text"
+												},
+												{
+													"key": "response_mode",
+													"value": "",
+													"type": "text"
+												}
+											]
+										},
+										"url": "{{CFS Master URL}}/Home/OAuthTwoStep"
+									},
+									"response": []
+								}
+							],
+							"id": "d04e7bd3-44b5-4c97-a87f-a3bde3a7b3aa"
+						},
+						{
+							"name": "Invalid scope",
+							"item": [
+								{
+									"name": "2FA Submit Code",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "6b94ce18-8977-4208-b816-909081177721",
+												"exec": [
+													"const responseData = pm.response.json();\r",
+													"\r",
+													"pmutils(pm).testCallbacks.testResponseStatus(400);\r",
+													"\r",
+													"pm.test('Response body has error \"invalid_grant\"', () => {\r",
+													"    pm.expect(responseData).to.have.property('error', 'invalid_grant');\r",
+													"});\r",
+													"\r",
+													"pm.test('Response body has error_description', () => {\r",
+													"    pm.expect(responseData).to.have.property('error_description');\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "300cad9c-bfc4-4472-8805-0d90fb2f802a",
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"id": "01811579-ab35-41c6-9843-0d6565366d25",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": ""
+											}
+										],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "Tenant",
+													"value": "{{Tenant Name}}",
+													"type": "text"
+												},
+												{
+													"key": "IsApproved",
+													"value": "true",
+													"type": "text"
+												},
+												{
+													"key": "client_id",
+													"value": "{{client_id}}",
+													"type": "text"
+												},
+												{
+													"key": "redirect_uri",
+													"value": "{{redirect_uri}}",
+													"type": "text"
+												},
+												{
+													"key": "state",
+													"value": "{{state}}",
+													"type": "text"
+												},
+												{
+													"key": "scope",
+													"value": "invalidScope",
+													"type": "text"
+												},
+												{
+													"key": "nonce",
+													"value": "{{nonce}}",
+													"type": "text"
+												},
+												{
+													"key": "code_challenge",
+													"value": "{{code_challenge}}",
+													"type": "text"
+												},
+												{
+													"key": "code_challenge_method",
+													"value": "{{code_method}}",
+													"type": "text"
+												},
+												{
+													"key": "Username",
+													"value": "{{username}}",
+													"type": "text"
+												},
+												{
+													"key": "Password",
+													"value": "{{password}}",
+													"type": "text"
+												},
+												{
+													"key": "TwoStepCode",
+													"value": "{{2fa_code}}",
+													"type": "text"
+												},
+												{
+													"key": "RememberMachine",
+													"value": "false",
+													"type": "text"
+												},
+												{
+													"key": "response_type",
+													"value": "code",
+													"type": "text"
+												},
+												{
+													"key": "response_mode",
+													"value": "",
+													"type": "text"
+												}
+											]
+										},
+										"url": "{{CFS Master URL}}/Home/OAuthTwoStep"
+									},
+									"response": []
+								}
+							],
+							"id": "4cc7fcdb-3866-4d20-b333-0b7c16560ec3"
+						},
+						{
+							"name": "Missing client id",
+							"item": [
+								{
+									"name": "2FA Submit Code",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "6b94ce18-8977-4208-b816-909081177721",
+												"exec": [
+													"const responseData = pm.response.json();\r",
+													"\r",
+													"pmutils(pm).testCallbacks.testResponseStatus(400);\r",
+													"\r",
+													"pm.test('Response body has error \"invalid_request\"', () => {\r",
+													"    pm.expect(responseData).to.have.property('error', 'invalid_request');\r",
+													"});\r",
+													"\r",
+													"pm.test('Response body has error_description', () => {\r",
+													"    pm.expect(responseData).to.have.property('error_description');\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "300cad9c-bfc4-4472-8805-0d90fb2f802a",
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"id": "c9fed51e-43bc-4622-8395-336e8fd9fe19",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": ""
+											}
+										],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "Tenant",
+													"value": "{{Tenant Name}}",
+													"type": "text"
+												},
+												{
+													"key": "IsApproved",
+													"value": "true",
+													"type": "text"
+												},
+												{
+													"key": "client_id",
+													"value": "{{client_id}}",
+													"type": "text",
+													"disabled": true
+												},
+												{
+													"key": "redirect_uri",
+													"value": "{{redirect_uri}}",
+													"type": "text"
+												},
+												{
+													"key": "state",
+													"value": "{{state}}",
+													"type": "text"
+												},
+												{
+													"key": "scope",
+													"value": "{{scope}}",
+													"type": "text"
+												},
+												{
+													"key": "nonce",
+													"value": "{{nonce}}",
+													"type": "text"
+												},
+												{
+													"key": "code_challenge",
+													"value": "{{code_challenge}}",
+													"type": "text"
+												},
+												{
+													"key": "code_challenge_method",
+													"value": "{{code_method}}",
+													"type": "text"
+												},
+												{
+													"key": "Username",
+													"value": "{{username}}",
+													"type": "text"
+												},
+												{
+													"key": "Password",
+													"value": "{{password}}",
+													"type": "text"
+												},
+												{
+													"key": "TwoStepCode",
+													"value": "{{2fa_code}}",
+													"type": "text"
+												},
+												{
+													"key": "RememberMachine",
+													"value": "false",
+													"type": "text"
+												},
+												{
+													"key": "response_type",
+													"value": "code",
+													"type": "text"
+												},
+												{
+													"key": "response_mode",
+													"value": "",
+													"type": "text"
+												}
+											]
+										},
+										"url": "{{CFS Master URL}}/Home/OAuthTwoStep"
+									},
+									"response": []
+								}
+							],
+							"id": "949e6d12-6e83-4b45-ab57-a5db10672ca6"
+						},
+						{
+							"name": "Missing 2FA code",
+							"item": [
+								{
+									"name": "2FA Submit Code",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "6b94ce18-8977-4208-b816-909081177721",
+												"exec": [
+													"const responseData = pm.response.json();\r",
+													"\r",
+													"pmutils(pm).testCallbacks.testResponseStatus(400);\r",
+													"\r",
+													"pm.test('Response body has error \"invalid_grant\"', () => {\r",
+													"    pm.expect(responseData).to.have.property('error', 'invalid_grant');\r",
+													"});\r",
+													"\r",
+													"pm.test('Response body has error_description', () => {\r",
+													"    pm.expect(responseData).to.have.property('error_description');\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "300cad9c-bfc4-4472-8805-0d90fb2f802a",
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"id": "6d6b4e38-adc2-4da9-aa07-330fe2a1fee5",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": ""
+											}
+										],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "Tenant",
+													"value": "{{Tenant Name}}",
+													"type": "text"
+												},
+												{
+													"key": "IsApproved",
+													"value": "true",
+													"type": "text"
+												},
+												{
+													"key": "client_id",
+													"value": "{{client_id}}",
+													"type": "text"
+												},
+												{
+													"key": "redirect_uri",
+													"value": "{{redirect_uri}}",
+													"type": "text"
+												},
+												{
+													"key": "state",
+													"value": "{{state}}",
+													"type": "text"
+												},
+												{
+													"key": "scope",
+													"value": "{{scope}}",
+													"type": "text"
+												},
+												{
+													"key": "nonce",
+													"value": "{{nonce}}",
+													"type": "text"
+												},
+												{
+													"key": "code_challenge",
+													"value": "{{code_challenge}}",
+													"type": "text"
+												},
+												{
+													"key": "code_challenge_method",
+													"value": "{{code_method}}",
+													"type": "text"
+												},
+												{
+													"key": "Username",
+													"value": "{{username}}",
+													"type": "text"
+												},
+												{
+													"key": "Password",
+													"value": "{{password}}",
+													"type": "text"
+												},
+												{
+													"key": "TwoStepCode",
+													"value": "{{2fa_code}}",
+													"type": "text",
+													"disabled": true
+												},
+												{
+													"key": "RememberMachine",
+													"value": "false",
+													"type": "text"
+												},
+												{
+													"key": "response_type",
+													"value": "code",
+													"type": "text"
+												},
+												{
+													"key": "response_mode",
+													"value": "",
+													"type": "text"
+												}
+											]
+										},
+										"url": "{{CFS Master URL}}/Home/OAuthTwoStep"
+									},
+									"response": []
+								}
+							],
+							"id": "6f2c69db-5766-457c-9c78-51fb373b21ed"
+						}
+					],
+					"id": "e7a0ba47-8665-4474-99d8-85eb1538ecf9"
 				}
 			],
 			"id": "cc963083-1e8f-4f40-91ca-440314a8f772",
@@ -11479,7 +11454,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "c789cb78-9634-43bf-bd3f-5b70bf463677",
+				"id": "9ee951fc-ae4c-4d80-8c79-ba1c81dce59d",
 				"type": "text/javascript",
 				"exec": [
 					"pmutils =",
@@ -11826,6 +11801,9 @@
 					"                const URL = require('url');",
 					"",
 					"                const responseLocation = response.headers.get('Location');",
+					"                if(responseLocation == undefined)",
+					"                    return null;",
+					"",
 					"                const url = URL.parse(responseLocation);",
 					"                const queryStringValue = url.hash.split('#')[1];",
 					"",
@@ -11839,6 +11817,9 @@
 					"                const URL = require('url');",
 					"",
 					"                const responseLocation = response.headers.get('Location');",
+					"                if(responseLocation == undefined)",
+					"                    return null;",
+					"",
 					"                const url = URL.parse(responseLocation);",
 					"                const queryStringValue = url.query;",
 					"",
@@ -11874,8 +11855,30 @@
 					"             * @param {'form' | 'hash' | 'query'} urlQueryExtractionMode",
 					"             * @param {(variablesMap: object) => void} callback",
 					"             */",
+					"            TryExtractAndSetTokens(response, urlQueryExtractionMode, callback) {",
+					"                try",
+					"                {",
+					"                    if(response.json().hasOwnProperty(\"error\"))",
+					"                        return null;",
+					"                    ",
+					"                    this.ExtractAndSetTokens(response, urlQueryExtractionMode, callback);",
+					"                }",
+					"                catch",
+					"                {",
+					"                    this.ExtractAndSetTokens(response, urlQueryExtractionMode, callback);",
+					"                }",
+					"            },",
+					"",
+					"            /**",
+					"             * @param {require('postman-collection').Response} response",
+					"             * @param {'form' | 'hash' | 'query'} urlQueryExtractionMode",
+					"             * @param {(variablesMap: object) => void} callback",
+					"             */",
 					"            ExtractAndSetTokens(response, urlQueryExtractionMode, callback) {",
 					"                const variablesMap = this.extractTokenVariablesFromResponse(response, urlQueryExtractionMode);",
+					"                if(variablesMap == null)",
+					"                    return;",
+					"",
 					"                this.setCollectionVariables(variablesMap);",
 					"                this.setVisualizer(variablesMap);",
 					"",
@@ -11925,11 +11928,11 @@
 					"                            }",
 					"",
 					"                            this.SetVerificationTokenFromResponse(response);",
-					"                            this.ExtractAndSetTokens(response, urlQueryExtractionMode, callback);",
+					"                            this.TryExtractAndSetTokens(response, urlQueryExtractionMode, callback);",
 					"                        }",
 					"                    );",
 					"                } else {",
-					"                    this.ExtractAndSetTokens(pm.response, urlQueryExtractionMode, callback);",
+					"                    this.TryExtractAndSetTokens(pm.response, urlQueryExtractionMode, callback);",
 					"                }",
 					"            },",
 					"",
@@ -12008,7 +12011,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "f5d76715-39af-41d0-a394-62af7b863de3",
+				"id": "1e2146e1-de15-41c2-b5ee-c385967a4051",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -12018,139 +12021,139 @@
 	],
 	"variable": [
 		{
-			"id": "340f4787-2769-497c-bda6-a096d8980948",
+			"id": "92b7c0bb-698d-4b3a-a168-e81307611ee2",
 			"key": "CFS Master URL",
 			"value": "https://cfs01.example.com/cfs"
 		},
 		{
-			"id": "870326b1-0635-42c9-9c95-4f110588aaac",
+			"id": "202425a4-7199-42fb-b523-ae065574524c",
 			"key": "Tenant Name",
 			"value": "mytenant"
 		},
 		{
-			"id": "a08610cb-3afc-4cc9-8578-7b8580d81c97",
+			"id": "a92243a5-0a1a-4c12-95bb-5f1d1920e713",
 			"key": "Application Id",
 			"value": "1f734c83-3ca4-433e-bfb0-27bc711f3b4e"
 		},
 		{
-			"id": "df0ac437-efbe-4046-8093-227ca9fa52de",
+			"id": "bac2dec0-6f07-46c1-9ac7-cd567271c0c6",
 			"key": "username",
 			"value": "john.doe@example.com"
 		},
 		{
-			"id": "13b616b7-73fe-4aa8-b7bb-031cdb965ad7",
+			"id": "29aeb7c4-7281-4565-924f-7aa42af03607",
 			"key": "password",
 			"value": "MyPassword123!"
 		},
 		{
-			"id": "b91c2941-9dd4-470a-85e6-35e7e5337c98",
+			"id": "0b1a9174-5265-4a73-9606-32e4f92066dd",
 			"key": "ropc_locked_out_username",
 			"value": "john.doe@example.com"
 		},
 		{
-			"id": "b155be7d-ea2f-4b5a-8289-cf4d85c1d00f",
+			"id": "df4fc8b5-8bb7-4ddc-948e-5b1266a5253d",
 			"key": "ropc_locked_out_password",
 			"value": "MyPassword123!"
 		},
 		{
-			"id": "c8ddfd49-93dd-4732-9408-f96ea8202d5e",
+			"id": "a66b5062-87d3-4d65-ab1b-cc89926aaa19",
 			"key": "ropc_cac_enabled_username",
 			"value": "john.doe@example.com"
 		},
 		{
-			"id": "02c4ee09-00e2-4d5f-b7e8-3a068f3c146d",
+			"id": "8d1638ad-bd94-4399-af88-fc0e17c42951",
 			"key": "ropc_cac_enabled_password",
 			"value": "MyPassword123!"
 		},
 		{
-			"id": "ad66d4ba-ebc9-472e-8bfb-f82f41393884",
+			"id": "c5bbf83a-aa5c-4de1-8072-1626acf52ada",
 			"key": "ropc_mfa_enabled_username",
 			"value": "john.doe@example.com"
 		},
 		{
-			"id": "83a2168a-e8d6-49f4-a651-fa13184f65dc",
+			"id": "5a5f7d46-ae7f-4a13-880f-a5389ce69e04",
 			"key": "ropc_mfa_enabled_password",
 			"value": "MyPassword123!"
 		},
 		{
-			"id": "8d841aa3-59a3-4d04-845f-bda4276d14d2",
+			"id": "d453c8d5-2d26-443d-b452-14ece7df912e",
 			"key": "client_id",
 			"value": "stLJwW9b3L5BPaiFFVx9cB"
 		},
 		{
-			"id": "eba26d18-878a-4282-9b27-3976937c8cf0",
+			"id": "4771237e-a66c-4de2-86b4-804a2d0c23b1",
 			"key": "client_secret",
 			"value": "jqvQwFVQgK92xRg4D1DryiiO7F3X5Hl6UeYZE4fZUQ95"
 		},
 		{
-			"id": "1449feb4-9870-4b70-9f73-70838ad2741b",
+			"id": "ec94832c-b8ad-439a-be01-c4f71b266b9d",
 			"key": "scope",
 			"value": "openid email profile"
 		},
 		{
-			"id": "3a9d8eaf-1dc1-48f1-911d-a547709acd75",
+			"id": "c2ffe116-c945-470f-9ded-d7d3098cb06f",
 			"key": "state",
 			"value": "6879bf2ef296d720f3a54eb8faabee9c"
 		},
 		{
-			"id": "99503a65-573c-453b-b5ac-0affba2fc2e2",
+			"id": "c0d14fde-23a4-47bd-9475-45074c8c7cdd",
 			"key": "nonce",
 			"value": "c4fdef35f2e05abe2ceb88ae0f743ee4"
 		},
 		{
-			"id": "4fd04d15-94d3-44ae-a864-790eb92aa313",
+			"id": "e1d4b5b3-a97c-41d7-9963-249a561430af",
 			"key": "redirect_uri",
 			"value": "https://oauth.pstmn.io/v1/callback"
 		},
 		{
-			"id": "08be6762-b6d4-4ab7-8a1f-8d0286a86275",
+			"id": "83b05b6a-e21d-4857-bc2d-50802a9cbc8d",
 			"key": "code_challenge",
 			"value": "rrsv_GL5iipUGp6yR5w5ra77fdggOxJ6htH9E217PeI"
 		},
 		{
-			"id": "1c09f4df-c148-4cfb-b218-baa51ac57ca7",
+			"id": "89c863db-f0f5-43ae-a21b-7d8ddce04ce3",
 			"key": "code_verifier",
 			"value": "MR~lBQbZeIHsG3RnZuvgWmrAr8y1Ia~muw2zBrJdPlz5A7carMvqfm3MxiWCMN7KOjzfbZo0is3FxyWDf6e4Ad0sU6Of10.PvukuaqO2ez~YLU.lCrLYDC4.xDb420z2"
 		},
 		{
-			"id": "12879e01-8c2d-4cc8-8eff-f0683bf96b5f",
+			"id": "c41a5940-f28a-4cd9-9c9e-b5b8e9df033e",
 			"key": "code_method",
 			"value": "S256"
 		},
 		{
-			"id": "a5913188-bbec-45f7-943c-a97dd42aab4a",
+			"id": "0aa873f1-3084-43e6-a78d-27ffbc31307c",
 			"key": "validations_common_response_type",
 			"value": "code"
 		},
 		{
-			"id": "5923c9af-e7a3-4994-961c-86250fbea04c",
+			"id": "8d64c5e5-03fc-467f-8f21-7667622fef20",
 			"key": "authorization_code",
 			"value": ""
 		},
 		{
-			"id": "9afe90d7-9293-468a-83eb-dd30f8659ed8",
+			"id": "92687e9b-d35b-4305-8273-2d3da538e658",
 			"key": "id_token",
 			"value": ""
 		},
 		{
-			"id": "c80497a8-22be-495c-92cb-3aef48150070",
+			"id": "ea58dd2a-1aed-4b18-aa7f-0109b22849ce",
 			"key": "access_token",
 			"value": ""
 		},
 		{
-			"id": "fc1c2f9e-4123-4263-94b3-ae933fe0597d",
+			"id": "9604bd83-eab8-423c-92de-f698720e0124",
 			"key": "refresh_token",
 			"value": ""
 		},
 		{
-			"id": "124cccb4-61c9-4979-ab06-74fc95c40dca",
-			"key": "request_verification_token",
-			"value": ""
-		},
-		{
-			"id": "d62a57b7-8e5b-41e4-a54f-fab2a4efeae3",
+			"id": "7541b808-97a2-49ae-8f0c-ee82aabf7599",
 			"key": "2fa_code",
 			"value": "000000"
+		},
+		{
+			"id": "3c498c96-3c8f-4f3f-910e-2db2ddfa691b",
+			"key": "request_verification_token",
+			"value": ""
 		}
 	]
 }
